@@ -1,0 +1,25 @@
+parameters:
+    # ...
+    ben.controller.security.class: Ben\UserBundle\Controller\SecurityController
+services:
+    activity_listener:
+        class: Ben\UserBundle\Listener\ActivityListener
+        arguments: ["@security.context", "@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
+    ben.stats_handler:
+        class: Ben\UserBundle\Stats\StatsHandler
+        arguments: ["@doctrine.orm.entity_manager"]
+    security.authentication.success_handler:
+        class:  Ben\UserBundle\Handler\AuthenticationSuccessHandler
+        arguments:  ["@security.http_utils", {},'@router',@service_container]
+        tags:
+            - { name: 'monolog.logger', channel: 'security' }
+
+    security.authentication.failure_handler:
+        class:  Ben\UserBundle\Handler\AuthenticationFailureHandler
+        arguments:  ["@http_kernel", "@security.http_utils", {}, "@logger",@service_container]
+        tags:
+            - { name: 'monolog.logger', channel: 'security' }
+    app.security_controller:
+        class:     "%ben.controller.security.class%"

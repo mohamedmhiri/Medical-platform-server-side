@@ -1,0 +1,50 @@
+#trial guzzle
+person_guzzle:
+    path:     /guzzle
+    defaults: {_controller: "BenDoctorsBundle:Person:guzzle"}
+    requirements: { _method: get }
+
+person:
+    path:     /
+    defaults: { _controller: "BenDoctorsBundle:Person:index" }
+persons_non_inscrits:
+    path:     /nonpatients
+    defaults: { _controller: "BenDoctorsBundle:Person:bindPatients" }
+    requirements: { _method: get }
+
+person_ajax:
+    path:     /ajaxlist
+    defaults: { _controller: "BenDoctorsBundle:Person:ajaxList" }
+    requirements: { _method: post|get }
+
+person_show:
+    path:     /{id}/show
+    defaults: { _controller: "BenDoctorsBundle:Person:show" }
+
+person_new:
+    path:     /new
+    defaults: { _controller: "BenDoctorsBundle:Person:new" }
+
+person_create:
+    path:     /create
+    defaults: { _controller: "BenDoctorsBundle:Person:create" }
+    requirements: { _method: post }
+
+person_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BenDoctorsBundle:Person:edit" }
+
+person_update:
+    path:     /{id}/update
+    defaults: { _controller: "BenDoctorsBundle:Person:update" }
+    requirements: { _method: post|put|get }
+
+person_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BenDoctorsBundle:Person:delete" }
+    requirements: { _method: get|delete }
+
+person_remove:
+    path:     /remove
+    defaults: { _controller: "BenDoctorsBundle:Person:remove" }
+    requirements: { _method: post|get }
