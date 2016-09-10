@@ -161,7 +161,7 @@ class PersonController extends Controller
       $npatients=$this->listNonPatients();
 
       if($entity->getISNP()==true)
-        $i=0;
+        {$i=0;
         while($i<count($npatients))
         {
           if($npatients[$i]->id==$entity->getNpid())
@@ -169,6 +169,7 @@ class PersonController extends Controller
           else
             $i++;
         }
+      }
 
     }
 
@@ -192,10 +193,9 @@ class PersonController extends Controller
           $entity=$entity->setCin(" ");
           $entity=$entity->setGender(" ");
           $entity=$entity->setCnsstype(" ");
-          $entity=$entity->setResident(0);
           $entity=$entity->setISNP(true);
           $entity=$entity->setNpid($list[$i]->id);
-          $entity=$entity->setCreated(new \DateTime('now'));
+          $entity=$entity->setCreated(null);
           array_push($persons,$entity);
         }
 
@@ -219,7 +219,7 @@ class PersonController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('info', "L'étudiant a été ajouté avec succès.");
+            $this->get('session')->getFlashBag()->add('info', "Le patient a été ajouté avec succès.");
             return $this->redirect($this->generateUrl('person_show', array('id' => $entity->getId())));
         }
         // $cities = $em->getRepository('BenDoctorsBundle:Person')->getCities();
@@ -361,7 +361,7 @@ class PersonController extends Controller
             }
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('info', "L'étudiant a été mis à jour avec succès.");
+            $this->get('session')->getFlashBag()->add('info', "Le patient a été mis à jour avec succès.");
             return $this->redirect($this->generateUrl('person_edit', array('id' => $id)));
         }
         // $cities = $em->getRepository('BenDoctorsBundle:Person')->getCities();

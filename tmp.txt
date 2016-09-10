@@ -1,0 +1,22 @@
+/*** updateAction antecedent
+
+
+
+$entity->getImage()->manualRemove($entity->getImage()->getAbsolutePath());
+$entity->getImage()->upload();
+$em->persist($entity);
+$em->flush();
+
+
+/**consultation show
+*med
+*/
+{% for item in entity.consultationmeds %}
+<tr>
+    <td>{{ item.meds.name }}</td>
+    <td>{{ item.count}}</td>
+</tr>
+{% endfor %}
+
+
+style="height:250px;width:1000px;" 

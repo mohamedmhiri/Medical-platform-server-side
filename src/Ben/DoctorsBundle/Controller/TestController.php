@@ -56,12 +56,12 @@ class TestController extends Controller
      * @Secure(roles="ROLE_USER")
      *
      */
-    public function createAction(Request $request, $type)
+    public function createAction(Request $request)
     {
         $entity = new Test();
-        $form = $this->createForm(new TestType($type), $entity);
+        $form = $this->createForm(new TestType(), $entity);
         $form->handleRequest($request);
-        if($type) $entity->setType(Test::$GENERAL);
+
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -74,10 +74,32 @@ class TestController extends Controller
         $this->get('session')->getFlashBag()->add('danger', "Il y a des erreurs dans le formulaire soumis !");
         return $this->render('BenDoctorsBundle:Test:new.html.twig', array(
             'entity' => $entity,
-            'type' => $type,
             'form'   => $form->createView(),
         ));
     }
+    // public function createAction(Request $request)
+    // {
+    //     $entity = new Person();
+    //     $form = $this->createForm(new PersonType(), $entity);
+    //     $form->handleRequest($request);
+    //     $em = $this->getDoctrine()->getManager();
+    //
+    //     if ($form->isValid()) {
+    //         $em->persist($entity);
+    //         $em->flush();
+    //
+    //         $this->get('session')->getFlashBag()->add('info', "Le patient a été ajouté avec succès.");
+    //         return $this->redirect($this->generateUrl('person_show', array('id' => $entity->getId())));
+    //     }
+    //     // $cities = $em->getRepository('BenDoctorsBundle:Person')->getCities();
+    //
+    //     $this->get('session')->getFlashBag()->add('danger', "Il y a des erreurs dans le formulaire soumis !");
+    //     return $this->render('BenDoctorsBundle:Person:new.html.twig', array(
+    //         'entity' => $entity,
+    //         'form'   => $form->createView(),
+    //         // 'cities' => $cities,
+    //     ));
+    // }
 
     /**
      * Displays a form to create a new Test entity.
@@ -95,7 +117,7 @@ class TestController extends Controller
             'form'   => $form->createView(),
         ));
     }
-  
+
 
     /**
      * Finds and displays a Test entity.
@@ -133,8 +155,7 @@ class TestController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Test entity.');
         }
-        $type = ($entity->getType()===Test::$GENERAL);
-        $editForm = $this->createForm(new TestType($type), $entity);
+        $editForm = $this->createForm(new TestType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('BenDoctorsBundle:Test:edit.html.twig', array(
@@ -159,11 +180,15 @@ class TestController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $type = ($entity->getType()===Test::$GENERAL);
-        $editForm = $this->createForm(new TestType($type), $entity);
+        $editForm = $this->createForm(new TestType(), $entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+
+            foreach ($entity->getImages() as $key => $value) {
+            $value->upload();  
+            }
+
             $em->persist($entity);
             $em->flush();
 
@@ -236,5 +261,33 @@ class TestController extends Controller
         $em->flush();
 
         return new Response('1');
+    }
+    /**
+     * Finds and displays a test's image.
+     *
+     *
+     */
+    public function showImageAction($id,$id_image)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('BenDoctorsBundle:Test')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Test entity.');
+        }
+        $image=null;
+        foreach ($entity->getImages() as $key => $value) {
+            if($value->getId()==$id_image){
+              $image=$value->getPath();
+              break;
+            }
+        }
+
+
+        return $this->render('BenDoctorsBundle:Test:image.html.twig', array(
+            'image'      => $image,
+
+        ));
     }
 }

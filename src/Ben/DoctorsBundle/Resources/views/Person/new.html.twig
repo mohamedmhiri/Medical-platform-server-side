@@ -42,33 +42,10 @@ Tableau de bord | {{ parent() }}
         });
         $('select').removeClass('form-control').select2({minimumResultsForSearch: -1});
 
-        /* handicap */
-        var ishandicap = $('#ben_person_ishandicap'),
-            handicap = ishandicap.closest('.form-group').next().hide();
-            needs = handicap.closest('.form-group').next().hide();
 
-        if(ishandicap.is(":checked")){
-            handicap.show();
-            needs.show();
-        }
-        ishandicap.on('change', function(){
-          if(ishandicap.is(":checked")){
-            handicap.show();
-            needs.show();
-          }
-          else {
-            handicap.hide();
-            needs.hide();
-          }
-        });
 
-        /*universityData = $.map(universityData, function(val,index){return {id:val, text:val};});
-        $('#ben_person_university').removeClass('form-control').select2({
-          createSearchChoice:function(term, data) { if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {return {id:term, text:term};} },
-          multiple: false,
-          data: universityData
-        });
-*/
+
+
     })(jQuery);
 </script>
 {% endblock %}

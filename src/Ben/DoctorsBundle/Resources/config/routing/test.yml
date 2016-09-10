@@ -38,3 +38,7 @@ test_remove:
     path:     /remove
     defaults: { _controller: "BenDoctorsBundle:Test:remove" }
     requirements: { _method: post|delete }
+test_show_img:
+    path:     /image/{id}/{id_image}
+    defaults: { _controller: "BenDoctorsBundle:Test:showImage" }
+    requirements: { _method: get }

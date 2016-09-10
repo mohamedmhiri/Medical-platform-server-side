@@ -5,13 +5,10 @@ Tableau de bord | {{ parent() }}
 {% block body -%}
 <h3>Examen médical</h3>
 <div class="row">
-    <div class="col-md-10">    
+    <div class="col-md-10">
         <table class="table table-striped table-hover table-bordered">
         <tbody>
-            <tr>
-                <th>Type</th>
-                <td>{{ entity.type }}</td>
-            </tr>
+
             <tr>
                 <th>Patient</th>
                 <td><a href="{{ path('person_show', { 'id': entity.consultation.person.id }) }}">{{ entity.consultation.person.fullname }}</a></td>
@@ -20,38 +17,31 @@ Tableau de bord | {{ parent() }}
                 <th>Medecin</th>
                 <td>{{ entity.consultation.user.fullname }}</td>
             </tr>
-            {% if entity.isGeneral %}
             <tr>
-                <th>Taille</th>
-                <td>{{ entity.taille }}</td>
+                <th>Type de l'examen</th>
+                <td>{{ entity.typeexam }}</td>
             </tr>
             <tr>
-                <th>Poids</th>
-                <td>{{ entity.poids }}</td>
+                <th>Date </th>
+                <td>{{ entity.date}}</td>
             </tr>
             <tr>
-                <th>TA</th>
-                <td>{{ entity.ta }}</td>
+                <th>Lieu </th>
+                <td>{{ entity.lieu }}</td>
             </tr>
-            <tr><th colspan="2">Acuité visuelle</th></tr>
+            {% if entity.images %}
             <tr>
-                <th>OD</th>
-                <td>{{ entity.od }}</td>
-            </tr>
-            <tr>
-                <th>OG</th>
-                <td>{{ entity.og }}</td>
+                <th>Fichier</th>
+                {% for item in entity.images %}
+                <td><a href="{{ path('test_show_img',{'id':entity.id}) }}">Voir fichier</a></td>
+                {%endfor%}
             </tr>
             {% else %}
             <tr>
-                <th>Demande</th>
-                <td>{{ entity.request|nl2br }}</td>
+                <th>Conclusion</th>
+                <td>{{ entity.conclusion }}</td>
             </tr>
-            <tr>
-                <th>Resultats</th>
-                <td>{{ entity.result|nl2br }}</td>
-            </tr>
-            {% endif %}
+            {%endif%}
         </tbody>
     </table>
     </div>
@@ -63,7 +53,7 @@ Tableau de bord | {{ parent() }}
             <hr>
             <button class="btn btn-danger btn-block" type="submit">Supprimer</button>
             {{ form_widget(delete_form) }}
-        </form> 
+        </form>
     </div>
 </div>
 {% endblock %}

@@ -5,3 +5,6 @@ ben_dashboard:
 ben_stats:
     pattern:  /stats
     defaults: { _controller: BenDoctorsBundle:Default:stats }
+ben_chart_api:
+    pattern: /chart
+    defaults: {_controller: BenDoctorsBundle:Default:chartApi}

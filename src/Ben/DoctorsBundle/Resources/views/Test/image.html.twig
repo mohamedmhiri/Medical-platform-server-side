@@ -1,0 +1,7 @@
+{% extends "BenDoctorsBundle::layout.html.twig" %}
+{% block title %}
+Tableau de bord | {{ parent() }}
+{% endblock %}
+{% block body -%}
+    <img src="{{asset('uploads/img/'~image)}}" class="img-responsive" alt="fiche">
+{% endblock %}

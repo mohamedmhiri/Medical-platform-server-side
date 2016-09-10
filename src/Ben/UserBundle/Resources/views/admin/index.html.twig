@@ -6,7 +6,7 @@ Tableau de bord | {{ parent() }}
 
 <h3><span class="glyphicon glyphicon-user"></span> Gestion des médecins</h3>
         <form  id="jsForm" role="form" method="post" action="">
-          <input id="pagenumber" type="hidden" name="searchParam[page]" value="1"> 
+          <input id="pagenumber" type="hidden" name="searchParam[page]" value="1">
             <div class="row hide-print">
               <div class="col-md-5 form-group">
                 <div class="input-group">
@@ -29,7 +29,7 @@ Tableau de bord | {{ parent() }}
               </div>
 
               <div class="col-lg-5">
-                <div class="btn-group pull-right">              
+                <div class="btn-group pull-right">
                   <button class="btn btn-primary "><span class="glyphicon glyphicon-cog"></span>  Selectioner une action</button>
                   <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
@@ -66,16 +66,16 @@ Tableau de bord | {{ parent() }}
                 <tbody id="dataContainer"></tbody>
             </table>
             <div>
-              <em><strong>Total:</strong> {{ entitiesLength }} utilisateur</em>
+              <em><strong>Total:</strong> {% if  entitiesLength >0 %} {{entitiesLength}} utilisateurs {% else %} aucun utilisateur {%endif%}</em>
             </div>
         </form>
-   
-<div class="clearfix"></div> 
+
+<div class="clearfix"></div>
 {% endblock body %}
 
  {% block javascripts %}
 {{ parent() }}
-<script> 
+<script>
     (function($) {
 
       /* helper functions */
@@ -100,11 +100,11 @@ Tableau de bord | {{ parent() }}
       }
       function ajaxPost(action) {
         container.addClass('working');
-        $.ajax({ 
-          type: "POST", 
+        $.ajax({
+          type: "POST",
           data: form.serialize(),
-          url: jsFormUrl, 
-          success: function(data){ 
+          url: jsFormUrl,
+          success: function(data){
             container.removeClass('working');
             init();
             if(!action){
@@ -131,7 +131,7 @@ Tableau de bord | {{ parent() }}
           jsFormUrl = '',
           checkboxBtn = form.find("input:checkbox");
 
-      /* pagination */    
+      /* pagination */
       form.on('click', '.js-page', function(){
           pageInput.val($(this).data('page'));
           ajaxPost();

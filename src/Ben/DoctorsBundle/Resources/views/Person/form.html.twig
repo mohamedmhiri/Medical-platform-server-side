@@ -8,21 +8,10 @@
   {{ form_row(form.cin, { 'label': 'CIN'}) }}
 
 <legend>Informations générale</legend>
-  {{ form_row(form.resident, { 'label': 'Résident ?'}) }}
   {{ form_row(form.address, { 'label': 'Adresse Personnelle'}) }}
-  {{ form_row(form.parentAddress, { 'label': 'Adresse des parents'}) }}
   {{ form_row(form.city, { 'label': 'Province'}) }}
   {{ form_row(form.gsm, { 'label': 'GSM'}) }}
   {{ form_row(form.email, { 'label': 'E-Mail'}) }}
   {{ form_row(form.cnsstype, { 'label': 'Type de couverture sociale'})  }}
-
-  <legend>Personne à contacter en cas d'urgence</legend>
-  {{ form_row(form.parentName, { 'label': 'Nom et prenom'}) }}
-  {{ form_row(form.parentGsm, { 'label': 'GSM'}) }}
-  {{ form_row(form.parentFixe, { 'label': 'FIXE'}) }}
-
-  <legend>Partie handicap</legend>
-  {{ form_row(form.ishandicap, { 'label': 'Handicap ?'}) }}
-  {{ form_row(form.handicap, { 'label': 'Nature de l’handicap'}) }}
-  {{ form_row(form.needs, { 'label': 'Besoins spécifiques'}) }}
+  {{ form_row(form.cnssnum, { 'label': 'Numéro de couverture sociale'})  }}
   {{ form_rest(form) }}

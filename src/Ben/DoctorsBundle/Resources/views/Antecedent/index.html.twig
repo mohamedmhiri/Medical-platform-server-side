@@ -8,9 +8,9 @@
             <tr>
                 <th>Id</th>
                 <th>Allergies</th>
-                <th>Autres</th>
+                <th>Medicaux</th>
                 <th>Traitement</th>
-                <th>Chirurgicaux</th>
+                <th>Chirurgicaux </th>
                 <th>Type</th>
                 <th>Actions</th>
             </tr>
@@ -20,7 +20,7 @@
             <tr>
                 <td><a href="{{ path('antecedent_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.allergies }}</td>
-                <td>{{ entity.autres }}</td>
+                <td>{{ entity.medicaux }}</td>
                 <td>{{ entity.traitement }}</td>
                 <td>{{ entity.chirurgicaux }}</td>
                 <td>{{ entity.type }}</td>

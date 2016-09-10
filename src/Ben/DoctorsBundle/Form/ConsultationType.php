@@ -6,13 +6,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Ben\DoctorsBundle\Entity\Consultation;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+
 
 class ConsultationType extends AbstractType
 {
-    private $general;
-    public function __construct($type)
+    public function __construct()
     {
-        $this->general = ($type === Consultation::$GENERAL);
     }
     /**
      * @param FormBuilderInterface $builder
@@ -20,36 +20,20 @@ class ConsultationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if($this->general)
-            $builder
-                ->add('motiftype', 'choice', array('label'=>'Type', 'choices' => array('EXAMEN MEDICAL SYSTEMATIQUE' => 'EXAMEN MEDICAL SYSTEMATIQUE','CONSULTATION MEDICALE A LA DEMANDE' => 'CONSULTATION MEDICALE A LA DEMANDE'),
-                    'required' => false,))
-                ->add('name', 'text', array('label'=>'Motif'));
-        else
-            $builder
-                ->add('name', 'text', array('label'=>'Specialité medicale'))
-                ->add('infrastructure', 'text', array('label'=>'Infrastructure sanitaire de reference'));
 
         $builder
-            ->add('diagnosis')
-            ->add('treatment', 'textarea', array('label'=>'Traitement préscrit', 'required'  => false))
+            ->add('name', 'text', array('label'=>'Specialité medicale'))
+            ->add('motiftype','text',array('label'=>'Motif de consultation'))
+            ->add('anamnese', 'textarea',  array('label'=>'Interrogatoire','required'  => false))
             ->add('person')
-            ->add('type', 'hidden');
+            ->add('diagnosis', 'textarea', array('label'=>'Diagnostique','required' => false,))
+            ->add('decision', 'textarea', array('label'=>'Conduite tenue','required' => false,))
+            ->add('treatment', 'textarea', array('label'=>'Traitement préscrit', 'required'  => false))
 
-
-        if($this->general)
-            $builder
-                ->add('decision', 'choice', array('label'=>'Décision prise', 'choices' => array(
-                            'Préscription du traitement' => 'Préscription du traitement',
-                            'Orientation vers la consultation médicale spécialisé' => 'Orientation vers la consultation médicale spécialisé'),
-                    'required' => false,))
-                ->add('chronic', 'checkbox', array('label'=>'Maladie chronique ?', 'required'  => false));
-
-        $builder->add('consultationmeds', 'collection', array('label'=>'Medicaments déliverés par le centre', 'type' => new ConsultationMedsType(), 'allow_add' => true, 'by_reference' => false, 'allow_delete' => true,'prototype' => true,))
         ;
 
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

@@ -31,9 +31,9 @@ class Antecedent
     /**
      * @var string
      *
-     * @ORM\Column(name="autres", type="text", nullable=true)
+     * @ORM\Column(name="medicaux", type="text", nullable=true)
      */
-    private $autres;
+    private $medicaux;
 
     /**
      * @var string
@@ -55,25 +55,25 @@ class Antecedent
      * @ORM\Column(name="type", type="string", length=255)
      */
     private $type;
-    
+
     /**
     * @ORM\ManyToOne(targetEntity="Ben\DoctorsBundle\Entity\Person", inversedBy="antecedents")
     * @ORM\JoinColumn(name="person_id", referencedColumnName="id", nullable=false)
     */
     private $person;
-    
+
     /************ constructeur ************/
-    
+
     public function __construct()
     {
     }
-    
+
     /************ getters & setters  ************/
 
    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -96,7 +96,7 @@ class Antecedent
     /**
      * Get allergies
      *
-     * @return string 
+     * @return string
      */
     public function getAllergies()
     {
@@ -104,26 +104,26 @@ class Antecedent
     }
 
     /**
-     * Set autres
+     * Set medicaux
      *
-     * @param string $autres
+     * @param string $medicaux
      * @return Antecedent
      */
-    public function setAutres($autres)
+    public function setMedicaux($medicaux)
     {
-        $this->autres = $autres;
+        $this->medicaux = $medicaux;
 
         return $this;
     }
 
     /**
-     * Get autres
+     * Get medicaux
      *
-     * @return string 
+     * @return string
      */
-    public function getAutres()
+    public function getMedicaux()
     {
-        return $this->autres;
+        return $this->medicaux;
     }
 
     /**
@@ -142,7 +142,7 @@ class Antecedent
     /**
      * Get traitement
      *
-     * @return string 
+     * @return string
      */
     public function getTraitement()
     {
@@ -165,7 +165,7 @@ class Antecedent
     /**
      * Get chirurgicaux
      *
-     * @return string 
+     * @return string
      */
     public function getChirurgicaux()
     {
@@ -188,7 +188,7 @@ class Antecedent
     /**
      * Get type
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {
@@ -211,7 +211,7 @@ class Antecedent
     /**
      * Get person
      *
-     * @return \Ben\DoctorsBundle\Entity\Person 
+     * @return \Ben\DoctorsBundle\Entity\Person
      */
     public function getPerson()
     {

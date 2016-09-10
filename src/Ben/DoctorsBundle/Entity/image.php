@@ -23,12 +23,18 @@ class image
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     public $path;
-    
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Ben\DoctorsBundle\Entity\Test", inversedBy="images")
+    * @ORM\JoinColumn(name="test_id", referencedColumnName="id", nullable=false)
+    */
+    private $test;
+
     /**
     * @var file $file
     * @Assert\File(
@@ -42,47 +48,47 @@ class image
     * )
     */
     private $file;
-    
+
     // propriété utilisé temporairement pour la suppression
     private $filenameForRemove;
-    
+
      /************ Le constructeur ************/
-    
+
     public function __construct()
     {
         $this->alt = 'image';
         $this->path= 'anonymous.png';
     }
-    
+
     /************ Les setters et getters ************/
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
-    
+
     public function getFile()
     {
         return $this->file;
     }
-    
+
     public function setFile($file)
     {
         $this->file = $file;
-    
+
         return $this;
     }
 
-   
+
     /**
      * Get path
      *
-     * @return string 
+     * @return string
      */
     public function getPath()
     {
@@ -99,7 +105,7 @@ class image
         $this->path = $path;
         return $this;
     }
-    
+
     public function getAbsolutePath()
     {
         return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->path;
@@ -120,7 +126,7 @@ class image
     {
         return 'uploads/img';
     }
-  
+
     public function upload()
     {
         // var_dump(pathinfo($this->file, PATHINFO_EXTENSION));die();
@@ -158,9 +164,31 @@ class image
         $default1=$this->getUploadRootDir().'/anonymous.png';
         $default2=$this->getUploadRootDir().'/unknown.png';
         $default3=$this->getUploadRootDir().'/jpeg.png';
-        
+
         if ($filenameForRemove != $default1 and $filenameForRemove != $default2 and $filenameForRemove != $default3) {
             if (!preg_match("#http://#", $filenameForRemove))  unlink($filenameForRemove);
         }
+    }
+    /**
+     * Set test
+     *
+     * @param \Ben\DoctorsBundle\Entity\Test $test
+     * @return image
+     */
+    public function setTest(\Ben\DoctorsBundle\Entity\Test $test)
+    {
+        $this->test = $test;
+
+        return $this;
+    }
+
+    /**
+     * Get test
+     *
+     * @return \Ben\DoctorsBundle\Entity\Test
+     */
+    public function getTest()
+    {
+        return $this->test;
     }
 }

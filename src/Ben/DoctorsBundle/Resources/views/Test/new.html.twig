@@ -17,8 +17,15 @@ Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
+<script src="{{ asset('js/moment.js') }}"></script>
+<script src="{{ asset('bootstrap/js/bootstrap-datetimepicker.js') }}"></script>
+
+
 <script>
     (function($) {
+    $('.has-datepicker').attr('data-date-format', 'YYYY-MM-DD').parent().datetimepicker({
+      pickTime: false
+    });
         $('#ben_test_consultation').closest('.form-group').hide();
         $('select').removeClass('form-control').select2({minimumResultsForSearch: -1});
 

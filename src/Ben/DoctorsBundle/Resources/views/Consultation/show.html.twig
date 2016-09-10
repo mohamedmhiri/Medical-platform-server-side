@@ -3,156 +3,90 @@
 Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block body -%}
-<h3><span class="glyphicon glyphicon-tag"></span> {{ entity.isSpecial ? 'Orientation vers une consultation spécialisée' : 'Consultation médicale générale '}}</h3>
+<h3><span class="glyphicon glyphicon-list-alt"></span> {{ entity.name }}</h3>
+
+<div class="row">
+<div class="col-md-10">
+
+    <div class="box">
+      <header>
+          <h4><span class="glyphicon glyphicon-tag"></span> Historique des consultations de {{ entity.person.fullname }}</h4>
+      </header>
+      <table class="table table-hover table-bordered">
+          <thead>
+              <tr>
+                  <th>Type</th>
+                  <th>Date</th>
+                  <th>Conclusion</th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ entity.name }}</td>
+              <td>{{ entity.created|date('m/d/Y') }}</td>
+              <td>{{ entity.decision|nl2br }}</td>
+
+            </tr>
+          </tbody>
+      </table>
+  </div>
+</div>
+</div>
 <div id="mycontainer" class="row">
-    <div class="col-md-10">    
-        <table class="table table-striped table-hover table-bordered">
-            <tbody>
-                {% if entity.isSpecial %}
-                <tr>
-                    <th>Infrastructure sanitaire de reference</th>
-                    <td>{{ entity.infrastructure }}</td>
-                </tr>
-                <tr>
-                    <th>Specialité</th>
-                    <td>{{ entity.name }}</td>
-                </tr>
-                {% else %}
-                <tr>
-                    <th>Motif</th>
-                    <td>{{ entity.name }}</td>
-                </tr>
-                {% endif %}
-                <tr>
-                    <th>Patient</th>
-                    <td><a href="{{ path('person_show', { 'id': entity.person.id }) }}">{{ entity.person.fullname }}</a></td>
-                </tr>
-                <tr>
-                    <th>Medecin</th>
-                    <td>{{ entity.user.fullname }}</td>
-                </tr>
-                <tr>
-                    <th>Type de consultation</th>
-                    <td>{{ entity.type }}</td>
-                </tr>
-                <tr>
-                    <th>Date de consultation</th>
-                    <td>{{ entity.created|date('m/d/Y') }}</td>
-                </tr>
-                <tr>
-                    <th>Diagnostic</th>
-                    <td>
-                    <ul>
-                    {% for item in entity.diagnosis|split(',') %}
-                        <li>{{ item }}</li>
-                    {% endfor %}
-                    </ul>
-                    </td>
-                </tr>
-                {% if not entity.isSpecial %}
-                <tr>
-                    <th>Décision prise</th>
-                    <td>{{ entity.decision|nl2br }}</td>
-                </tr>
-                <tr>
-                    <th>Maladie chronique</th>
-                    <td>{{ entity.chronic ? 'Oui' : 'Non' }}</td>
-                </tr>
-                {% endif %}
-                <tr>
-                    <th>Traitement</th>
-                    <td>
-                        <button class="btn btn-sm btn-default pull-right print-only-this"><span class="glyphicon glyphicon-print"></span></button>
-                        <p>{{ entity.treatment|nl2br }}</p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="col-md-10">
+
         <div class="row">
-        {% if not entity.isSpecial %}
             <div class="col-md-7">
-            <h3>Liste des exameins effectuées 
-                <span class="btn-group pull-right">       
+            <h3>Examens complémentaires effectués
+                <span class="btn-group pull-right">
                   <button class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">
                     <span class="glyphicon glyphicon-plus"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu">
                     <li><a href="{{ path('test_new', { 'id': entity.id }) }}"> Ajouter un examen </a></li>
-                    <li><a href="{{ path('test_new', { 'id': entity.id, 'type': 1 }) }}"> Ajouter un examen général</a></li>
                   </ul>
                 </span>
             </h3>
-            
+
             {% for entity in entity.tests %}
                 <table class="table table-striped table-hover table-bordered">
-                <thead>
+
                     <tr>
-                        <th colspan="2" class="text-center"><a href="{{ path('test_edit', { 'id': entity.id }) }}">{{ entity.type }}</a></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if entity.isGeneral %}
-                    <tr>
-                        <th style="width: 150px;">Taille</th>
-                        <td>{{ entity.taille }}</td>
+                        <th style="width: 150px;">Examen complémentaire</th>
+                        <td>###</td>
                     </tr>
                     <tr>
-                        <th>Poids</th>
-                        <td>{{ entity.poids }}</td>
+                        <th>Date</th>
+                        <td>{{ entity.date|date('m/d/Y') }}</td>
                     </tr>
                     <tr>
-                        <th>TA</th>
-                        <td>{{ entity.ta }}</td>
+                        <th>Type de l'examen</th>
+                        <td>{{ entity.typeexam }}</td>
                     </tr>
                     <tr>
-                        <th>Acuité visuelle - OD</th>
-                        <td>{{ entity.od }}</td>
+                        <th>Lieu</th>
+                        <td>{{ entity.lieu }}</td>
                     </tr>
                     <tr>
-                        <th>Acuité visuelle - OG</th>
-                        <td>{{ entity.og }}</td>
+                        <th>Conclusion</th>
+                        <td>{{ entity.conclusion }}</td>
                     </tr>
-                    <tr>
-                        <th>Trouble visuel</th>
-                        <td>{{ entity.hasvisualissue ? entity.fixedvisualissue : 'Non'}}</td>
-                    </tr>
-                    {% else %}
-                    <tr>
-                        <th>Demande</th>
-                        <td>
-                            <button class="btn btn-sm btn-default pull-right print-only-this"><span class="glyphicon glyphicon-print"></span></button>
-                            <p>{{ entity.request|nl2br }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Resultats</th>
-                        <td>
-                            <button class="btn btn-sm btn-default pull-right print-only-this"><span class="glyphicon glyphicon-print"></span></button>
-                            <p>{{ entity.result|nl2br }}</p>
-                        </td>
-                    </tr>
-                    {% endif %}
+
                 </tbody>
                 </table>
             {% endfor %}
             </div>
-        {% endif %}
-            <div class="col-md-5">
+            <!--<div class="col-md-5">
                 <h3>Médicaments délivrées <a class="btn btn-info btn-sm pull-right" href="{{ path('consultation_edit', { 'id': entity.id }) }}"> <span class="glyphicon glyphicon-plus"></span></a></h3>
-                
+
                 <table class="table table-striped table-hover table-bordered">
                     <tr>
                         <th>Médicament</th>
                         <th>Nombre d'unités</th>
                     </tr>
-                    {% for item in entity.consultationmeds %}
-                    <tr>
-                        <td>{{ item.meds.name }}</td>
-                        <td>{{ item.count}}</td>
-                    </tr>
-                    {% endfor %}
+
                 </table>
-            </div>
+            </div>-->
         </div>
     </div>
     <div class="col-md-2">
@@ -163,7 +97,7 @@ Tableau de bord | {{ parent() }}
             <hr>
             <button class="btn btn-danger btn-block" type="submit">Supprimer</button>
             {{ form_widget(delete_form) }}
-        </form> 
+        </form>
     </div>
 </div>
 <div id="printzone" class="visible-print"></div>
@@ -171,7 +105,7 @@ Tableau de bord | {{ parent() }}
 
 {% block javascripts %}
 {{ parent() }}
-<script> 
+<script>
     (function($) {
         var mycontainer = $('#mycontainer'),
             printOnly = mycontainer.find('.print-only-this'),

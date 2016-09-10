@@ -31,7 +31,8 @@
         "jms/serializer-bundle": "@dev",
         "lightsuner/carbon-bundle": "2.*",
         "nelmio/api-doc-bundle": "@dev",
-        "guzzlehttp/guzzle": "~6.0@dev"
+        "guzzlehttp/guzzle": "~6.0@dev",
+        "beberlei/DoctrineExtensions": "^1.0"
 
 
       },

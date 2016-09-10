@@ -5,13 +5,13 @@ namespace Ben\DoctorsBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class TestType extends AbstractType
 {
-    private $general;
-    public function __construct($general = false)
+
+    public function __construct()
     {
-        $this->general = $general;
     }
 
     /**
@@ -20,33 +20,25 @@ class TestType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('consultation');
 
-        if($this->general)
             $builder
-                ->add('taille', 'text', array('label'=>'Taille'))
-                ->add('poids', 'text', array('label'=>'Poids'))
-                ->add('ta', 'text', array('label'=>'TA'))
-                ->add('od', 'text', array('label'=>'OD'))
-                ->add('og', 'text', array('label'=>'OG'))
-                ->add('hasvisualissue', 'checkbox', array('label'=>'Trouble visuel','required'  => false))
-                ->add('fixedvisualissue', 'choice', array('choices' => ['Corrigé'=>'Corrigé', 'Non corrigé'=>'Non corrigé'], 
-                        'expanded' => true,
-                        'multiple' => false,
-                        'label' => false,
-                        ))
-                ;
-        else 
-            $builder
-                ->add('type', 'choice', array('label'=>'Type', 'choices' => array(
-                    'Examens biologiques' => 'Examens biologiques',
-                    'Examens radioloqiue' => 'Examens radioloqiue',
-                    'Autre' => 'Autre')))
-                ->add('request', 'textarea', array('label'=>'Demande','required'  => false))
-                ->add('result', 'textarea', array('label'=>'Resultat','required'  => false))
+                ->add('consultation')
+                ->add('typeexam', 'text', array('label'=>'Type de l examen'))
+                ->add('lieu', 'text', array('label'=>'Lieu'))
+                ->add('conclusion', 'textarea', array('label'=>'conclusion','required'  => false))
+                //->add('images' , new \Doctrine\Common\Collections\ArrayCollection())
+                ->add('date', 'date', array('widget' => 'single_text','label'=>'Date'))
+                // ->add('hasvisualissue', 'checkbox', array('label'=>'Trouble visuel','required'  => false))
+                // ->add('fixedvisualissue', 'choice', array('choices' => ['Corrigé'=>'Corrigé', 'Non corrigé'=>'Non corrigé'],
+                //         'expanded' => true,
+                //         'multiple' => false,
+                //         'label' => false,
+                //         ))
+
+
                 ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

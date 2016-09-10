@@ -25,17 +25,11 @@ class PersonType extends AbstractType
                     'required' => false,))
             ->add('contry', 'text',array('required' => false,))
             ->add('city', 'text',array('required' => false,))
-            ->add('resident', 'checkbox', array('required' => false,))
             ->add('address')
             ->add('gsm', 'text',array('required' => false,))
             ->add('cnsstype', 'choice', array('choices' => array('Cnam' => 'Cnam','Cnrps' => 'Cnrps','Cnss' => 'Cnss','Assurance privé' => 'Assurance privé','sans' => 'sans')))
-            ->add('parentName', 'text',array('required' => false,))
-            ->add('parentAddress', 'text',array('required' => false,))
-            ->add('parentGsm', 'text',array('required' => false,))
-            ->add('parentFixe','text', array('required' => false,))
-            ->add('ishandicap', 'checkbox', array('required' => false,))
-            ->add('handicap', 'text',array('required' => false,))
-            ->add('needs', 'text',array('required' => false,))
+            ->add('cnssnum', 'text',array('required' => false,))
+            ->add('parentGsm', 'text',array('label'=>'GSM2','required' => false,))
         ;
     }
 

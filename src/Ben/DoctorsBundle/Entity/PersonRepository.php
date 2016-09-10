@@ -52,6 +52,11 @@ class PersonRepository extends EntityRepository
     {
         return  $this->fetch("select distinct city as label from person");
     }
+    public function getBirthdays()
+    {
+        return  $this->fetch("select birthday from person where birthday !=NULL");
+    }
+    
     private function fetch($query)
     {
         $stmt = $this->getEntityManager()->getConnection()->prepare($query);

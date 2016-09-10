@@ -37,7 +37,7 @@ class ConsultationController extends Controller
 
     /**
      * Consultations list using ajax
-     * @Secure(roles="ROLE_USER")     
+     * @Secure(roles="ROLE_USER")
      */
     public function ajaxListAction(Request $request)
     {
@@ -65,6 +65,7 @@ class ConsultationController extends Controller
         if ($form->isValid()) {
             $currentUser = $this->container->get('security.context')->getToken()->getUser();
             $entity->setUser($currentUser);
+            $entity->getImage()->upload();
             $em = $this->getDoctrine()->getManager();
             foreach ($entity->getConsultationmeds() as $item) {
                 $item->getMeds()->minusCount($item->getCount());
@@ -87,12 +88,11 @@ class ConsultationController extends Controller
      * @Secure(roles="ROLE_USER")
      *
      */
-    public function newAction(Person $person, $type)
+    public function newAction(Person $person)
     {
         $entity = new Consultation();
-        if($type) $entity->setType(Consultation::$SPECIAL);
         $entity->setPerson($person);
-        $form   = $this->createForm(new ConsultationType($entity->getType()), $entity);
+        $form   = $this->createForm(new ConsultationType( ),$entity);
 
         return $this->render('BenDoctorsBundle:Consultation:new.html.twig', array(
             'entity' => $entity,
@@ -137,7 +137,7 @@ class ConsultationController extends Controller
             throw $this->createNotFoundException('Unable to find Consultation entity.');
         }
 
-        $editForm = $this->createForm(new ConsultationType($entity->getType()), $entity);
+        $editForm = $this->createForm( new ConsultationType( ),$entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('BenDoctorsBundle:Consultation:edit.html.twig', array(
@@ -165,7 +165,7 @@ class ConsultationController extends Controller
             $originalMeds->add($item);
         }
 
-        $editForm = $this->createForm(new ConsultationType($entity->getType()), $entity);
+        $editForm = $this->createForm( new ConsultationType( ),$entity);
         $deleteForm = $this->createDeleteForm($id);
         $editForm->handleRequest($request);
 
@@ -206,7 +206,7 @@ class ConsultationController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('BenDoctorsBundle:Consultation')->find($id);
-            if (!$entity) 
+            if (!$entity)
                 throw $this->createNotFoundException('Unable to find Consultation entity.');
 
             $currentUser = $this->get('security.context')->getToken()->getUser();
@@ -235,7 +235,7 @@ class ConsultationController extends Controller
             ->getForm()
         ;
     }
-    
+
     /**
      * Deletes multiple entities
      * @Secure(roles="ROLE_ADMIN")
@@ -250,4 +250,5 @@ class ConsultationController extends Controller
 
         return new Response('1');
     }
+
 }

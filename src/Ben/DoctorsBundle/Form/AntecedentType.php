@@ -16,14 +16,14 @@ class AntecedentType extends AbstractType
     {
         $builder
             ->add('allergies')
-            ->add('autres')
+            ->add('medicaux')
             ->add('traitement')
             ->add('chirurgicaux')
             ->add('type', 'choice', array('choices' => array('Antecedents personnels' => 'Antecedents personnels','Antecedents familiaux' => 'Antecedents familiaux')))
             ->add('person')
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

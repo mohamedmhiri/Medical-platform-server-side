@@ -116,20 +116,14 @@ class Person
      * @ORM\Column(name="cnsstype", type="string", length=255)
      */
     private $cnsstype;
-
     /**
      * @var string
      *
-     * @ORM\Column(name="parent_name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="cnssnum", type="string", length=255)
      */
-    private $parentName;
+    private $cnssnum;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="parent_address", type="string", length=255, nullable=true)
-     */
-    private $parentAddress;
+
 
     /**
      * @var string
@@ -138,40 +132,6 @@ class Person
      */
     private $parentGsm;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="parent_fixe", type="string", length=255, nullable=true)
-     */
-    private $parentFixe;
-
-    /**
-     * @var boolean
-     * @ORM\Column(name="ishandicap", type="boolean", nullable=true)
-     *
-     */
-    private $ishandicap;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="handicap", type="string", length=255, nullable=true)
-     */
-    private $handicap;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="needs", type="text", nullable=true)
-     */
-    private $needs;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="resident", type="boolean")
-     */
-    private $resident;
     /**
     *@var boolean
     *
@@ -578,51 +538,27 @@ class Person
         return $this->cnsstype;
     }
     /**
-     * Set parentName
+     * Set cnssnum
      *
-     * @param string $parentName
+     * @param string $cnssnum
      * @return Person
      */
-    public function setParentName($parentName)
+    public function setCnssnum($cnssnum)
     {
-        $this->parentName = $parentName;
+        $this->cnssnum = $cnssnum;
 
         return $this;
     }
 
     /**
-     * Get parentName
+     * Get cnssnum
      *
      * @return string
      */
-    public function getParentName()
+    public function getCnssnum()
     {
-        return $this->parentName;
+        return $this->cnssnum;
     }
-
-    /**
-     * Set parentAddress
-     *
-     * @param string $parentAddress
-     * @return Person
-     */
-    public function setParentAddress($parentAddress)
-    {
-        $this->parentAddress = $parentAddress;
-
-        return $this;
-    }
-
-    /**
-     * Get parentAddress
-     *
-     * @return string
-     */
-    public function getParentAddress()
-    {
-        return $this->parentAddress;
-    }
-
     /**
      * Set parentGsm
      *
@@ -645,52 +581,7 @@ class Person
     {
         return $this->parentGsm;
     }
-
-    /**
-     * Set parentFixe
-     *
-     * @param string $parentFixe
-     * @return Person
-     */
-    public function setParentFixe($parentFixe)
-    {
-        $this->parentFixe = $parentFixe;
-
-        return $this;
-    }
-
-    /**
-     * Get parentFixe
-     *
-     * @return string
-     */
-    public function getParentFixe()
-    {
-        return $this->parentFixe;
-    }
-    /**
-     * Set resident
-     *
-     * @param boolean $resident
-     * @return Person
-     */
-    public function setResident($resident)
-    {
-        $this->resident = $resident;
-
-        return $this;
-    }
-
-    /**
-     * Get resident
-     *
-     * @return boolean
-     */
-    public function getResident()
-    {
-        return $this->resident;
-    }
-    /**
+  /**
      * Set isnp
      *
      * @param boolean $isnp
@@ -779,76 +670,6 @@ class Person
     {
         return $this->consultations;
     }
-
-    /**
-     * Set ishandicap
-     *
-     * @param boolean $ishandicap
-     * @return Person
-     */
-    public function setIshandicap($ishandicap)
-    {
-        $this->ishandicap = $ishandicap;
-
-        return $this;
-    }
-
-    /**
-     * Get ishandicap
-     *
-     * @return boolean
-     */
-    public function getIshandicap()
-    {
-        return $this->ishandicap;
-    }
-
-    /**
-     * Set handicap
-     *
-     * @param string $handicap
-     * @return Person
-     */
-    public function setHandicap($handicap)
-    {
-        $this->handicap = $handicap;
-
-        return $this;
-    }
-
-    /**
-     * Get handicap
-     *
-     * @return string
-     */
-    public function getHandicap()
-    {
-        return $this->handicap;
-    }
-
-    /**
-     * Set needs
-     *
-     * @param string $needs
-     * @return Person
-     */
-    public function setNeeds($needs)
-    {
-        $this->needs = $needs;
-
-        return $this;
-    }
-
-    /**
-     * Get needs
-     *
-     * @return string
-     */
-    public function getNeeds()
-    {
-        return $this->needs;
-    }
-
     /**
      * Set created
      *

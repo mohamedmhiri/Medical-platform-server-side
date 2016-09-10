@@ -21,127 +21,70 @@ class Test
      */
     private $id;
 
-    public static $GENERAL  = 'Examen Générale';
+    // public static $GENERAL  = 'Examen Générale';
+
+
 
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255)
+     * @ORM\Column(name="typeexam", type="string", length=255, nullable=true)
      */
-    private $type;
+    private $typeexam;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="date")
+     */
+    private $date;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lieu", type="string", length=255, nullable=true)
+     */
+    private $lieu;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Ben\DoctorsBundle\Entity\image", mappedBy="test",cascade={"remove", "persist"})
+    */
+    private $images;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="taille", type="string", length=255, nullable=true)
+     *@ORM\Column(name="conclusion", type="text", nullable=true)
      */
-    private $taille;
+    private $conclusion;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="poids", type="string", length=255, nullable=true)
-     */
-    private $poids;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="ta", type="string", length=255, nullable=true)
-     */
-    private $ta;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="od", type="string", length=255, nullable=true)
-     */
-    private $od;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="og", type="string", length=255, nullable=true)
-     */
-    private $og;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="hasvisualissue", type="boolean", nullable=true)
-     */
-    private $hasvisualissue;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="fixedvisualissue", length=255, nullable=true)
-     */
-    private $fixedvisualissue;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="request", type="text", nullable=true)
-     */
-    private $request;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="result", type="text", nullable=true)
-     */
-    private $result;
-    
     /**
     * @ORM\ManyToOne(targetEntity="Ben\DoctorsBundle\Entity\Consultation", inversedBy="tests")
     * @ORM\JoinColumn(name="consultation_id", referencedColumnName="id", nullable=false)
     */
     private $consultation;
-    
+
     /************ constructeur ************/
-    
+
     public function __construct()
     {
+      $this->images = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /************ getters & setters  ************/
 
    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set type
-     *
-     * @param string $type
-     * @return Test
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
 
-        return $this;
-    }
 
-    /**
-     * Get type
-     *
-     * @return string 
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-    public function isGeneral()
-    {
-        return ($this->type === Test::$GENERAL);
-    }
 
     /**
      * Set consultation
@@ -159,7 +102,7 @@ class Test
     /**
      * Get consultation
      *
-     * @return \Ben\DoctorsBundle\Entity\Consultation 
+     * @return \Ben\DoctorsBundle\Entity\Consultation
      */
     public function getConsultation()
     {
@@ -167,209 +110,138 @@ class Test
     }
 
     /**
-     * Set taille
+     * Set typeexam
      *
      * @param string $taille
      * @return Test
      */
-    public function setTaille($taille)
+    public function setTypeexam($typeexam)
     {
-        $this->taille = $taille;
+        $this->typeexam = $typeexam;
 
         return $this;
     }
 
     /**
-     * Get taille
+     * Get typeexam
      *
-     * @return string 
+     * @return string
      */
-    public function getTaille()
+    public function getTypeexam()
     {
-        return $this->taille;
+        return $this->typeexam;
     }
 
     /**
-     * Set poids
+     * Set conclusion
      *
-     * @param string $poids
+     * @param string $conclusion
      * @return Test
      */
-    public function setPoids($poids)
+    public function setConclusion($conclusion)
     {
-        $this->poids = $poids;
+        $this->conclusion = $conclusion;
 
         return $this;
     }
 
     /**
-     * Get poids
+     * Get conclusion
      *
-     * @return string 
+     * @return string
      */
-    public function getPoids()
+    public function getConclusion()
     {
-        return $this->poids;
+        return $this->conclusion;
     }
-
     /**
-     * Set ta
+     * Set date
      *
-     * @param string $ta
+     * @param \DateTime $date
      * @return Test
      */
-    public function setTa($ta)
+    public function setDate($date)
     {
-        $this->ta = $ta;
+        $this->date = $date;
 
         return $this;
     }
 
     /**
-     * Get ta
+     * Get date
      *
-     * @return string 
+     * @return \DateTime
      */
-    public function getTa()
+    public function getDate()
     {
-        return $this->ta;
+        return $this->date;
     }
-
     /**
-     * Set od
+     * Set lieu
      *
-     * @param string $od
+     * @param string $lieu
      * @return Test
      */
-    public function setOd($od)
+    public function setLieu($lieu)
     {
-        $this->od = $od;
+        $this->lieu = $lieu;
 
         return $this;
     }
 
     /**
-     * Get od
+     * Get lieu
      *
-     * @return string 
+     * @return string
      */
-    public function getOd()
+    public function getLieu()
     {
-        return $this->od;
+        return $this->lieu;
     }
+    // /**
+    //  * Set images
+    //  *
+    //  * @param \Ben\DoctorsBundle\Entity\images $images
+    //  * @return profile
+    //  */
+    // public function setImages(\Ben\DoctorsBundle\Entity\image $images = null)
+    // {
+    //     $this->images = $images;
+    //
+    //     return $this;
+    // }
 
     /**
-     * Set og
+     * Get images
      *
-     * @param string $og
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+    /**
+     * Add images
+     *
+     * @param \Ben\DoctorsBundle\Entity\image $images
      * @return Test
      */
-    public function setOg($og)
+    public function addImage(\Ben\DoctorsBundle\Entity\image $images)
     {
-        $this->og = $og;
+        $this->images[] = $images;
 
         return $this;
     }
 
     /**
-     * Get og
+     * Remove images
      *
-     * @return string 
+     * @param \Ben\DoctorsBundle\Entity\image $images
      */
-    public function getOg()
+    public function removeImage(\Ben\DoctorsBundle\Entity\image $images)
     {
-        return $this->og;
+        $this->images->removeElement($images);
     }
 
-    /**
-     * Set request
-     *
-     * @param string $request
-     * @return Test
-     */
-    public function setRequest($request)
-    {
-        $this->request = $request;
 
-        return $this;
-    }
-
-    /**
-     * Get request
-     *
-     * @return string 
-     */
-    public function getRequest()
-    {
-        return $this->request;
-    }
-
-    /**
-     * Set result
-     *
-     * @param string $result
-     * @return Test
-     */
-    public function setResult($result)
-    {
-        $this->result = $result;
-
-        return $this;
-    }
-
-    /**
-     * Get result
-     *
-     * @return string 
-     */
-    public function getResult()
-    {
-        return $this->result;
-    }
-
-    /**
-     * Set hasvisualissue
-     *
-     * @param boolean $hasvisualissue
-     * @return Test
-     */
-    public function setHasvisualissue($hasvisualissue)
-    {
-        $this->hasvisualissue = $hasvisualissue;
-
-        return $this;
-    }
-
-    /**
-     * Get hasvisualissue
-     *
-     * @return boolean 
-     */
-    public function getHasvisualissue()
-    {
-        return $this->hasvisualissue;
-    }
-
-    /**
-     * Set fixedvisualissue
-     *
-     * @param string $fixedvisualissue
-     * @return Test
-     */
-    public function setFixedvisualissue($fixedvisualissue)
-    {
-        $this->fixedvisualissue = $fixedvisualissue;
-
-        return $this;
-    }
-
-    /**
-     * Get fixedvisualissue
-     *
-     * @return string 
-     */
-    public function getFixedvisualissue()
-    {
-        return $this->fixedvisualissue;
-    }
 }

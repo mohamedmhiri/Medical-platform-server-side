@@ -21,8 +21,8 @@ class Consultation
      */
     private $id;
 
-    public static $GENERAL  = 'Consultation generale';
-    public static $SPECIAL  = 'Consultation spécialisé';
+    // public static $GENERAL  = 'Consultation generale';
+    // public static $SPECIAL  = 'Consultation spécialisé';
 
     /**
      * @var string
@@ -38,19 +38,9 @@ class Consultation
      */
     private $motiftype;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=255)
-     */
-    private $type;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="infrastructure", type="string", length=255, nullable=true)
-     */
-    private $infrastructure;
+
+
 
     /**
      * @var \DateTime
@@ -58,20 +48,27 @@ class Consultation
      * @ORM\Column(name="created", type="date")
      */
     private $created;
-    
+
    /**
      * @var string
      *
      * @ORM\Column(name="diagnosis", type="text", nullable=true)
      */
     private $diagnosis;
-    
+
    /**
      * @var string
      *
      * @ORM\Column(name="treatment", type="text", nullable=true)
      */
     private $treatment;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="anamnese", type="text", nullable=true)
+     */
+    private $anamnese;
+
 
     /**
      * @var string
@@ -80,19 +77,13 @@ class Consultation
      */
     private $decision;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="chronic", type="boolean", nullable=true)
-     */
-    private $chronic;
-    
+
     /**
     * @ORM\ManyToOne(targetEntity="Ben\DoctorsBundle\Entity\Person", inversedBy="consultations")
     * @ORM\JoinColumn(name="person_id", referencedColumnName="id", nullable=false)
     */
     private $person;
-    
+
     /**
     * @ORM\ManyToOne(targetEntity="Ben\UserBundle\Entity\User", inversedBy="consultations")
     * @ORM\JoinColumn(name="doc_id", referencedColumnName="id", nullable=false)
@@ -104,27 +95,24 @@ class Consultation
     */
     protected $tests;
 
-    /**
-    * @ORM\OneToMany(targetEntity="Ben\DoctorsBundle\Entity\ConsultationMeds", mappedBy="consultation", cascade={"remove", "persist"})
-    */
-    protected $consultationmeds;
-    
+
+
+
     /************ constructeur ************/
-    
+
     public function __construct()
     {
         $this->created = new \DateTime;
-        $this->type = Consultation::$GENERAL;
         $this->tests = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->consultationmeds = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->image= new \Ben\DoctorsBundle\Entity\image();
     }
-    
+
     /************ getters & setters  ************/
 
    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -152,7 +140,7 @@ class Consultation
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -175,7 +163,7 @@ class Consultation
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -198,7 +186,7 @@ class Consultation
     /**
      * Get person
      *
-     * @return \Ben\DoctorsBundle\Entity\Person 
+     * @return \Ben\DoctorsBundle\Entity\Person
      */
     public function getPerson()
     {
@@ -221,7 +209,7 @@ class Consultation
     /**
      * Get user
      *
-     * @return \Ben\UserBundle\Entity\User 
+     * @return \Ben\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -254,64 +242,20 @@ class Consultation
     /**
      * Get tests
      *
-     * @return \Doctrine\Common\Collections\ArrayCollection 
+     * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function getTests()
     {
         return $this->tests;
     }
 
-    /**
-     * Add consultationmeds
-     *
-     * @param \Ben\DoctorsBundle\Entity\ConsultationMeds $consultationmeds
-     * @return Consultation
-     */
-    public function addConsultationmed(\Ben\DoctorsBundle\Entity\ConsultationMeds $consultationmeds)
-    {
-        $consultationmeds->setConsultation($this);
-        $this->consultationmeds->add($consultationmeds);
 
-        return $this;
-    }
 
-    /**
-     * Remove consultationmeds
-     *
-     * @param \Ben\DoctorsBundle\Entity\ConsultationMeds $consultationmeds
-     */
-    public function removeConsultationmed(\Ben\DoctorsBundle\Entity\ConsultationMeds $consultationmeds)
-    {
-        $this->consultationmeds->removeElement($consultationmeds);
-    }
-
-    /**
-     * Get consultationmeds
-     *
-     * @return \Doctrine\Common\Collections\ArrayCollection 
-     */
-    public function getConsultationmeds()
-    {
-        return $this->consultationmeds;
-    }
-
-    /**
-     * Set diagnosis
-     *
-     * @param string $diagnosis
-     * @return Consultation
-     */
-    public function setDiagnosis($diagnosis)
-    {
-        $this->diagnosis = $diagnosis;
-
-        return $this;
-    }
 
     /**
      * Get diagnosis
      *
-     * @return string 
+     * @return string
      */
     public function getDiagnosis()
     {
@@ -334,35 +278,13 @@ class Consultation
     /**
      * Get treatment
      *
-     * @return string 
+     * @return string
      */
     public function getTreatment()
     {
         return $this->treatment;
     }
 
-    /**
-     * Set type
-     *
-     * @param string $type
-     * @return Consultation
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string 
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
 
     /**
      * Set motiftype
@@ -380,64 +302,35 @@ class Consultation
     /**
      * Get motiftype
      *
-     * @return string 
+     * @return string
      */
     public function getMotiftype()
     {
         return $this->motiftype;
     }
-
     /**
-     * Set infrastructure
+     * Set anamnese
      *
-     * @param string $infrastructure
+     * @param string $anamnese
      * @return Consultation
      */
-    public function setInfrastructure($infrastructure)
+    public function setAnamnese($anamnese)
     {
-        $this->infrastructure = $infrastructure;
+        $this->anamnese = $anamnese;
 
         return $this;
     }
 
     /**
-     * Get infrastructure
+     * Get anamnese
      *
-     * @return string 
+     * @return string
      */
-    public function getInfrastructure()
+    public function getAnamnese()
     {
-        return $this->infrastructure;
-    }
-    
-    public function isSpecial()
-    {
-        return ($this->type === Consultation::$SPECIAL);
+        return $this->anamnese;
     }
 
-    /**
-     * Set chronic
-     *
-     * @param boolean $chronic
-     * @return Consultation
-     */
-    public function setChronic($chronic)
-    {
-        $this->chronic = $chronic;
-
-        return $this;
-    }
-
-    /**
-     * Get chronic
-     *
-     * @return boolean 
-     */
-    public function getChronic()
-    {
-        return $this->chronic;
-    }
-    
     /**
      * Set decision
      *
@@ -454,10 +347,11 @@ class Consultation
     /**
      * Get decision
      *
-     * @return string 
+     * @return string
      */
     public function getDecision()
     {
         return $this->decision;
     }
+    
 }

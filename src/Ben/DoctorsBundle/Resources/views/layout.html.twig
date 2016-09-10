@@ -18,6 +18,7 @@
         <link href="{{ asset('css/main.css') }}" rel="stylesheet">
         <link href="{{ asset('css/select2.css') }}" rel="stylesheet">
         <link href="{{ asset('css/button.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('bower_components/chartist/dist/chartist.min.css') }}">
 
     {% endblock %}
     <title>{% block title %}{{ app_config.app_name }}{% endblock %}</title>
@@ -33,7 +34,7 @@
 <body class="theme1">
     {% include "BenDoctorsBundle:Default:menu.html.twig" %}
 
-    <div class="visible-print col-md-12 text-left"><img src="{{ asset( 'images/header.png' )}}" alt="logo" /></div>
+    <div class="visible-print col-md-12 text-left"><img src="{{ asset('images/header.PNG') }}" alt="logo" /></div>
     <section class="wrap">
         <header id="adminbar">
             <div id="logo"><img src="{{ asset( app_config.app_logo )}}" alt="logo" class="img-small" /> <span>{{ app_config.app_name }}</span></div>

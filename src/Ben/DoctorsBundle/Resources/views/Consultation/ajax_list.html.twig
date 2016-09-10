@@ -3,7 +3,6 @@
         <td class="hidden-print"><input type="checkbox" name="entities[]" value="{{ entity.id }}"></td>
         <td>{{ entity.name }}</td>
         <td>{% if entity.created %}{{ entity.created|date('d/m/Y') }}{% endif %}</td>
-        <td>{{ entity.type }}</td>
         <td>{{ entity.diagnosis }}</td>
         <td>{{ entity.person.fullname }}</td>
         <td>{{ entity.user.fullname }}</td>
@@ -15,9 +14,9 @@
         </td>
     </tr>
 {% else %}
-    <tr class="mypagination">            
+    <tr class="mypagination">
         <td colspan="10">
-            <div id="msgbox" class="alert alert-danger fade in" role="alert"> 
+            <div id="msgbox" class="alert alert-danger fade in" role="alert">
                 <button type="button" class="close" data-dismiss="alert">×</button>
                 <strong>info !</strong> aucun résultat ne correspond à vos critères
             </div>
@@ -26,7 +25,7 @@
 {% endfor %}
 {% include "BenDoctorsBundle:Default:pagination.html.twig" %}
 
-<script>   
+<script>
 (function($) {
 
     /* tooltip */
