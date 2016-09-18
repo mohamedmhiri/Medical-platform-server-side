@@ -34,6 +34,11 @@ fos_user_check:
     path:     /check
     defaults: { _controller: BenUserBundle:Security:loginCheck }
     requirements: { _method: post }
+fos_user_notallowed:
+    path:     /error
+    defaults: { _controller: BenUserBundle:Security:error }
+    requirements: { _method: get }
+
 
 #admin section
 ben_user_profile:

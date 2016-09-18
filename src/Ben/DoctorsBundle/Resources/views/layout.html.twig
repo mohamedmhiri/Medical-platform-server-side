@@ -18,6 +18,7 @@
         <link href="{{ asset('css/main.css') }}" rel="stylesheet">
         <link href="{{ asset('css/select2.css') }}" rel="stylesheet">
         <link href="{{ asset('css/button.css') }}" rel="stylesheet">
+        {#<link href="{{ asset('/css/form.css') }}" rel="stylesheet">#}
         <link rel="stylesheet" href="{{ asset('bower_components/chartist/dist/chartist.min.css') }}">
 
     {% endblock %}
@@ -27,7 +28,9 @@
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
-    <![endif]-->
+      <!--<script src="{{ asset('/js/form.js') }}"></script>-->
+
+      <![endif]-->
 </head>
 
 {% block container %}

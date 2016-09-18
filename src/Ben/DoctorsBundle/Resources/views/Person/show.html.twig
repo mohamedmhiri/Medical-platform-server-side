@@ -180,10 +180,12 @@ Tableau de bord | {{ parent() }}
             {% endfor %}
             </tbody>
         </table>
+        <header>
+            <h4><span class="glyphicon glyphicon-tag"></span> Examen complémentaire</h4>
+        </header>
         <table class="table table-hover table-bordered">
             <thead>
                 <tr>
-                    <th>Examen complémentaire</th>
                     <th>Date</th>
                     <th>Type de l'examen</th>
                     <th>Lieu</th>
@@ -195,7 +197,6 @@ Tableau de bord | {{ parent() }}
             {% for i in item.tests %}
               {% if i.typeexam %}
               <tr>
-                <td>###</td>
                 <td>{{ i.date|date('d/m/Y') }}</td>
                 <td>{{ i.typeexam}}</td>
                 <td>{{ i.lieu}}</td>

@@ -46,11 +46,11 @@ Tableau de bord | {{ parent() }}
           <tbody>
             <tr>
               <td><strong>{{age}} ans </strong></td>
-              <td><strong>{{p_femmes}} %</strong></td>
-              <td><strong>{{p_hommes}} %</strong></td>
-              <td><strong>{{nb_patients_this_month}} patients</strong></td>
+              <td><strong>{{p_femmes|round}} %</strong></td>
+              <td><strong>{{p_hommes|round}} %</strong></td>
+              <td><strong>{{nb_patients_this_month}} patient(s)</strong></td>
               {%if evolution >0%}
-              <td><strong>nombre de patients a augmenté de {{evolution}} patients</strong></td>
+              <td><strong>nombre de patients a augmenté de {{evolution}} patient(s)</strong></td>
               {%elseif evolution <0%}
               <td><strong>nombre de patients a diminué de {{evolution|abs}} patient(s)</strong></td>
               {%else%}

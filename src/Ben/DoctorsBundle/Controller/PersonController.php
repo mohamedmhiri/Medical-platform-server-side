@@ -76,13 +76,13 @@ class PersonController extends Controller
         }
         else
         {
-        $list=$this->listNonPatients();
+        /*$list=$this->listNonPatients();
         $persons=$this->storeNonPatients($list,$persons);
         for($i=0;$i<count($persons) ;$i++) {
           $em->persist($persons[$i]);
           $em->flush();
           $em->clear();
-        }
+        }*/
         $entities = $em->getRepository('BenDoctorsBundle:Person')->search($searchParam)/*findAll()*/;
         $pagination = (new Paginator())->setItems(count($entities), $searchParam['perPage'])->setPage($searchParam['page'])->toArray();
         return $this->render('BenDoctorsBundle:Person:ajax_list.html.twig', array(
@@ -288,11 +288,11 @@ class PersonController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Person entity.');
         }
-        if(strcmp(strtolower($entity->getOldemail()),strtolower($this->oldEmail($entity))!=0))
+        /*if(strcmp(strtolower($entity->getOldemail()),strtolower($this->oldEmail($entity))!=0))
         {
           $entity->setOldemail($this->oldEmail($entity));
           $em->flush();
-        }
+        }*/
         $editForm = $this->createForm(new PersonType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
         // $cities = $em->getRepository('BenDoctorsBundle:Person')->getCities();
@@ -322,7 +322,7 @@ class PersonController extends Controller
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new PersonType(), $entity);
         $editForm->handleRequest($request);
-
+/*
         if ($editForm->isValid()) {
           if($entity->getISNP()==true)
           {
@@ -341,12 +341,12 @@ class PersonController extends Controller
             //
             // else
             //   $entity_to_array["old_email"]=$entity->getEmail();
-            $jsonInfo=json_encode($entity_to_array);
-            if(!strpos($this->prepareJWT()," "))
+            //$jsonInfo=json_encode($entity_to_array);
+            /*if(!strpos($this->prepareJWT()," "))
             {
               return $this->render($this->prepareJWT());
-            }
-            else
+            }*/
+            /*else
             {
               $name=str_replace(" ","%20",$this->prepareJWT(),array('error'=>"",'last_username'=>""));
               $curl = curl_init('http://localhost:8080/updatePatient/'.$jsonInfo.'/'.$name);
@@ -354,16 +354,16 @@ class PersonController extends Controller
               $resp = curl_exec($curl);
               // Close request to clear up some resources
               curl_close($curl);
-            }
+            }*/
             //$curl = curl_init('http://medical.placeholder.tn/booking2/public/updatePatient/'.$jsonInfo.$email);
 
             //$r=file_get_contents('http://medical.placeholder.tn/booking2/public/updatePatient/'.$jsonInfo);
-            }
+            //}
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('info', "Le patient a été mis à jour avec succès.");
             return $this->redirect($this->generateUrl('person_edit', array('id' => $id)));
-        }
+        //}
         // $cities = $em->getRepository('BenDoctorsBundle:Person')->getCities();
 
         $this->get('session')->getFlashBag()->add('danger', "Il y a des erreurs dans le formulaire soumis !");
@@ -385,7 +385,7 @@ class PersonController extends Controller
         $entities = $em->getRepository('BenDoctorsBundle:Person')->search(array('ids'=>$ids));
         foreach( $entities as $entity)
         {
-          if($entity->getISNP()==true)
+          /*if($entity->getISNP()==true)
           {
 
 
@@ -410,7 +410,7 @@ class PersonController extends Controller
             }
 
 
-          }
+          }*/
           $em->remove($entity);
         }
         $em->flush();
@@ -436,7 +436,7 @@ class PersonController extends Controller
                 throw $this->createNotFoundException('Unable to find Person entity.');
             }
             /*send a put httprequest to delete the entity*/
-            if($entity->getISNP()==true)
+            /*if($entity->getISNP()==true)
             {
               if(!strpos($this->prepareJWT()," "))
               {
@@ -457,7 +457,7 @@ class PersonController extends Controller
                 // Close request to clear up some resources
                 curl_close($curl);
               }
-            }
+            }*/
             $em->remove($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('info', "Action effectué avec succès !");

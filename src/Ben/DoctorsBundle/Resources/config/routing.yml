@@ -1,3 +1,11 @@
+ben_doctors_ben_availability:
+    resource: "@BenDoctorsBundle/Resources/config/routing/availability.yml"
+    prefix:   /ben_availability
+
+ben_doctors_ben_appointment:
+    resource: "@BenDoctorsBundle/Resources/config/routing/appointment.yml"
+    prefix:   /ben_appointment
+
 ben_doctors_default:
     resource: "@BenDoctorsBundle/Resources/config/routing/default.yml"
 

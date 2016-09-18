@@ -1,0 +1,26 @@
+ben_availability:
+    path:     /
+    defaults: { _controller: "BenDoctorsBundle:Availability:index" }
+
+ben_availability_show:
+    path:     /{id}/show
+    defaults: { _controller: "BenDoctorsBundle:Availability:show" }
+
+
+
+ben_availability_create:
+    path:     /create/{start}/{end}
+    defaults: { _controller: "BenDoctorsBundle:Availability:create" }
+    methods:  POST|GET
+
+
+
+ben_availability_update:
+    path:     /{id}/update/{start}/{end}
+    defaults: { _controller: "BenDoctorsBundle:Availability:update" }
+    methods:  [POST, PUT]
+
+ben_availability_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BenDoctorsBundle:Availability:delete" }
+    methods:  [POST, DELETE]

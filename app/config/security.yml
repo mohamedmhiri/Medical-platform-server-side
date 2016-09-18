@@ -23,7 +23,7 @@ security:
             # since anonymous is allowed users will not be forced to login
             pattern:   ^/.*
             form_login:
-                #login_path: fos_user_security_login
+                login_path: fos_user_security_login
                 check_path: /check
                 provider: fos_userbundle
                 remember_me: true
@@ -41,11 +41,10 @@ security:
             anonymous: true
             logout: false
 
-        #login:
-        #    pattern:  ^/login$
-        #    security: false
-        #secured_area:
-        # ...
-        #    logout:
-        #      path:   logout # a route called logout
-        #      target: login
+#        login:
+#            pattern:  ^/login$
+#            security: false
+#        secured_area:
+#            logout:
+#              path:   logout # a route called logout
+#              target: login

@@ -24,13 +24,11 @@ class UserController extends Controller {
       print (count(array_intersect($objts,$objs)));*/
       //echo explode(" ","Mohamed Mhiri")[0]."</br>";
       //echo explode(" ","Mohamed Mhiri")[1];
-      $em=$this->getDoctrine()->getManager();
-      $objts=$em->getRepository('BenUserBundle:User')->findByIsActivated(1);
-      $objs=$em->getRepository('BenUserBundle:User')->findByPassword("QvKJ2JNFZ4WIlUbtZgu5NpBue/SZ8M4ozqg2x/xfRV5U3BUahUGu42AP6u3/WPQBowH/w8uFyVgKFtoGTH7NWg==");
-
+        $em=$this->getDoctrine()->getManager();
+        $id=$em->getRepository('BenUserBundle:User')->findByIsActivated(1)[0]->getId();
       /*$usersCo=$this->getDoctrine()->getManager()->getRepository('BenUserBundle:User')->findByUsername('admin');
       echo $usersCo[0]->getFirstName().' '.$usersCo[0]->getFamilyName();*/
-      echo count($objs);
+      return new JsonResponse($id);
     }
     public function loginFbAction() {
         return $this->redirect($this->generateUrl("home"));
