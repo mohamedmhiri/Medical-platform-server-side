@@ -9,9 +9,14 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 
 use Ben\DoctorsBundle\Entity\Test;
 use Ben\DoctorsBundle\Form\TestType;
-use Ben\DoctorsBundle\Entity\Consultation;
+use Ben\DoctorsBundle\Entity\image;
 
 use Ben\DoctorsBundle\Pagination\Paginator;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+
+
 
 /**
  * Test controller.
@@ -289,5 +294,26 @@ class TestController extends Controller
             'image'      => $image,
 
         ));
+    }
+    /**
+     * inserts an array of images into db
+     */
+    public function addImageAction($path,$id)
+    {
+        //$images=$request->request->/*get('file');*/all();
+
+        if(!$path)
+            return new JsonResponse(["response"=>"error"]);
+        $em = $this->getDoctrine()->getManager();
+        $object = new image();
+        $object->setPath($path);
+        $test = $em->getRepository('BenDoctorsBundle:Test')->find($id);
+        $object->setTest($test);
+        $fs = new Filesystem();
+
+        $fs->copy("/home/mohamed/Pictures/".$path,"uploads/img/".$path);
+        $em->persist($object);
+        $em->flush();
+        return new JsonResponse(["response"=>"OK"]);
     }
 }

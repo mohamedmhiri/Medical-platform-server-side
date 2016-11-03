@@ -1,0 +1,58 @@
+{#<div class="row fileupload-buttonbar">#}
+        {#<div class="col-lg-7 ">#}
+            <span class="btn btn-success fileinput-button">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>Add files...</span>
+                <input id="fileupload" type="file" name="files[]" data-url="{{ oneup_uploader_endpoint('gallery') }}"
+                       multiple/>
+            </span>
+
+        {#</div>#}
+    {#</div>#}
+    <br>
+    <div class="row">
+        <div class="span16">
+            <table class="zebra-striped">
+                <tbody class="files"></tbody>
+            </table>
+        </div>
+    </div>
+    <div id="progress">
+        <div class="bar" style="width: 0%;"></div>
+    </div>
+
+
+/*css***/
+        <link href="{{ asset('css/fine-uploader-gallery.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/multiple_file_uploader.css') }}" rel="stylesheet">
+
+
+        /***JS****/
+        {#<script src="{{ asset('js/jquery.ui.widget.js') }}"></script>#}
+                {#<script src="{{ asset('js/jquery.iframe-transport.js') }}"></script>#}
+                {#<script src="{{ asset('js/jquery.fileupload.js') }}"></script>#}
+                {#<script src="{{ asset('js/jquery.xdr-transport.js') }}"></script>#}
+                {#<script src="{{ asset('js/multiple_file_uploader.js') }}"></script>#}
+                {#<script src="{{ asset('js/jquery.blueimp-gallery.min.js') }}"></script>#}
+                {#<script src="{{ asset('js/tmpl.min.js') }}"></script>#}
+                {#<script src="{{ asset('js/load-image.all.min.js') }}"></script>#}
+                {#<script src="{{ asset('js/jquery.fileupload-audio.js') }}"></script>#}
+                {#<script src="{{ asset('js/jquery.fileupload-image.js') }}"></script>#}
+                {#<script src="{{ asset('js/jquery.fileupload-process.js') }}"></script>#}
+                {#<script src="{{ asset('js/jquery.fileupload-ui.js') }}"></script>#}
+                {#<script src="{{ asset('js/jquery.fileupload-validate.js') }}"></script>#}
+                {#<script src="{{ asset('js/jquery.fileupload-video.js') }}"></script>#}
+                /**** mini ajax ... **/
+                    <form id="upload" method="post" action="upload.php" enctype="multipart/form-data">
+                        <div id="drop">
+                            Drop Here
+
+                            <a>Browse</a>
+                            <input type="file" name="upl" multiple />
+                        </div>
+
+                        <ul>
+                            <!-- The file uploads will be shown here -->
+                        </ul>
+
+                    </form>

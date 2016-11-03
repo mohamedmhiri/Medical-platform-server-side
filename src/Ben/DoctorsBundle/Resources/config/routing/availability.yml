@@ -2,6 +2,10 @@ ben_availability:
     path:     /
     defaults: { _controller: "BenDoctorsBundle:Availability:index" }
 
+ben_availability_retrieve:
+    path:     /retrieve
+    defaults: { _controller: "BenDoctorsBundle:Availability:retrieve" }
+
 ben_availability_show:
     path:     /{id}/show
     defaults: { _controller: "BenDoctorsBundle:Availability:show" }

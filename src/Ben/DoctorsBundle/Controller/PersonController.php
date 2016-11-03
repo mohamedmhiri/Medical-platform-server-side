@@ -9,7 +9,7 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 
 use Ben\DoctorsBundle\Entity\Person;
 use Ben\DoctorsBundle\Form\PersonType;
-
+use Ben\DoctorsBundle\Entity\Consultation;
 use Ben\DoctorsBundle\Pagination\Paginator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Constraints\DateTime;
@@ -40,10 +40,7 @@ class PersonController extends Controller
         // var_dump($this);die;
         $em = $this->getDoctrine()->getManager();
         $entitiesLength = $em->getRepository('BenDoctorsBundle:Person')->counter();
-        $cities = $em->getRepository('BenDoctorsBundle:Person')->getCities();
-
         return $this->render('BenDoctorsBundle:Person:index.html.twig', array(
-            'cities' => $cities,
             'entitiesLength' => $entitiesLength));
     }
     public function prepareJWT()
@@ -85,9 +82,9 @@ class PersonController extends Controller
         }*/
         $entities = $em->getRepository('BenDoctorsBundle:Person')->search($searchParam)/*findAll()*/;
         $pagination = (new Paginator())->setItems(count($entities), $searchParam['perPage'])->setPage($searchParam['page'])->toArray();
-        return $this->render('BenDoctorsBundle:Person:ajax_list.html.twig', array(
+            return $this->render('BenDoctorsBundle:Person:ajax_list.html.twig', array(
                     'entities' => $entities,
-                    'pagination' => $pagination,
+                    'pagination' => $pagination
                   ));
         }
     }
@@ -383,34 +380,21 @@ class PersonController extends Controller
         $ids = $request->get('entities');
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('BenDoctorsBundle:Person')->search(array('ids'=>$ids));
+        $person = new Person();
+        $person->setId(0);
+        $consultation=new Consultation();
+        $consultation->setId(0);
         foreach( $entities as $entity)
         {
-          /*if($entity->getISNP()==true)
-          {
+          $consultations=$em->getRepository('BenDoctorsBundle:Consultation')->findByPerson($entity);
+          foreach ( $consultations as $cons ){
+            $tests=$em->getRepository('BenDoctorsBundle:Test')->findByConsultation($cons);
 
-
-            if(!strpos($this->prepareJWT()," "))
-            {
-              return $this->render($this->prepareJWT(),array('error'=>"",'last_username'=>""));
-            }
-            else
-            {
-              $name=str_replace(" ","%20",$this->prepareJWT());
-              $curl = curl_init();
-              curl_setopt_array($curl, array(
-                  CURLOPT_RETURNTRANSFER => 1,
-                  //CURLOPT_URL => 'http://medical.placeholder.tn/booking2/public/deletePatient/'.$entity->getEmail().$email
-                  CURLOPT_URL => 'http://localhost:8080/deletePatient/'.$entity->getEmail().'/'.$name
-
-                ));
-              // Send the request & save response to $resp
-              $resp = curl_exec($curl);
-              // Close request to clear up some resources
-              curl_close($curl);
-            }
-
-
-          }*/
+              foreach ($tests as $test){
+                  $cons->removeTest($test);
+              }
+            $entity->removeConsultation($cons);
+          }
           $em->remove($entity);
         }
         $em->flush();
@@ -435,6 +419,8 @@ class PersonController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Person entity.');
             }
+            $person = new Person();
+            $person->setId(0);
             /*send a put httprequest to delete the entity*/
             /*if($entity->getISNP()==true)
             {
@@ -458,6 +444,12 @@ class PersonController extends Controller
                 curl_close($curl);
               }
             }*/
+        $consultations=$em->getRepository('BenDoctorsBundle:Consultation')->findByPerson($entity);
+        foreach ( $consultations as $cons ){
+            $cons->setPerson($person);
+            $em->persist($cons);
+
+        }
             $em->remove($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('info', "Action effectué avec succès !");

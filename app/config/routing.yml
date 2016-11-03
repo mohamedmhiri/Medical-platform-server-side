@@ -4,3 +4,6 @@ ben_doctors:
 ben_user:
     resource: "@BenUserBundle/Resources/config/routing.yml"
     prefix:   /
+#oneup_uploader:
+#    resource: .
+#    type: uploader

@@ -21,6 +21,13 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 class UtilityController extends Controller
 {
 
+    /**
+     * trial function to test fineUploader
+     */
+    public function fineUploadAction(){
+        return $this->render('/var/www/html/medical/src/Ben/DoctorsBundle/Resources/views/try.html.twig');
+    }
+
 
     public function prepareLoginAction($name)
     {

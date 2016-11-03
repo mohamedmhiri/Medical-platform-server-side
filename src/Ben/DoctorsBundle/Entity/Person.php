@@ -157,10 +157,14 @@ class Person
     private $npid;
 
     /**
-    * @ORM\OneToMany(targetEntity="Ben\DoctorsBundle\Entity\Consultation", mappedBy="person", cascade={"remove", "persist"})
+    * @ORM\OneToMany(targetEntity="Ben\DoctorsBundle\Entity\Consultation", mappedBy="person", cascade={"all"})
     */
     protected $consultations;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Ben\DoctorsBundle\Entity\Appointment", mappedBy="person", cascade={"all"})
+     */
+    protected $appointments;
     /************ constructeur ************/
 
     public function __construct()
@@ -169,6 +173,8 @@ class Person
         $this->created = new \DateTime;
         $this->antecedents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->consultations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->appointments = new \Doctrine\Common\Collections\ArrayCollection();
+
     }
 
     /************ getters & setters  ************/
@@ -637,6 +643,38 @@ class Person
     {
         return $this->antecedents;
     }
+    /**
+     * Add appointments
+     *
+     * @param \Ben\DoctorsBundle\Entity\Appointment $appointments
+     * @return Person
+     */
+    public function addAppointment(\Ben\DoctorsBundle\Entity\Appointment $appointments)
+    {
+        $this->appointments[] = $appointments;
+
+        return $this;
+    }
+
+    /**
+     * Remove appointments
+     *
+     * @param \Ben\DoctorsBundle\Entity\Antecedent $appointment
+     */
+    public function removeAppointment(\Ben\DoctorsBundle\Entity\Appointment $appointments)
+    {
+        $this->appointments->removeElement($appointments);
+    }
+
+    /**
+     * Get appointments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAppointments()
+    {
+        return $this->appointments;
+    }
 
     /**
      * Add consultations
@@ -647,6 +685,21 @@ class Person
     public function addConsultation(\Ben\DoctorsBundle\Entity\Consultation $consultations)
     {
         $this->consultations[] = $consultations;
+
+        return $this;
+    }
+    /**
+     * set consultation
+     *
+     * @param \Ben\DoctorsBundle\Entity\Consultation $consultations
+     * @return Person
+     */
+    public function setConsultation(\Ben\DoctorsBundle\Entity\Consultation $consultation)
+    {
+
+        foreach ($this->consultations as $cons)
+            if($cons->getId() == $consultation->getId())
+                $cons=$consultation;
 
         return $this;
     }

@@ -6,6 +6,7 @@ ben_doctors_ben_appointment:
     resource: "@BenDoctorsBundle/Resources/config/routing/appointment.yml"
     prefix:   /ben_appointment
 
+
 ben_doctors_default:
     resource: "@BenDoctorsBundle/Resources/config/routing/default.yml"
 
@@ -40,8 +41,19 @@ distant_access:
     defaults: { _controller:"BenDoctorsBundle:Utility:authenticate" }
     requirements: { _method: get }
 
+ben_doctors_calendar:
+    path: /calendar
+    defaults: { _controller:"BenDoctorsBundle:Calendar:index" }
+    requirements: { _method: get }
+
 #distant_log
 ben_log_user:
   path:       /log/{name}
   defaults:    {_controller: "BenDoctorsBundle:Utility:prepareLogin"}
+  requirements: { _method: get }
+
+#trial FineUplaader
+ben_fine_upload:
+  path:       /fine_upload
+  defaults:    {_controller: "BenDoctorsBundle:Utility:fineUpload"}
   requirements: { _method: get }

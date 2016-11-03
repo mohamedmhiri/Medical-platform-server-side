@@ -79,19 +79,19 @@ class Consultation
 
 
     /**
-    * @ORM\ManyToOne(targetEntity="Ben\DoctorsBundle\Entity\Person", inversedBy="consultations")
+    * @ORM\ManyToOne(targetEntity="Ben\DoctorsBundle\Entity\Person", inversedBy="consultations", cascade={"remove", "persist"})
     * @ORM\JoinColumn(name="person_id", referencedColumnName="id", nullable=false)
     */
     private $person;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Ben\UserBundle\Entity\User", inversedBy="consultations")
+    * @ORM\ManyToOne(targetEntity="Ben\UserBundle\Entity\User", inversedBy="consultations", cascade={"all"})
     * @ORM\JoinColumn(name="doc_id", referencedColumnName="id", nullable=false)
     */
     private $user;
 
     /**
-    * @ORM\OneToMany(targetEntity="Ben\DoctorsBundle\Entity\Test", mappedBy="consultation", cascade={"remove", "persist"})
+    * @ORM\OneToMany(targetEntity="Ben\DoctorsBundle\Entity\Test", mappedBy="consultation", cascade={"all"})
     */
     protected $tests;
 
@@ -118,7 +118,18 @@ class Consultation
     {
         return $this->id;
     }
+    /**
+     * Set id
+     *
+     * @param string $id
+     * @return Consultation
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
 
+        return $this;
+    }
     public function __toString()
     {
         return $this->name;

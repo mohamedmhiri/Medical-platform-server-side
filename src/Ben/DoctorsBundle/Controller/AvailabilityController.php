@@ -22,11 +22,12 @@ class AvailabilityController extends Controller
      * makes an object able to be parsed with JSON
      */
     public function jsonFormatter($entity){
-        $item=array();
-        $item["id"]=$entity->getId();
-        $item["start"]=$entity->getStart();
-        $item["end"]=$entity->getEnd();
-        $item["user_id"]=$entity->getUser()->getId();
+        $item=array(
+            "id"=>$entity->getId(),
+            "start"=>$entity->getStart()->format('Y-m-d H:i:s'),
+            "end"=>$entity->getEnd()->format('Y-m-d H:i:s'),
+            "user_id"=>$entity->getUser()->getId()
+        );
         return $item;
     }
     /**
@@ -60,7 +61,24 @@ class AvailabilityController extends Controller
             $item=$this->jsonFormatter($entity);
             array_push($availabilities,$item);
         }
-        return new JsonResponse($availabilities);
+        return new JsonResponse(($availabilities));
+    }
+    /**
+     * Lists all Availability entities with "availabilities=> {...}.
+     *
+     */
+    public function retrieveAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('BenDoctorsBundle:Availability')->findAll();
+        $availabilities=array();
+        foreach ( $entities as $entity)
+        {
+            $item=$this->jsonFormatter($entity);
+            array_push($availabilities,$item);
+        }
+        return new JsonResponse(["availabilities"=>$availabilities]);
     }
     /**
      * Creates a new Availability entity.
@@ -91,7 +109,7 @@ class AvailabilityController extends Controller
 
 
     /**
-     * Finds and displays a Availability entity.
+     * Finds and displays an Availability entity.
      *
      */
     public function showAction($id)
@@ -123,10 +141,14 @@ class AvailabilityController extends Controller
             return new JsonResponse(["response"=>"error"]);
 
         }
-            if(strlen($start)!==0)
-                $entity->setStart($start);
-            if(strlen($end)!==0)
-                $entity->setEnd($end);
+            if(strlen($start)===14){
+                $_start=$this->dateTimeFormatter($start);
+                $entity->setStart($_start);
+            }
+            if(strlen($end)===14){
+                $_end=$this->dateTimeFormatter($end);
+                $entity->setEnd($_end);
+            }
             $em->persist($entity);
             $em->flush();
             $tab=$this->jsonFormatter($entity);

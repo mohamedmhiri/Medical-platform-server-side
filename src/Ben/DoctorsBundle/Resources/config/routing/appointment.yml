@@ -6,22 +6,18 @@ ben_appointment_show:
     path:     /{id}/show
     defaults: { _controller: "BenDoctorsBundle:Appointment:show" }
 
-ben_appointment_new:
-    path:     /new
-    defaults: { _controller: "BenDoctorsBundle:Appointment:new" }
+
 
 ben_appointment_create:
-    path:     /create
+    path:     /create/{date}/{person}
     defaults: { _controller: "BenDoctorsBundle:Appointment:create" }
-    methods:  POST
+    methods:  POST|GET
 
-ben_appointment_edit:
-    path:     /{id}/edit
-    defaults: { _controller: "BenDoctorsBundle:Appointment:edit" }
+
 
 ben_appointment_update:
-    path:     /{id}/update
-    defaults: { _controller: "BenDoctorsBundle:Appointment:update" }
+    path:     /{id}/update/{date}/{person}
+    defaults: { _controller: "BenDoctorsBundle:Appointment:update",date:null }
     methods:  [POST, PUT]
 
 ben_appointment_delete:

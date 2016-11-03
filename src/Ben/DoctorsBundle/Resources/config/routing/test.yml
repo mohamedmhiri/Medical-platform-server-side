@@ -42,3 +42,8 @@ test_show_img:
     path:     /image/{id}/{id_image}
     defaults: { _controller: "BenDoctorsBundle:Test:showImage" }
     requirements: { _method: get }
+
+test_add_img:
+    path:     /add_image/{path}/{id}
+    defaults: { _controller: "BenDoctorsBundle:Test:addImage" }
+    requirements: { _method: POST }

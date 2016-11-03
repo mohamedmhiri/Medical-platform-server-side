@@ -37,10 +37,8 @@ Tableau de bord | {{ parent() }}
             <tr>
                 <th class="hidden-print"><input id="checkall" type="checkbox" value=""></th>
                 <th class="sortable"><a href="#" class="js-sort" data-order="familyname">Nom<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
-                <th class="sortable"><a href="#" class="js-sort" data-order="firstname">Prenom<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
-                <th>Cin</th>
-                <th>Ville</th>
-                <th class="sortable"><a href="#" class="js-sort" data-order="birthday">Date de naissance<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
+                <th class="sortable"><a href="#" class="js-sort" data-order="firstname">Prénom<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
+                <th class="sortable"><a href="#" class="js-sort" data-order="date">Rendez-vous<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
                 <th class="hidden-print">Actions</th>
             </tr>
             </thead>
@@ -79,9 +77,9 @@ Tableau de bord | {{ parent() }}
             <div class="col-sm-6">
               <select id="cityselect" name="searchParam[city]" class="select2 search">
                 <option value="">Tous</option>
-                {% for item in cities %}
-                  <option value="{{ item.label }}"> {{ item.label }}</option>
-                {% endfor %}
+                {#{% for item in cities %}#}
+                  {#<option value="{{ item.label }}"> {{ item.label }}</option>#}
+                {#{% endfor %}#}
               </select>
             </div>
           </div>

@@ -14,15 +14,15 @@
         {% if not is_granted("ROLE_MANAGER") or is_granted("ROLE_ADMIN") %}
         <li class="{% if route not in personMenu %}not-{% endif %}current"><a href="{{ path('person') }}"><span class="glyphicon glyphicon-user "></span> <span class="menu-title">Patients</span></a>
         </li>
-        <!--<li class="{% if route not in consultationMenu %}not-{% endif %}current"><a href="{{ path('consultation') }}"><span class="glyphicon glyphicon-list-alt "></span> <span class="menu-title">Consultations</span></a></li>-->
-        <!--<li class="{% if route not in testMenu %}not-{% endif %}current"><a href="{{ path('test') }}"><span class="glyphicon glyphicon-file "></span> <span class="menu-title">Examens</span></a></li>-->
+        {#<!--<li class="{% if route not in consultationMenu %}not-{% endif %}current"><a href="{{ path('consultation') }}"><span class="glyphicon glyphicon-list-alt "></span> <span class="menu-title">Consultations</span></a></li>-->#}
+        {#<!--<li class="{% if route not in testMenu %}not-{% endif %}current"><a href="{{ path('test') }}"><span class="glyphicon glyphicon-file "></span> <span class="menu-title">Examens</span></a></li>-->#}
         {% endif %}
         {% if is_granted("ROLE_MANAGER") %}
-        <!--<li class="{% if route not in medsMenu %}not-{% endif %}current"><a href="{{ path('meds') }}"><span class="glyphicon glyphicon-leaf "></span> <span class="menu-title">Medicaments</span></a></li>-->
+        {#<!--<li class="{% if route not in medsMenu %}not-{% endif %}current"><a href="{{ path('meds') }}"><span class="glyphicon glyphicon-leaf "></span> <span class="menu-title">Medicaments</span></a></li>-->#}
         {% endif %}
         {% if is_granted("ROLE_ADMIN") %}
         <li class="{% if route not in userMenu %}not-{% endif %}current"><a href="{{ path('ben_users') }}"><span class="glyphicon glyphicon-user"></span> <span class="menu-title">Medecins</span></a></li>
-        <li ><a href="http://localhost:8080/admin/appointments" ><span class="glyphicon glyphicon-envelope"></span>  <span class="menu-title">Rendez_vous</span></a></li>
+        <li ><a href="{{ path('ben_doctors_calendar') }}" ><span class="glyphicon glyphicon-envelope"></span>  <span class="menu-title">Rendez_vous</span></a></li>
         <li class="{% if route not in configMenu %}not-{% endif %}current"><a href="{{ path('config') }}"><span class="glyphicon glyphicon-wrench "></span> <span class="menu-title">Préférences</span></a>
         </li>
         {% endif %}

@@ -59,7 +59,7 @@ class Test
 
 
     /**
-    * @ORM\ManyToOne(targetEntity="Ben\DoctorsBundle\Entity\Consultation", inversedBy="tests")
+    * @ORM\ManyToOne(targetEntity="Ben\DoctorsBundle\Entity\Consultation", inversedBy="tests", cascade={"all"})
     * @ORM\JoinColumn(name="consultation_id", referencedColumnName="id", nullable=false)
     */
     private $consultation;

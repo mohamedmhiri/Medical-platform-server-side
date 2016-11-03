@@ -17,7 +17,7 @@ Login - {{ parent() }}
             {% endif %}
             {# <h1 class="text-center login-title">Sign in to continue to Bootsnipp</h1> #}
             <div class="sign-in-head text-center">
-                <h1>{{ app_config.app_name }}</h1>
+                <h1>Sign In</h1>
             </div>
             <div class="account-wall">
                 <img class="profile-img" src="{{ asset("uploads/img/anonymous.png") }}"
@@ -27,11 +27,7 @@ Login - {{ parent() }}
                 <input type="password" class="form-control" placeholder="Password" name="_password" required>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">
                     Sign in</button>
-                <label class="checkbox pull-left">
-                    <input type="checkbox" name="_remember_me" value="on">
-                    Garder ma session active
-                </label>
-                <span class="clearfix"></span>
+                {#<span class="clearfix"></span>#}
                 </form>
             </div>
         </div>

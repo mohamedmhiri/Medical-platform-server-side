@@ -1,7 +1,15 @@
 {% extends "BenDoctorsBundle::layout.html.twig" %}
-{% block title %}
-Tableau de bord | {{ parent() }}
+{% block head %}
+    {% block stylesheet %}
+        {{ parent() }}
+        <link href="{{ asset('css/fine-uploader-gallery.css') }}" rel="stylesheet">
+    {% endblock %}
+    {% block title %}
+        Tableau de bord | {{ parent() }}
+    {% endblock %}
 {% endblock %}
+
+
 {% block body %}
 <h3><span class="glyphicon glyphicon-user"></span> Ajout d'un examen medicale</h3>
 
@@ -14,6 +22,8 @@ Tableau de bord | {{ parent() }}
       </div>
     </div>
 </form>
+    <div id="uploader"></div>
+
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
