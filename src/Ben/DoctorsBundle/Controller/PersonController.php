@@ -380,25 +380,12 @@ class PersonController extends Controller
         $ids = $request->get('entities');
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('BenDoctorsBundle:Person')->search(array('ids'=>$ids));
-        $person = new Person();
-        $person->setId(0);
-        $consultation=new Consultation();
-        $consultation->setId(0);
-        foreach( $entities as $entity)
-        {
-          $consultations=$em->getRepository('BenDoctorsBundle:Consultation')->findByPerson($entity);
-          foreach ( $consultations as $cons ){
-            $tests=$em->getRepository('BenDoctorsBundle:Test')->findByConsultation($cons);
+        foreach ( $entities as $entity ){
+            $entity->setIsDeleted(true);
+            $em->persist($entity);
+            $em->flush();
 
-              foreach ($tests as $test){
-                  $cons->removeTest($test);
-              }
-            $entity->removeConsultation($cons);
-          }
-          $em->remove($entity);
         }
-        $em->flush();
-
         return $this->redirect($this->generateUrl('person'));
     }
     /**
@@ -419,38 +406,9 @@ class PersonController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Person entity.');
             }
-            $person = new Person();
-            $person->setId(0);
-            /*send a put httprequest to delete the entity*/
-            /*if($entity->getISNP()==true)
-            {
-              if(!strpos($this->prepareJWT()," "))
-              {
-                return $this->render($this->prepareJWT(),array('error'=>"",'last_username'=>""));
-              }
-              else
-              {
-                $name=str_replace(" ","%20",$this->prepareJWT());
-                $curl = curl_init();
-                curl_setopt_array($curl, array(
-                    CURLOPT_RETURNTRANSFER => 1,
-                    //CURLOPT_URL => 'http://medical.placeholder.tn/booking2/public/deletePatient/'.$entity->getEmail().$email
-                    CURLOPT_URL => 'http://localhost:8080/deletePatient/'.$entity->getEmail().'/'.$name
 
-                  ));
-                // Send the request & save response to $resp
-                $resp = curl_exec($curl);
-                // Close request to clear up some resources
-                curl_close($curl);
-              }
-            }*/
-        $consultations=$em->getRepository('BenDoctorsBundle:Consultation')->findByPerson($entity);
-        foreach ( $consultations as $cons ){
-            $cons->setPerson($person);
-            $em->persist($cons);
-
-        }
-            $em->remove($entity);
+            $entity->setIsDeleted(true);
+            $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('info', "Action effectué avec succès !");
 

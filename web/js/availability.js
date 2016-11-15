@@ -285,6 +285,7 @@ $(document).ready(function () {
                                         }
                                     }
                                 });
+                                return;
                             }
                         });
                     }

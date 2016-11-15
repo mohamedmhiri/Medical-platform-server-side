@@ -98,13 +98,12 @@ CREATE TABLE IF NOT EXISTS `consultation` (
   `person_id` int(11) NOT NULL,
   `doc_id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `infrastructure` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `anamnese` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` date NOT NULL,
   `diagnosis` longtext COLLATE utf8_unicode_ci,
   `treatment` longtext COLLATE utf8_unicode_ci,
   `motiftype` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `decision` longtext COLLATE utf8_unicode_ci,
-  `chronic` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_964685A6217BBB47` (`person_id`),
   KEY `IDX_964685A6895648BC` (`doc_id`)
@@ -114,17 +113,17 @@ CREATE TABLE IF NOT EXISTS `consultation` (
 -- Contenu de la table `consultation`
 --
 
-INSERT INTO `consultation` (`id`, `person_id`, `doc_id`, `name`, `type`, `infrastructure`, `created`, `diagnosis`, `treatment`, `motiftype`, `decision`, `chronic`) VALUES
-(1, 1, 1, 'visite medicale', 'Consultation generale', NULL, '2014-08-25', 'Jaundice', 'Traitement préscrit', 'EXAMEN MEDICAL SYSTEMATIQUE', 'Décision prise', 1),
-(2, 1, 1, 'Dermato', 'Consultation spécialisé', 'CHU', '2014-08-25', 'Alopecia', 'ODRIK 2 mg : une gélule par jour - Q.S.P. 1 mois \r\nDIAMICRON 30 mg : 1 comp. le matin - Q.S.P. 1 mois', 'EXAMEN MEDICAL SYSTEMATIQUE', NULL, 0),
-(3, 2, 1, 'Examen medical', 'Consultation generale', NULL, '2014-08-26', 'Jaundice', 'pariatur. Excepteur sint occaecat cupidatat non\r\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'EXAMEN MEDICAL SYSTEMATIQUE', NULL, 0),
-(4, 1, 4, 'consultation #13', 'Consultation generale', NULL, '2014-08-27', 'Bronchitis,Allergy', 'I''ve got the program to write to and save a .txt file however I''m having some trouble reading from .txt files.', 'CONSULTATION MEDICALE A LA DEMANDE', 'decision prise', 1),
-(5, 3, 4, 'Examen medical', 'Consultation generale', NULL, '2014-08-28', 'Amblyopia', 'Traitement préscrit', 'EXAMEN MEDICAL SYSTEMATIQUE', NULL, 0),
-(6, 1, 1, 'Examen medical', 'Consultation generale', NULL, '2014-08-28', 'Alzheimer''s disease', NULL, 'EXAMEN MEDICAL SYSTEMATIQUE', NULL, 0),
-(7, 5, 1, 'motif 3', 'Consultation generale', NULL, '2014-09-12', 'Angines,Stress', 'aeaea', 'EXAMEN MEDICAL SYSTEMATIQUE', NULL, 0),
-(8, 6, 4, 'consultation #1', 'Consultation generale', NULL, '2014-09-14', 'Allergy,Breast cancer', 'Traitement préscrit', 'CONSULTATION MEDICALE A LA DEMANDE', 'la Décision prise', 1),
-(10, 8, 1, 'Specialité #1', 'Consultation spécialisé', 'Centre de diagnostic', '2014-09-18', 'Caries dentaires', 'Traitement préscrit #1\r\nTraitement préscrit #2', NULL, NULL, NULL),
-(11, 9, 1, 'Certificat de bonne santé', 'Consultation generale', NULL, '2014-09-18', 'Angines,Caries dentaires', 'Traitement préscrit', 'EXAMEN MEDICAL SYSTEMATIQUE', 'Décision prise', 1);
+INSERT INTO `consultation` (`id`, `person_id`, `doc_id`, `name`, `anamnese`, `created`, `diagnosis`, `treatment`, `motiftype`, `decision`) VALUES
+(1, 1, 1, 'visite medicale',  NULL, '2014-08-25', 'Jaundice', 'Traitement préscrit', 'EXAMEN MEDICAL SYSTEMATIQUE', 'Décision prise'),
+(2, 1, 1, 'Dermato', 'CHU', '2014-08-25', 'Alopecia', 'ODRIK 2 mg : une gélule par jour - Q.S.P. 1 mois \r\nDIAMICRON 30 mg : 1 comp. le matin - Q.S.P. 1 mois', 'EXAMEN MEDICAL SYSTEMATIQUE', NULL),
+(3, 2, 1, 'Examen medical',  NULL, '2014-08-26', 'Jaundice', 'pariatur. Excepteur sint occaecat cupidatat non\r\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'EXAMEN MEDICAL SYSTEMATIQUE', NULL),
+(4, 1, 4, 'consultation #13',  NULL, '2014-08-27', 'Bronchitis,Allergy', 'I''ve got the program to write to and save a .txt file however I''m having some trouble reading from .txt files.', 'CONSULTATION MEDICALE A LA DEMANDE', 'decision prise'),
+(5, 3, 4, 'Examen medical',  NULL, '2014-08-28', 'Amblyopia', 'Traitement préscrit', 'EXAMEN MEDICAL SYSTEMATIQUE', NULL),
+(6, 1, 1, 'Examen medical',  NULL, '2014-08-28', 'Alzheimer''s disease', NULL, 'EXAMEN MEDICAL SYSTEMATIQUE', NULL),
+(7, 5, 1, 'motif 3',  NULL, '2014-09-12', 'Angines,Stress', 'aeaea', 'EXAMEN MEDICAL SYSTEMATIQUE', NULL),
+(8, 6, 4, 'consultation #1',  NULL, '2014-09-14', 'Allergy,Breast cancer', 'Traitement préscrit', 'CONSULTATION MEDICALE A LA DEMANDE', 'la Décision prise'),
+(10, 8, 1, 'Specialité #1', 'Centre de diagnostic', '2014-09-18', 'Caries dentaires', 'Traitement préscrit #1\r\nTraitement préscrit #2', NULL, NULL),
+(11, 9, 1, 'Certificat de bonne santé',  NULL, '2014-09-18', 'Angines,Caries dentaires', 'Traitement préscrit', 'EXAMEN MEDICAL SYSTEMATIQUE', 'Décision prise');
 
 -- --------------------------------------------------------
 
@@ -226,7 +225,6 @@ CREATE TABLE IF NOT EXISTS `metadata` (
 CREATE TABLE IF NOT EXISTS `person` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cin` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `cne` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `firstname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `familyname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -237,8 +235,6 @@ CREATE TABLE IF NOT EXISTS `person` (
   `contry` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `city` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `etablissement` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `university` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `gsm` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cnsstype` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `cnssnum` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -246,6 +242,7 @@ CREATE TABLE IF NOT EXISTS `person` (
   `created` datetime NOT NULL,
   `isnp` tinyint(1) DEFAULT false ,
   `npid` int(11) DEFAULT -5,
+  `isDeleted` TINYINT(1) DEFAULT FALSE ,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
 
@@ -253,15 +250,15 @@ CREATE TABLE IF NOT EXISTS `person` (
 -- Contenu de la table `person`
 --
 
-INSERT INTO `person` (`id`, `cin`, `cne`, `firstname`, `familyname`, `email`, `birthday`, `birthcity`, `gender`, `contry`, `city`, `address`, `etablissement`, `university`, `gsm`, `cnsstype`, `parent_name`, `parent_address`, `parent_gsm`, `parent_fixe`, `resident`, `handicap`, `needs`, `ishandicap`, `created`) VALUES
-(1, 'ae60550', '1028605605', 'adil', 'harbouj', 'benaich.med@gmail.com', '1992-08-25', 'rabat', 'Masculin', 'maroc', 'salé', 'rue 12, ain chok n52 casablanca', 'fsr', 'université mohamed V', '0644432821','Cnss', 'omar benaich', 'rue 12, ain chok n52 casablanca', '0666343755', '0534521568', 1, 'handicap', 'besoin 1\r\nbesoin 2', 1, '2014-08-28 00:00:00'),
-(2, 'ae60561', '10284605605', 'adnan', 'yassir', 'benaich.med@gmail.com', '1992-03-04', 'rabat', 'Masculin', 'maroc', 'Rabat', 'lot charaf n42 salé', 'fsr', 'université mohamed V', '0644432821',  'Ramed', 'inssaf chahid', 'lot charaf n42 salé', '0666343755', '0534521568', 1, NULL, NULL, 0, '2014-08-28 00:00:00'),
-(3, 'ae60786', '1028605615', 'basma', 'nahal', 's.nahal@gmail.com', '1993-08-25', 'taza', 'Féminin', 'maroc', 'casablanca', 'lot charaf n42 salé', 'fsr', 'université mohamed V', '0644432821',  'Cnss','rfikh najad', 'rue 12, ain chok n52 casablanca', '0666343755', '0534521568', 1, NULL, NULL, NULL, '2014-08-28 00:00:00'),
-(4, 'EZ4562', '1028605611', 'nacer', 'chahid', 's.nahal@gmail.com', '1993-08-25', 'rabat', 'Masculin', 'maroc', 'salé', 'rue 12, ain chok n52 casablanca', 'fsr', 'université mohamed V', '0644432821', 'Cnss', 'inssaf chahid', 'rue 12, ain chok n52 casablanca', '06452215452', '0534521568', 1, NULL, NULL, NULL, '2014-08-28 00:00:00'),
-(5, 'Z4520', '1028456512', 'azziz', 'amrabet', 'azziz-amrabet@gmail.com', '1990-09-12', 'salé', 'Masculin', 'maroc', 'Rabat', 'rabat hay riad block 45 rue araar', 'FSR', 'university mohamed V', '0666343745','Cnss',  'omar amrabet', 'lot charaf n42 salé', '0666645946', '0537546512', 1, NULL, NULL, NULL, '2014-08-28 00:00:00'),
-(6, 'ae605500', '10286205605', 'ahlame', 'isnaki', 'ahlame@gmail.com', '1993-09-14', 'rabat', 'Féminin', 'maroc', 'Rabat', 'rue 12, ain chok n52 casablanca', 'fsr', 'université mohamed V', '0644432821',  'Assurance privé', 'nasiiri falah', 'rue 12, ain chok n52 casablanca', '0666343755', '0534521568', 0, NULL, NULL, 0, '2014-09-14 21:08:46'),
-(8, 'ae60542', '1228605605', 'fadwa', 'mrabet', 'fadwa95@gmail.com', '1995-09-18', 'Taza', 'Féminin', 'maroc', 'Rabat', 'rue 12, ain chok n52 casablanca', 'fsr', 'université mohamed V', '0644432821',  'Cnss', 'hassan mrabet', 'rue 12, ain chok n52 casablanca', '0666343755', '0537521568', 1, NULL, NULL, 0, '2014-09-18 12:33:52'),
-(9, 'ae60552', '1028605625', 'adil', 'harbouj', 'benaich.med@gmail.com', '1992-09-18', 'rabat', 'Masculin', 'maroc', 'salé', 'rue 12, ain chok n52 casablanca', 'fsr', 'université mohamed V', '0644432821',  'Cnss','omar benaich', 'rue 12, ain chok n52 casablanca', '0666343755', '0534521568', 1, NULL, NULL, 0, '2014-09-18 15:33:47');
+INSERT INTO `person` (`id`, `cin`,  `firstname`, `familyname`, `email`, `birthday`, `birthcity`, `gender`, `contry`, `city`, `address`,  `gsm`, `cnsstype`,  `parent_gsm`,  `created`, `isDeleted`) VALUES
+(1, 'ae60550',  'adil', 'harbouj', 'benaich.med@gmail.com', '1992-08-25', 'rabat', 'Masculin', 'maroc', 'salé', 'rue 12, ain chok n52 casablanca',  '0644432821','Cnss',  '0666343755', '2014-08-28 00:00:00', 0),
+(2, 'ae60561',  'adnan', 'yassir', 'benaich.med@gmail.com', '1992-03-04', 'rabat', 'Masculin', 'maroc', 'Rabat', 'lot charaf n42 salé', '0644432821',  'Ramed',  '0666343755',  '2014-08-28 00:00:00', 0),
+(3, 'ae60786',  'basma', 'nahal', 's.nahal@gmail.com', '1993-08-25', 'taza', 'Féminin', 'maroc', 'casablanca', 'lot charaf n42 salé','0644432821',  'Cnss', '0666343755',  '2014-08-28 00:00:00', 0),
+(4, 'EZ4562',  'nacer', 'chahid', 's.nahal@gmail.com', '1993-08-25', 'rabat', 'Masculin', 'maroc', 'salé', 'rue 12, ain chok n52 casablanca',  '0644432821', 'Cnss', '06452215452',  '2014-08-28 00:00:00', 0),
+(5, 'Z4520',  'azziz', 'amrabet', 'azziz-amrabet@gmail.com', '1990-09-12', 'salé', 'Masculin', 'maroc', 'Rabat', 'rabat hay riad block 45 rue araar',  '0666343745','Cnss',  '0666645946', '2014-08-28 00:00:00', 0),
+(6, 'ae605500',  'ahlame', 'isnaki', 'ahlame@gmail.com', '1993-09-14', 'rabat', 'Féminin', 'maroc', 'Rabat', 'rue 12, ain chok n52 casablanca', '0644432821',  'Assurance privé',  '0666343755',  '2014-09-14 21:08:46', 0),
+(8, 'ae60542',  'fadwa', 'mrabet', 'fadwa95@gmail.com', '1995-09-18', 'Taza', 'Féminin', 'maroc', 'Rabat', 'rue 12, ain chok n52 casablanca',  '0644432821',  'Cnss', '0666343755','2014-09-18 12:33:52', 0),
+(9, 'ae60552',  'adil', 'harbouj', 'benaich.med@gmail.com', '1992-09-18', 'rabat', 'Masculin', 'maroc', 'salé', 'rue 12, ain chok n52 casablanca', '0644432821',  'Cnss', '0666343755',  '2014-09-18 15:33:47', 0);
 
 -- --------------------------------------------------------
 
@@ -326,11 +323,12 @@ CREATE TABLE IF NOT EXISTS `user` (
   `roles` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
   `credentials_expired` tinyint(1) NOT NULL,
   `credentials_expire_at` datetime DEFAULT NULL,
-  `family_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `first_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `familyName` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `firstName` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tel` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime NOT NULL,
   `lastActivity` datetime NOT NULL,
+  `isActivated` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_5DBD36CC92FC23A8` (`username_canonical`),
   UNIQUE KEY `UNIQ_5DBD36CCA0D96FBF` (`email_canonical`),
@@ -341,10 +339,10 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Contenu de la table `user`
 --
 
-INSERT INTO `user` (`id`, `image_id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `locked`, `expired`, `expires_at`, `confirmation_token`, `password_requested_at`, `roles`, `credentials_expired`, `credentials_expire_at`, `family_name`, `first_name`, `tel`, `created`, `lastActivity`) VALUES
-(1, 2, 'admin', 'admin', 'benaich.med@gmail.com', 'benaich.med@gmail.com', 1, 'cjooq91lu5kokookkowwowgkcow08g0', 'QvKJ2JNFZ4WIlUbtZgu5NpBue/SZ8M4ozqg2x/xfRV5U3BUahUGu42AP6u3/WPQBowH/w8uFyVgKFtoGTH7NWg==', '2014-09-21 11:39:49', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:10:"ROLE_ADMIN";}', 0, NULL, 'benaich', 'mohamed', '0644342821', '2014-05-03 21:13:54', '2014-09-21 12:50:59'),
-(4, 4, 'user', 'user', 'souad@gmail.com', 'souad@gmail.com', 1, '1ubba1pb58m8k8c84oggkgg0w8k8k4k', 'HkNUbNRxHqNXOLOt0vz5A+HaGa/ZACk+Kr9lfA/M5onG1Z0nBod+uZAkRIS0MWXVmBm5mGfkPMXEluuyjvzGyw==', '2014-09-21 12:57:46', 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, 'fadil', 'souad', '0666343755', '2014-05-10 17:59:17', '2014-09-21 13:03:02'),
-(5, 5, 'manager', 'manager', 'vincent.jev@gmail.com', 'vincent.jev@gmail.com', 1, 'l904llzwz9ws8cc8sow84sogko48ksw', 'yLv9u+3FRIrxIS+X4lqHQb/SiC1CyKYk/REsG76GGa+zpOmpCa4YhkPdBIilNTViXnJr4HIFQW3YDdY8Me2tTw==', '2014-09-21 12:53:17', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:12:"ROLE_MANAGER";}', 0, NULL, 'fadil', 'adil', '+21266345886', '2014-09-01 14:15:56', '2014-09-21 12:56:48');
+INSERT INTO `user` (`id`, `image_id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `locked`, `expired`, `expires_at`, `confirmation_token`, `password_requested_at`, `roles`, `credentials_expired`, `credentials_expire_at`, `familyName`, `firstName`, `tel`, `created`, `lastActivity`,`isActivated`) VALUES
+(1, 2, 'admin', 'admin', 'benaich.med@gmail.com', 'benaich.med@gmail.com', 1, 'cjooq91lu5kokookkowwowgkcow08g0', 'QvKJ2JNFZ4WIlUbtZgu5NpBue/SZ8M4ozqg2x/xfRV5U3BUahUGu42AP6u3/WPQBowH/w8uFyVgKFtoGTH7NWg==', '2014-09-21 11:39:49', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:10:"ROLE_ADMIN";}', 0, NULL, 'benaich', 'mohamed', '0644342821', '2014-05-03 21:13:54', '2014-09-21 12:50:59', 0),
+(4, 4, 'user', 'user', 'souad@gmail.com', 'souad@gmail.com', 1, '1ubba1pb58m8k8c84oggkgg0w8k8k4k', 'HkNUbNRxHqNXOLOt0vz5A+HaGa/ZACk+Kr9lfA/M5onG1Z0nBod+uZAkRIS0MWXVmBm5mGfkPMXEluuyjvzGyw==', '2014-09-21 12:57:46', 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, 'fadil', 'souad', '0666343755', '2014-05-10 17:59:17', '2014-09-21 13:03:02', 0),
+(5, 5, 'manager', 'manager', 'vincent.jev@gmail.com', 'vincent.jev@gmail.com', 1, 'l904llzwz9ws8cc8sow84sogko48ksw', 'yLv9u+3FRIrxIS+X4lqHQb/SiC1CyKYk/REsG76GGa+zpOmpCa4YhkPdBIilNTViXnJr4HIFQW3YDdY8Me2tTw==', '2014-09-21 12:53:17', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:12:"ROLE_MANAGER";}', 0, NULL, 'fadil', 'adil', '+21266345886', '2014-09-01 14:15:56', '2014-09-21 12:56:48', 0);
 
 --
 -- Contraintes pour les tables exportées

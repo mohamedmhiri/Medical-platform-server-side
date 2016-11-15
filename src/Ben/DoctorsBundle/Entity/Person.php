@@ -165,6 +165,15 @@ class Person
      * @ORM\OneToMany(targetEntity="Ben\DoctorsBundle\Entity\Appointment", mappedBy="person", cascade={"all"})
      */
     protected $appointments;
+    /**
+     *@var boolean
+     *
+     *@ORM\Column(name="isDeleted", type="boolean")
+     */
+    private $isDeleted;
+
+
+
     /************ constructeur ************/
 
     public function __construct()
@@ -354,6 +363,23 @@ class Person
     public function getOldemail()
     {
         return $this->oldemail;
+    }
+    /**
+     * @return boolean
+     */
+    public function getIsDeleted()
+    {
+        return $this->isDeleted;
+    }
+
+    /**
+     * @return Person
+     * @param boolean $isDeleted
+     */
+    public function setIsDeleted($isDeleted)
+    {
+        $this->isDeleted = $isDeleted;
+        return $this;
     }
 
     /**

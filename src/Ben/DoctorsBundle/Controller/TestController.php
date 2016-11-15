@@ -198,7 +198,7 @@ class TestController extends Controller
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('info', "L'examen a été mis à jour avec succès.");
-            return $this->redirect($this->generateUrl('test_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('consultation_show', array('id' => $entity->getConsultation()->getId())));
         }
 
         $this->get('session')->getFlashBag()->add('danger', "Il y a des erreurs dans le formulaire soumis !");
@@ -298,22 +298,47 @@ class TestController extends Controller
     /**
      * inserts an array of images into db
      */
-    public function addImageAction($path,$id)
+    public function addImageAction($file,$id)
     {
         //$images=$request->request->/*get('file');*/all();
 
-        if(!$path)
+        if(!$file)
             return new JsonResponse(["response"=>"error"]);
         $em = $this->getDoctrine()->getManager();
         $object = new image();
-        $object->setPath($path);
+        $object->setPath($file);
         $test = $em->getRepository('BenDoctorsBundle:Test')->find($id);
         $object->setTest($test);
         $fs = new Filesystem();
 
-        $fs->copy("/home/mohamed/Pictures/".$path,"uploads/img/".$path);
+        $fs->copy("/home/mohamed/Pictures/".$file,"uploads/img/".$file);
         $em->persist($object);
         $em->flush();
         return new JsonResponse(["response"=>"OK"]);
+    }
+
+    /***
+     * @return JsonResponse
+     * @param $id
+     * returns list of images for a specific test
+     */
+    public function getImagesAction($id){
+
+        $em = $this->getDoctrine()->getManager();
+        $test = $em->getRepository('BenDoctorsBundle:Test')->find($id);
+        if($test){
+            $images = $test->getImages();
+            $response = [];
+            $response[ "id" ]= $id;
+            $response[ "id_images" ] = [];
+            foreach ($images as $index=>$image){
+                $response[ "id_images"][$index] = [];
+                array_push($response[ "id_images" ][$index], $image->getId());
+                array_push($response[ "id_images" ][$index], $image->getPath());
+            }
+
+            return new JsonResponse(["response"=> $response ]);
+        }
+        return new JsonResponse(["response"=>"error"]);
     }
 }

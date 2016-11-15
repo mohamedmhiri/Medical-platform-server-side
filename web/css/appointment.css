@@ -42,6 +42,6 @@ body {
 }
 
 #calendar {
-    float: right;
-    width: 900px;
+    float: inherit;
+    width: 1000px;
 }

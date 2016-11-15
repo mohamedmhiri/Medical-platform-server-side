@@ -27,7 +27,7 @@ class image
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    public $path;
+    private $path;
 
     /**
     * @ORM\ManyToOne(targetEntity="Ben\DoctorsBundle\Entity\Test", inversedBy="images")

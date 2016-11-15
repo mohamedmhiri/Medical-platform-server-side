@@ -21,6 +21,7 @@ class PersonRepository extends EntityRepository
         if(!empty($keyword))
             $qb->andWhere('concat(p.familyname, p.firstname) like :keyword or p.email like :keyword or p.city like :keyword or p.cin like :keyword')
                 ->setParameter('keyword', '%'.$keyword.'%');
+        $qb->andWhere('p.isDeleted = :isDeleted')->setParameter('isDeleted',false);
         if(!empty($ids))
             $qb->andWhere('p.id in (:ids)')->setParameter('ids', $ids);
         if(!empty($cin))
@@ -44,7 +45,10 @@ class PersonRepository extends EntityRepository
     }
 
     public function counter() {
-        $qb = $this->createQueryBuilder('p')->select('COUNT(p)');
+        $qb = $this->createQueryBuilder('p')
+            ->andWhere('p.isDeleted = 0')
+            //->setParameter('isDeleted',false)
+            ->select('COUNT(p)');
         return $qb->getQuery()->getSingleScalarResult();
     }
 

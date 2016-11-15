@@ -24,14 +24,14 @@ Tableau de bord | {{ parent() }}
 	<div class="col-md-6">
 		<h3><span class="glyphicon glyphicon-stats"></span> Statistiques</h3>
 	</div>
-	<div class="col-md-6 links hidden-print">
-		<a class="btn btn-primary pull-right" onclick="onDrawClick()"><span class="glyphicon glyphicon-filter"></span>Graphe de variation de patients</a>
+	<div id="graph" class="col-md-6 links hidden-print">
+		<a  class="btn btn-primary pull-right" onclick="onDrawClick()"><span class="glyphicon glyphicon-filter"></span>Graphe de variation de patients</a>
     	</div>
 </div>
 
 
 
-<div class="col-md-12">
+<div id="statical-array" class="col-md-12">
   <div class="box">
       <table class="table table-hover table-bordered">
           <thead>
@@ -123,7 +123,7 @@ Tableau de bord | {{ parent() }}
 {{ parent() }}
     <script src="{{ asset('js/moment-with-langs.min.js') }}"></script>
     <script src="{{ asset('js/daterangepicker.js') }}"></script>
-    <script src="{{asset('bower_components/chartist/dist/chartist.min.js')}}">
+    <script src="{{asset('bower_components/chartist/dist/chartist.min.js')}}"></script>
 
 
 {% endblock %}

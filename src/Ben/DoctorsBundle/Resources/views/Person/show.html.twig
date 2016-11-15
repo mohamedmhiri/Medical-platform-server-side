@@ -12,6 +12,7 @@ Tableau de bord | {{ parent() }}
     <li><a href="{{ path('person_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span> modifier</a></li>
     <li><a href="{{ path('antecedent_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Antécedent</a></li>
     <li><a href="{{ path('consultation_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Consultation </a></li>
+    {#<li><a href="{{ path('appointment_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Rendes_vous </a></li>#}
     <li><a id="btnPrint"><span class="glyphicon glyphicon-print"></span> imprimer</a></li>
     <li><a href="#" id="js-delete"><span class="glyphicon glyphicon-trash"></span> Supprimer</a></li>
   </ul>
@@ -195,18 +196,47 @@ Tableau de bord | {{ parent() }}
             <tbody>
             {% for item in entity.consultations %}
             {% for i in item.tests %}
-              {% if i.typeexam %}
+              {#{% if i.typeexam %}#}
               <tr>
                 <td>{{ i.date|date('d/m/Y') }}</td>
                 <td>{{ i.typeexam}}</td>
                 <td>{{ i.lieu}}</td>
-                {%if i.images%}
-                <td>{%for j in i.images%}<a href="{{ path('test_show_img',{'id':i.id,'id_image':j.id}) }}">Voir fichier</a></br>{%endfor%}</td>
-                {%else%}
-                <td>{{ i.conclusion}}</td>
-                {%endif%}
+                {#<td></td>#}
+                <td>
+                    {%if i.images|length > 0%}
+                    <script>
+                        var id= {{ i.id }};
+                    </script>
+
+                        {#<a class="" href="#">Lanuch</a>#}
+                    <a class="trigger btn btn-info btn-block" onclick="modalAction( {{ i.id }} )" id="modal-button" data-target="#_modal" data-toggle="modal" href="#">
+                            Consulter les fichiers
+                    </a>
+
+                    <div id="modal" class="modal-wrapper" tabindex="-1">
+
+                        <div class="modal">
+
+                            <div class="head">
+                                <a class="btn-close trigger" href="#">
+                                    x
+                                </a>
+
+                                <h3 class="header">
+                                    Aperçu sur les fichiers
+                                </h3>
+
+                            </div>
+                            <div class="content" id="modal-content"></div>
+                        </div>
+                    </div>
+
+                    {%else%}
+                        {{ i.conclusion}}
+                    {%endif%}
+                </td>
               </tr>
-              {% endif %}
+              {#{% endif %}#}
             {% endfor %}
             {% endfor %}
             </tbody>
@@ -278,6 +308,34 @@ Tableau de bord | {{ parent() }}
             $('#deleteForm').submit();
             return false;
         });
+//        $('#modal-button').on('click', function(){
+//            $('div').innerHTML(function (data){
+//                console.log(data);
+//            });
+//        });
+
+
     })(jQuery);
+    function modalAction(data){
+        $.ajax({
+            type: 'GET',
+            url: "http://localhost:8000/examen/images/" + data,
+            dataType: "json",
+            success: function (images) {
+                console.log(  images.response.id_images );
+                {#<a href="{{ path('test_show_img',{'id':i.id,'id_image':i.images|first.id}) }}">#}
+                {#<img src="{{asset('uploads/img/'~i.images|first.path)}}" class="img-responsive" alt="fiche">#}
+                        {#</a>#}
+                //"<p><a href='http://www.google.com'>Google</a></p>"
+                var photos = images.response.id_images;
+                $.each( photos, function(index){
+                    $( " #modal-content " ).append( "<a href='/examen/image/"+images.response.id+"/"+photos[index][0]+"' >" +
+                            "<img src='/uploads/img/"+photos[index][1]+"' class='img-responsive' > </a>");
+                });
+               //
+            }
+        });
+    }
+
 </script>
 {% endblock %}

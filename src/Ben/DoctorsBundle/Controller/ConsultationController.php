@@ -161,29 +161,29 @@ class ConsultationController extends Controller
             throw $this->createNotFoundException('Unable to find Consultation entity.');
         }
         $originalMeds = new \Doctrine\Common\Collections\ArrayCollection();
-        foreach ($entity->getConsultationmeds() as $item) {
-            $originalMeds->add($item);
-        }
+//        foreach ($entity->getConsultationmeds() as $item) {
+//            $originalMeds->add($item);
+//        }
 
         $editForm = $this->createForm( new ConsultationType( ),$entity);
         $deleteForm = $this->createDeleteForm($id);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            foreach ($originalMeds as $item) {
-                if (false === $entity->getConsultationmeds()->contains($item)) {
-                    $em->remove($item);
-                }
-            }
-            foreach ($entity->getConsultationmeds() as $item) {
-                $item->getMeds()->minusCount($item->getCount());
-            }
+//            foreach ($originalMeds as $item) {
+//                if (false === $entity->getConsultationmeds()->contains($item)) {
+//                    $em->remove($item);
+//                }
+//            }
+//            foreach ($entity->getConsultationmeds() as $item) {
+//                $item->getMeds()->minusCount($item->getCount());
+//            }
 
             $em->persist($entity);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('info', "La consultation a été enregistré avec succès.");
-            return $this->redirect($this->generateUrl('consultation_edit', array('id' => $id)));
+            $this->get('session')->getFlashBag()->add('info', "La consultation a été modifiée avec succès.");
+            return $this->redirect($this->generateUrl('consultation_show', array('id' => $id)));
         }
 
         $this->get('session')->getFlashBag()->add('danger', "Il y a des erreurs dans le formulaire soumis !");

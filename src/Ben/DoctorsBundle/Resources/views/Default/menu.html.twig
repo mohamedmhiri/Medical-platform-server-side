@@ -21,7 +21,7 @@
         {#<!--<li class="{% if route not in medsMenu %}not-{% endif %}current"><a href="{{ path('meds') }}"><span class="glyphicon glyphicon-leaf "></span> <span class="menu-title">Medicaments</span></a></li>-->#}
         {% endif %}
         {% if is_granted("ROLE_ADMIN") %}
-        <li class="{% if route not in userMenu %}not-{% endif %}current"><a href="{{ path('ben_users') }}"><span class="glyphicon glyphicon-user"></span> <span class="menu-title">Medecins</span></a></li>
+        <li class="{% if route not in userMenu %}not-{% endif %}current"><a href="{{ path('ben_users') }}"><span class="glyphicon glyphicon-user"></span> <span class="menu-title">Médecins</span></a></li>
         <li ><a href="{{ path('ben_doctors_calendar') }}" ><span class="glyphicon glyphicon-envelope"></span>  <span class="menu-title">Rendez_vous</span></a></li>
         <li class="{% if route not in configMenu %}not-{% endif %}current"><a href="{{ path('config') }}"><span class="glyphicon glyphicon-wrench "></span> <span class="menu-title">Préférences</span></a>
         </li>
