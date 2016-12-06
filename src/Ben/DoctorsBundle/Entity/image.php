@@ -97,7 +97,7 @@ class image
      /**
      * Set path
      *
-     * @param Ben\DoctorsBundle\Entity\image $path
+     * @param \Ben\DoctorsBundle\Entity\image $path
      * @return profil
      */
     public function setPath($path)

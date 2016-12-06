@@ -119,6 +119,7 @@ class ConsultationController extends Controller
 
         return $this->render('BenDoctorsBundle:Consultation:show.html.twig', array(
             'entity'      => $entity,
+            'avas'        => $this->prepare(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -142,6 +143,7 @@ class ConsultationController extends Controller
 
         return $this->render('BenDoctorsBundle:Consultation:edit.html.twig', array(
             'entity'      => $entity,
+            'avas'        => $this->prepare(),
             'form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));

@@ -218,7 +218,7 @@ Tableau de bord | {{ parent() }}
                         <div class="modal">
 
                             <div class="head">
-                                <a class="btn-close trigger" href="#">
+                                <a class="btn-close trigger" onclick="deletePhotos()" href="#">
                                     x
                                 </a>
 
@@ -335,6 +335,9 @@ Tableau de bord | {{ parent() }}
                //
             }
         });
+    }
+    function deletePhotos() {
+        $( " #modal-content a " ).remove();
     }
 
 </script>

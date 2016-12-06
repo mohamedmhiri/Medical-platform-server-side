@@ -12,7 +12,7 @@ body {
 
 #external-events {
     float: left;
-    width: 150px;
+    width: 250px;
     padding: 0 10px;
     border: 1px solid #ccc;
     background: #eee;
@@ -42,6 +42,6 @@ body {
 }
 
 #calendar {
-    float: inherit;
-    width: 1000px;
+    float: right;
+    width: 900px;
 }

@@ -55,6 +55,7 @@ class AvailabilityController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('BenDoctorsBundle:Availability')->findAll();
+
         $availabilities=array();
         foreach ( $entities as $entity)
         {
@@ -80,6 +81,8 @@ class AvailabilityController extends Controller
         }
         return new JsonResponse(["availabilities"=>$availabilities]);
     }
+
+
     /**
      * Creates a new Availability entity.
      *
@@ -87,9 +90,11 @@ class AvailabilityController extends Controller
     public function createAction($start,$end)
     {
         if(strlen($start)===14 && strlen($end) ===14){
-            $entity = new Availability();
             $_start=$this->dateTimeFormatter($start);
             $_end=$this->dateTimeFormatter($end);
+
+            $entity = new Availability();
+
             $entity->setStart($_start);
             $entity->setEnd($_end);
             $em=$this->getDoctrine()->getManager();

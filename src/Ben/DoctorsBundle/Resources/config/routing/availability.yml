@@ -17,7 +17,10 @@ ben_availability_create:
     defaults: { _controller: "BenDoctorsBundle:Availability:create" }
     methods:  POST|GET
 
-
+ben_availability_prepare:
+    path:     /prepare
+    defaults: { _controller: "BenDoctorsBundle:Availability:prepare" }
+    methods:  GET
 
 ben_availability_update:
     path:     /{id}/update/{start}/{end}

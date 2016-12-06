@@ -155,4 +155,14 @@ class AppointmentController extends Controller
         return new JsonResponse($tab);
     }
 
+    /**
+     * @param Request $request
+     */
+    public function takeAppointmentAction(Request $request){
+        $fam_name = $request->get("familyname");
+        $fir_name = $request->get("firstname");
+        $date = $request->get("date");
+        return new JsonResponse(["fam"=>$fam_name,"fir"=>$fir_name,"date"=>$date]);
+    }
+
 }

@@ -149,6 +149,27 @@ $(document).ready(function () {
                 });
             }
         },
+        // eventRender: function(event, element) {
+        //     console.log( event );
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: "http://localhost:8000/ben_availability/" ,
+        //         success: function (events) {
+        //             console.log( events );
+        //             $('#calendar').fullCalendar('refetchEvents', {
+        //                 url: 'http://localhost:8000/ben_availability/',
+        //                 type: 'GET',
+        //                 error: function () {
+        //                     alert('there was an error while fetching events! 5');
+        //                 },
+        //                 color: '#866667',   // a non-ajax option
+        //                 textColor: 'black' // a non-ajax option
+        //             });
+        //         }
+        //
+        //     });
+        //
+        // },
         /*
          when user select timeslot this option code will execute.
          It has three arguments. Start,end and allDay.
@@ -160,6 +181,12 @@ $(document).ready(function () {
             {
                 url: 'http://localhost:8000/ben_availability/',
                 type: 'GET',
+                // success : function (events) {
+                //     $.each(events, function (index, event){
+                //
+                //     })
+                //
+                // },
                 error: function () {
                     alert('there was an error while fetching events! 6');
                 },
@@ -218,7 +245,8 @@ $(document).ready(function () {
                                         }
                                     }
                                 });
-                                return "1";
+                                console.log( "1" );
+                                return false;
                             }
                             else if (new Date(parseInt(t.substring(0,4),10),parseInt(t.substring(5,7),10),parseInt(t.substring(8,10),10),parseInt(t.substring(11,13),10),parseInt(t.substring(14,16),10),parseInt(t.substring(17,19),10)).getTime()===new Date(parseInt(value.start.substring(0,4),10),parseInt(value.start.substring(5,7),10),parseInt(value.start.substring(8,10),10),parseInt(value.start.substring(11,13),10),parseInt(value.start.substring(14,16),10),parseInt(value.start.substring(17,19),10)).getTime()) {
                                 $.ajax({
@@ -241,7 +269,9 @@ $(document).ready(function () {
                                         }
                                     }
                                 });
-                                return "2";
+                                console.log( "2" );
+                                return false;
+
                             } else if (new Date(parseInt(d.substring(0,4),10),parseInt(d.substring(5,7),10),parseInt(d.substring(8,10),10),parseInt(d.substring(11,13),10),parseInt(d.substring(14,16),10),parseInt(d.substring(17,19),10)).getTime()<=new Date(parseInt(value.start.substring(0,4),10),parseInt(value.start.substring(5,7),10),parseInt(value.start.substring(8,10),10),parseInt(value.start.substring(11,13),10),parseInt(value.start.substring(14,16),10),parseInt(value.start.substring(17,19),10)).getTime() && new Date(parseInt(t.substring(0,4),10),parseInt(t.substring(5,7),10),parseInt(t.substring(8,10),10),parseInt(t.substring(11,13),10),parseInt(t.substring(14,16),10),parseInt(t.substring(17,19),10)).getTime()>=new Date(parseInt(value.end.substring(0,4),10),parseInt(value.end.substring(5,7),10),parseInt(value.end.substring(8,10),10),parseInt(value.end.substring(11,13),10),parseInt(value.end.substring(14,16),10),parseInt(value.end.substring(17,19),10)).getTime()) {
                                 $.ajax({
                                     type: 'PUT',
@@ -263,7 +293,9 @@ $(document).ready(function () {
                                         }
                                     }
                                 });
-                                return "3";
+                                console.log( "3" );
+                                return false;
+
                             } else if ((index + 1 === data.length) && (start.format('YYYY-MM-DD HH:mm:ss') !== value.end) && (end.format('YYYY-MM-DD HH:mm:ss') !== value.start) && !(start.format('YYYY-MM-DD HH:mm:ss') <= value.start && end.format('YYYY-MM-DD HH:mm:ss') >= value.end)) {
                                 $.ajax({
                                     type: 'POST',
@@ -285,7 +317,9 @@ $(document).ready(function () {
                                         }
                                     }
                                 });
-                                return;
+                                console.log( "4" );
+                                return false;
+
                             }
                         });
                     }
