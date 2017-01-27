@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2372a58d-9f7b-42fa-a1a4-f2fe703f4ee4" name="Default" comment="Update 15/11/2016: docs popup">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/sessions/sess_fuhjgb4hdvi3e2o14j3sn1prq1" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Ben/DoctorsBundle/Controller/AppointmentController.php" afterPath="$PROJECT_DIR$/src/Ben/DoctorsBundle/Controller/AppointmentController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Ben/DoctorsBundle/Controller/AvailabilityController.php" afterPath="$PROJECT_DIR$/src/Ben/DoctorsBundle/Controller/AvailabilityController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Ben/DoctorsBundle/Controller/CalendarController.php" afterPath="$PROJECT_DIR$/src/Ben/DoctorsBundle/Controller/CalendarController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Ben/DoctorsBundle/Controller/ConsultationController.php" afterPath="$PROJECT_DIR$/src/Ben/DoctorsBundle/Controller/ConsultationController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Ben/DoctorsBundle/Entity/image.php" afterPath="$PROJECT_DIR$/src/Ben/DoctorsBundle/Entity/image.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Ben/DoctorsBundle/Resources/config/routing/appointment.yml" afterPath="$PROJECT_DIR$/src/Ben/DoctorsBundle/Resources/config/routing/appointment.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Ben/DoctorsBundle/Resources/config/routing/availability.yml" afterPath="$PROJECT_DIR$/src/Ben/DoctorsBundle/Resources/config/routing/availability.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Ben/DoctorsBundle/Resources/views/Calendar/calendar.html.twig" afterPath="$PROJECT_DIR$/src/Ben/DoctorsBundle/Resources/views/Calendar/calendar.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Ben/DoctorsBundle/Resources/views/Person/show.html.twig" afterPath="$PROJECT_DIR$/src/Ben/DoctorsBundle/Resources/views/Person/show.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Ben/DoctorsBundle/Resources/views/layout.html.twig" afterPath="$PROJECT_DIR$/src/Ben/DoctorsBundle/Resources/views/layout.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/appointment.css" afterPath="$PROJECT_DIR$/web/css/appointment.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/js/availability.js" afterPath="$PROJECT_DIR$/web/js/availability.js" />
     </list>
     <ignored path="medical.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -168,7 +155,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -381,7 +368,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -520,12 +507,13 @@
       <workItem from="1479667711842" duration="1976000" />
       <workItem from="1479969126949" duration="11469000" />
       <workItem from="1480591556626" duration="6390000" />
-      <workItem from="1481014093892" duration="1444000" />
+      <workItem from="1481014093892" duration="2049000" />
+      <workItem from="1481016956748" duration="1184000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="380364000" />
+    <option name="totallyTimeSpent" value="382153000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -538,15 +526,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1366" height="741" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.43126887" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13519637" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.4879154" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2571885" sideWeight="0.5506042" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290735" sideWeight="0.49093655" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24981412" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.053311795" sideWeight="0.44939578" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26171243" sideWeight="0.44939578" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3290735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -804,7 +792,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-28">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -868,9 +855,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="163" column="38" selection-start-line="163" selection-start-column="38" selection-end-line="163" selection-end-column="38" />
-          <folding>
-            <element signature="e#48#108#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -878,7 +862,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="864">
           <caret line="60" column="10" selection-start-line="60" selection-start-column="10" selection-end-line="60" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -886,9 +869,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7776">
           <caret line="444" column="24" selection-start-line="444" selection-start-column="17" selection-end-line="444" selection-end-column="24" />
-          <folding>
-            <element signature="e#48#93#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -896,7 +876,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="828">
           <caret line="46" column="36" selection-start-line="43" selection-start-column="32" selection-end-line="46" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -904,7 +883,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
           <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -912,7 +890,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
           <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -920,7 +897,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -928,7 +904,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -936,7 +911,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="318">
           <caret line="19" column="42" selection-start-line="19" selection-start-column="42" selection-end-line="19" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -944,7 +918,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -952,7 +925,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -960,7 +932,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -968,7 +939,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
