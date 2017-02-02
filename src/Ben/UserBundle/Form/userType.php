@@ -29,7 +29,8 @@ class userType extends AbstractType
             ->add('username')
             ->add('email')
             ->add('plainpassword', 'text', array('required' => false))
-            ->add('enabled', 'checkbox', array('required' => false));
+            ->add('enabled', 'checkbox', array('required' => false))
+            ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

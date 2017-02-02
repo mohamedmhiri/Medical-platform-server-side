@@ -20,7 +20,7 @@ class AntecedentType extends AbstractType
             ->add('traitement')
             ->add('chirurgicaux')
             ->add('type', 'choice', array('choices' => array('Antecedents personnels' => 'Antecedents personnels','Antecedents familiaux' => 'Antecedents familiaux')))
-            ->add('person')
+//            ->add('person')
         ;
     }
 

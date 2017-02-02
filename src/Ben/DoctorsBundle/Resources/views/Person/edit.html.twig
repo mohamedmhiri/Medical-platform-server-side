@@ -3,24 +3,76 @@
 Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block body %}
-<h3><span class="glyphicon glyphicon-user"></span> Modification d'un patient</h3>
-<form action="{{ path('person_update', { 'id': entity.id }) }}"  class="form-horizontal col-md-8" method="POST">
-    {% include "BenDoctorsBundle:Person:form.html.twig" %}
+    <!-- page content -->
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>Modification du patient </h3>
+                </div>
 
-    <div class="form-group">
-      <div class="col-sm-offset-6 col-sm-6">
-        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Mettre à jour</button>
-        <a href="#" id="js-delete" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Supprimer</a>
-      </div>
+
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>{{ entity.firstname }} {{ entity.familyname }} </h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <br />
+                            <form action="{{ path('person_update', { 'id': entity.id }) }}"   method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                                {% include "BenDoctorsBundle:Person:form.html.twig" %}
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Mettre à jour</button>
+                                        <a href="#" id="js-delete" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Supprimer</a>
+                                    </div>
+                                </div>
+                            </form>
+                            <form id="deleteForm" action="{{ path('person_delete', { 'id': entity.id }) }}" method="GET" class="">
+                                {{ form_widget(delete_form) }}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
     </div>
-</form>
-<form id="deleteForm" action="{{ path('person_delete', { 'id': entity.id }) }}" method="GET" class="">
-    {{ form_widget(delete_form) }}
-</form>
+    <!-- /page content -->
+
+{#<form action="{{ path('person_update', { 'id': entity.id }) }}"   method="POST" class="form-horizontal col-md-8">#}
+    {#<div class="form-group">#}
+      {#<div class="col-sm-offset-6 col-sm-6">#}
+        {#<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Mettre à jour</button>#}
+        {#<a href="#" id="js-delete" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Supprimer</a>#}
+      {#</div>#}
+    {#</div>#}
+{#</form>#}
+{#<form id="deleteForm" action="{{ path('person_delete', { 'id': entity.id }) }}" method="GET" class="">#}
+    {#{{ form_widget(delete_form) }}#}
+{#</form>#}
 {% endblock %}
 
 {% block javascripts %}
 {{ parent() }}
+    <!-- bootstrap-daterangepicker -->
+    <script>
+        $(document).ready(function() {
+            $('#birthday').daterangepicker({
+                singleDatePicker: true,
+                calender_style: "picker_4"
+            }, function(start, end, label) {
+                console.log(start.toISOString(), end.toISOString(), label);
+            });
+        });
+    </script>
+    <!-- /bootstrap-daterangepicker -->
 <script>
     (function($) {
 
@@ -29,33 +81,33 @@ Tableau de bord | {{ parent() }}
             return false;
         });
 
-        cityData = $.map(cityData, function(val,index){return {id:val, text:val};});
-        $('#ben_person_city').removeClass('form-control').select2({
-          createSearchChoice:function(term, data) { if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {return {id:term, text:term};} },
-          multiple: false,
-          data: cityData
-        });
-        $('select').removeClass('form-control').select2({minimumResultsForSearch: -1});
+//        cityData = $.map(cityData, function(val,index){return {id:val, text:val};});
+//        $('#ben_person_city').removeClass('form-control').select2({
+//          createSearchChoice:function(term, data) { if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {return {id:term, text:term};} },
+//          multiple: false,
+//          data: cityData
+//        });
+//        $('select').removeClass('form-control').select2({minimumResultsForSearch: -1});
 
-        /* handicap */
-        var ishandicap = $('#ben_person_ishandicap'),
-            handicap = ishandicap.closest('.form-group').next().hide();
-            needs = handicap.closest('.form-group').next().hide();
-
-        if(ishandicap.is(":checked")){
-            handicap.show();
-            needs.show();
-        }
-        ishandicap.on('change', function(){
-          if(ishandicap.is(":checked")){
-            handicap.show();
-            needs.show();
-          }
-          else {
-            handicap.hide();
-            needs.hide();
-          }
-        });
+//        /* handicap */
+//        var ishandicap = $('#ben_person_ishandicap'),
+//            handicap = ishandicap.closest('.form-group').next().hide();
+//            needs = handicap.closest('.form-group').next().hide();
+//
+//        if(ishandicap.is(":checked")){
+//            handicap.show();
+//            needs.show();
+//        }
+//        ishandicap.on('change', function(){
+//          if(ishandicap.is(":checked")){
+//            handicap.show();
+//            needs.show();
+//          }
+//          else {
+//            handicap.hide();
+//            needs.hide();
+//          }
+//        });
 
         /*universityData = $.map(universityData, function(val,index){return {id:val, text:val};});
         $('#ben_person_university').removeClass('form-control').select2({
@@ -66,4 +118,5 @@ Tableau de bord | {{ parent() }}
 
     })(jQuery);
 </script>
+
 {% endblock %}

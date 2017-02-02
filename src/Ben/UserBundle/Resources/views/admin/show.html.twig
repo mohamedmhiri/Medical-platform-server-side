@@ -4,59 +4,192 @@ Tableau de bord | {{ parent() }}
 {% endblock %}
 
 {% block body %}
-<h3><span class="glyphicon glyphicon-user"></span> {{ entity.fullName }}</h3>
+ <!-- page content -->
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3><span class="glyphicon glyphicon-user"></span> {{ entity.fullName }} </h3>
+                </div>
+                {#<div class="btn-group pull-right" style="margin-top: 15px;">#}
+                    {#<button class="btn btn-primary "><span class="glyphicon glyphicon-cog"></span> Selectioner une action</button>#}
+                    {#<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">#}
+                        {#<span class="caret"></span>#}
+                    {#</button>#}
+                    {#<ul class="dropdown-menu" role="menu">#}
+                        {#<li><a href="{{ path('person_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span> modifier</a></li>#}
+                        {#<li><a href="{{ path('antecedent_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Antécedent</a></li>#}
+                        {#<li><a href="{{ path('consultation_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Consultation </a></li>#}
+                        {#<li><a href="{{ path('appointment_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Rendes_vous </a></li>#}
+                        {#<li><a id="btnPrint"><span class="glyphicon glyphicon-print"></span> imprimer</a></li>#}
+                        {#<li><a href="#" id="js-delete"><span class="glyphicon glyphicon-trash"></span> Supprimer</a></li>#}
+                    {#</ul>#}
+                {#</div>#}
+                <h3> </h3>
+            </div>
 
-<div class="row">
-	<div class="col-md-12">
-    <div class="box">
-      <header>
-          <h4><span class="glyphicon glyphicon-file"></span> Medecin</h4>
-      </header>
-        <ul class="list-group">
-          <li class="list-group-item"><strong>Nom :</strong> {{ entity.familyname }}</li>
-          <li class="list-group-item"><strong>Preom :</strong>  {{ entity.firstname }} </li>
-          <li class="list-group-item"><strong>Tél :</strong> {{ entity.tel }}</li>
-          <li class="list-group-item"><strong>Ajouté le :</strong> {% if entity.created %}{{ entity.created|date('d/m/Y') }}{% endif %}</li>
-        </ul>
+            <div class="clearfix"></div>
+
+            <div class="row">
+               <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2><span class="glyphicon glyphicon-file"></span> Médecin </h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Nom</th>
+                                        <td>{{ entity.familyname }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Prénom</th>
+                                        <td>{{ entity.firstname }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Numéro de téléphone</th>
+                                        <td>{{ entity.tel }}</td>
+                                    </tr>
+                                {% if entity.created %}
+                                    <tr>
+                                        <th scope="row">Ajouté le</th>
+                                        <td>{{ entity.created|date('d/m/Y') }}</td>
+                                    </tr>
+                                {% endif %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                {#<div class="col-md-12 col-sm-12 col-xs-12">#}
+                    {#<div class="x_panel">#}
+                        {#<div class="x_title">#}
+                            {#<h2><span class="glyphicon glyphicon-plus"></span>  Historique des consultations </h2>#}
+                            {#<ul class="nav navbar-right panel_toolbox">#}
+                                {#<li>#}
+                                    {#<a class="collapse-link">#}
+                                        {#<i class="fa fa-chevron-up"></i>#}
+                                    {#</a>#}
+                                {#</li>#}
+
+                            {#</ul>#}
+                            {#<div class="clearfix"></div>#}
+                        {#</div>#}
+
+                        {#<div class="x_content">#}
+
+                            {#<div class="table-responsive">#}
+                                {#<table class="table table-striped jambo_table bulk_action">#}
+                                    {#<thead>#}
+                                    {#<tr class="headings">#}
+                                        {#{% if entity.antecedents|length > 0 %}#}
+                                        {#<th class="column-title">Type </th>#}
+                                        {#<th class="column-title">Médicaux </th>#}
+                                        {#<th class="column-title">Chirurgicaux & gynécologiques </th>#}
+                                        {#<th class="column-title">Description </th>#}
+                                        {#{% endif %}#}
+                                        {#<th class="column-title no-link last">#}
+                                            {#<span class="nobr">#}
+                                                {#Action#}
+                                            {#</span>#}
+                                        {#</th>#}
+                                    {#</tr>#}
+                                    {#</thead>#}
+
+                                    {#<tbody>#}
+                                    {#{% if entity.antecedents|length > 0 %}#}
+                                    {#{% for item in entity.antecedents %}#}
+                                    {#<tr class="even pointer">#}
+                                        {#<td class=" ">{{ item.type }}</td>#}
+                                        {#<td class=" ">{{ item.medicaux|nl2br }}</td>#}
+                                        {#<td class=" ">{{ item.chirurgicaux|nl2br }} </td>#}
+                                        {#<td class=" ">{{ item.traitement }}</td>#}
+                                        {#<td class=" last">#}
+                                            {#<a href="{{ path('antecedent_edit', { 'id': item.id }) }}">#}
+                                                {#Modifier l'antécédent#}
+                                            {#</a>#}
+                                        {#</td>#}
+                                    {#</tr>#}
+                                    {#{% endfor %}#}
+                                    {#{% else %}#}
+                                    {#<tr class="even pointer">#}
+                                        {#<td class=" last">#}
+                                            {#<a href="{{ path('antecedent_new', { 'id': entity.id }) }}">#}
+                                                 {#Ajouter un antécédent#}
+                                            {#</a>#}
+                                        {#</td>#}
+                                    {#</tr>#}
+                                    {#{% endif %}#}
+                                    {#</tbody>#}
+                                {#</table>#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+            </div>
+        </div>
     </div>
-	</div>
-	<div class="col-md-12">
-		
-      <div class="box">
-        <header>
-            <h4><span class="glyphicon glyphicon-tag"></span> Historique des consultations</h4>
-        </header>
-        <table class="table table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th>Motif</th>
-                    <th>Date</th>
-                    <th>Patient</th>
-                    <th>Diagnostic</th>
-                    <th>Traitement</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for item in entity.consultations %}
-              <tr>
-                <td><a href="{{ path('consultation_show', { 'id': item.id }) }}">{{ item.name }}</a></td>
-                <td>{{ item.created|date('d/m/Y') }}</td>
-                <td>{{ item.person.fullname }}</td>
-                <td>{{ item.diagnosis|nl2br }}</td>
-                <td>{{ item.treatment|nl2br }}</td>
-              </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div> 
-	</div>
-</div>
+    <!-- /page content -->
+{#<h3><span class="glyphicon glyphicon-user"></span> {{ entity.fullName }}</h3>#}
+
+{#<div class="row">#}
+	{#<div class="col-md-12">#}
+    {#<div class="box">#}
+      {#<header>#}
+          {#<h4><span class="glyphicon glyphicon-file"></span> Medecin</h4>#}
+      {#</header>#}
+        {#<ul class="list-group">#}
+          {#<li class="list-group-item"><strong>Nom :</strong> {{ entity.familyname }}</li>#}
+          {#<li class="list-group-item"><strong>Preom :</strong>  {{ entity.firstname }} </li>#}
+          {#<li class="list-group-item"><strong>Tél :</strong> {{ entity.tel }}</li>#}
+          {#<li class="list-group-item"><strong>Ajouté le :</strong> {% if entity.created %}{{ entity.created|date('d/m/Y') }}{% endif %}</li>#}
+        {#</ul>#}
+    {#</div>#}
+	{#</div>#}
+	{#<div class="col-md-12">#}
+		{##}
+      {#<div class="box">#}
+        {#<header>#}
+            {#<h4><span class="glyphicon glyphicon-tag"></span> Historique des consultations</h4>#}
+        {#</header>#}
+        {#<table class="table table-hover table-bordered">#}
+            {#<thead>#}
+                {#<tr>#}
+                    {#<th>Motif</th>#}
+                    {#<th>Date</th>#}
+                    {#<th>Patient</th>#}
+                    {#<th>Diagnostic</th>#}
+                    {#<th>Traitement</th>#}
+                {#</tr>#}
+            {#</thead>#}
+            {#<tbody>#}
+            {#{% for item in entity.consultations %}#}
+              {#<tr>#}
+                {#<td><a href="{{ path('consultation_show', { 'id': item.id }) }}">{{ item.name }}</a></td>#}
+                {#<td>{{ item.created|date('d/m/Y') }}</td>#}
+                {#<td>{{ item.person.fullname }}</td>#}
+                {#<td>{{ item.diagnosis|nl2br }}</td>#}
+                {#<td>{{ item.treatment|nl2br }}</td>#}
+              {#</tr>#}
+            {#{% endfor %}#}
+            {#</tbody>#}
+        {#</table>#}
+    {#</div> #}
+	{#</div>#}
+{#</div>#}
 
 {% endblock body %}
 
  {% block javascripts %}
 {{ parent() }}
-<script> 
+<script>
     (function($) {
     })(jQuery);
 </script>

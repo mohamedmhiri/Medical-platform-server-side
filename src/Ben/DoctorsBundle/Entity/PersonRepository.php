@@ -17,7 +17,10 @@ class PersonRepository extends EntityRepository
     public function search($searchParam) {
         extract($searchParam);
         $qb = $this->createQueryBuilder('p');
-
+        //SELECT u, img FROM Ben\UserBundle\Entity\User u LEFT JOIN u.image img
+        // WHERE concat(u.familyname, u.firstname)like :keyword
+        // or u.email like :keyword u.username like :keyword
+        // or u.roles like :keyword
         if(!empty($keyword))
             $qb->andWhere('concat(p.familyname, p.firstname) like :keyword or p.email like :keyword or p.city like :keyword or p.cin like :keyword')
                 ->setParameter('keyword', '%'.$keyword.'%');
@@ -44,12 +47,17 @@ class PersonRepository extends EntityRepository
        return new Paginator($qb->getQuery());
     }
 
-    public function counter() {
+    public function counter()
+    {
         $qb = $this->createQueryBuilder('p')
             ->andWhere('p.isDeleted = 0')
             //->setParameter('isDeleted',false)
             ->select('COUNT(p)');
         return $qb->getQuery()->getSingleScalarResult();
+    }
+    public function findActive()
+    {
+        return $this->fetch("select distinct id, firstname, familyname from person where isdeleted =0");
     }
 
     public function getCities()

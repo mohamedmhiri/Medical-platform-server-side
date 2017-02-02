@@ -4,35 +4,63 @@ Login - {{ parent() }}
 {% endblock %}
 
 {% block container %}
+    <body class="login">
+    <div>
+        <a class="hiddenanchor" id="signup"></a>
+        <a class="hiddenanchor" id="signin"></a>
 
-<body class="sign-in-bg">
-<div class="container">
-    <div class="row">
-        <div class="col-sm-6 col-md-4 col-md-offset-4">
+        <div class="login_wrapper">
+            <div class="animate form login_form">
+                <section class="login_content">
+                    <form action="/check" method="post">
+                        <h1>Login Form</h1>
+                        <div>
+                            <input type="text" class="form-control" placeholder="Username" name="_username" value="{{ last_username }}" required="" autofocus/>
+                        </div>
+                        <div>
+                            <input type="password" class="form-control" placeholder="Password" name="_password" required="" />
+                        </div>
+                        <div>
+                            <button class="btn btn-default submit" style="width:100%;">Log in</button>
+                        </div>
+                        <div class="clearfix"></div>
 
-            {% if error %}
-                <div class="alert alert-danger fade in">
-                    <strong><i class="icon-warning-sign"></i> erreur : </strong> {{ error|trans({}, 'FOSUserBundle') }}
-                </div>
-            {% endif %}
-            {# <h1 class="text-center login-title">Sign in to continue to Bootsnipp</h1> #}
-            <div class="sign-in-head text-center">
-                <h1>Sign In</h1>
+                    </form>
+                </section>
             </div>
-            <div class="account-wall">
-                <img class="profile-img" src="{{ asset("uploads/img/anonymous.png") }}"
-                    alt="">
-                <form action="/check" method="post" class="form-signin">
-                <input type="text" class="form-control" placeholder="Username" name="_username" value="{{ last_username }}" required autofocus>
-                <input type="password" class="form-control" placeholder="Password" name="_password" required>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">
-                    Sign in</button>
-                {#<span class="clearfix"></span>#}
-                </form>
-            </div>
+
+
         </div>
     </div>
-</div>
+    </body>
+{#<body class="sign-in-bg">#}
+{#<div class="container">#}
+    {#<div class="row">#}
+        {#<div class="col-sm-6 col-md-4 col-md-offset-4">#}
 
-</body>
+            {#{% if error %}#}
+                {#<div class="alert alert-danger fade in">#}
+                    {#<strong><i class="icon-warning-sign"></i> erreur : </strong> {{ error|trans({}, 'FOSUserBundle') }}#}
+                {#</div>#}
+            {#{% endif %}#}
+            {# <h1 class="text-center login-title">Sign in to continue to Bootsnipp</h1> #}
+            {#<div class="sign-in-head text-center">#}
+                {#<h1>Sign In</h1>#}
+            {#</div>#}
+            {#<div class="account-wall">#}
+                {#<img class="profile-img" src="{{ asset("uploads/img/anonymous.png") }}"#}
+                    {#alt="">#}
+                {#<form action="/check" method="post" class="form-signin">#}
+                {#<input type="text" class="form-control" placeholder="Username" name="_username" value="{{ last_username }}" required autofocus>#}
+                {#<input type="password" class="form-control" placeholder="Password" name="_password" required>#}
+                {#<button class="btn btn-lg btn-primary btn-block" type="submit">#}
+                    {#Sign in</button>#}
+                {#<span class="clearfix"></span>#}
+                {#</form>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+{#</div>#}
+
+{#</body>#}
 {% endblock container %}

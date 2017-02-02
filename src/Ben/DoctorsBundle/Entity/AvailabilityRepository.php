@@ -17,4 +17,19 @@ class AvailabilityRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
+    /**
+     * get coming availabilities
+     */
+    public function findComing()
+    {
+        return  $this->fetch("select distinct start, end from availabilities where start > date(now())");
+    }
+
+    private function fetch($query)
+    {
+        $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+        $stmt->execute();
+        return  $stmt->fetchAll();
+    }
+
 }

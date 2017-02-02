@@ -30,25 +30,36 @@ class CalendarController extends  Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('BenDoctorsBundle:Availability')->findAll();
-        $apps_ = $em->getRepository('BenDoctorsBundle:Appointment')->findAll();
+        $persons = $em->getRepository('BenDoctorsBundle:Person')->findActive();
+        $entities = $em->getRepository('BenDoctorsBundle:Availability')->findComing();
+        $apps_ = $em->getRepository('BenDoctorsBundle:Appointment')->findComing();
         $apps = [];
         $dates = [];
-        foreach ($apps_ as $app){
-            array_push($apps,$app->getDate()->format('Y-m-d H:i:s'));
+        $patients = [];
+        foreach ( $persons as $person)
+        {
+            array_push($patients,$person);
+        }
+        foreach ($apps_ as $app)
+        {
+            array_push($apps,substr($app["date"],0,-3));
         }
         foreach ( $entities as $entity)
         {
-
-            $time=$entity->getStart();
-            while ($time->format('Y-m-d H:i:s') <= $entity->getEnd()->format('Y-m-d H:i:s')) {
-                if( !in_array( $time->format('Y-m-d H:i:s') ,$apps ))
-                    array_push($dates, $time->format('Y-m-d H:i:s') );
-                $time->modify('+30 minutes')->format('Y-m-d H:i:s');
+            $time=substr($entity["start"],0,-3);
+            while ($time < substr($entity["end"],0,-3))
+            {
+                if( !in_array( $time ,$apps ) )
+                {
+                    array_push($dates, $time );
+                }
+                $date_obj = date_create($time);
+                $date_obj->modify('+30 minutes');
+                $time = $date_obj->format('Y-m-d H:i');
             }
         }
-        return $dates;
-
+        // there is an hour difference between now and tunisia
+        return ["patients"=>$patients, "dates"=>$dates];
     }
     /**
      * returns calendar vue
@@ -59,6 +70,15 @@ class CalendarController extends  Controller
             '/var/www/html/medical/src/Ben/DoctorsBundle/Resources/views/Calendar/calendar.html.twig',
             array("prepare"=>$this->prepare())
         );
+//        return $this->prepare();
+    }
+
+    /**
+     * Y-m-d H:i :string ==> array(Y) => array(m) => array(d H:i)
+     */
+    public function formatString($dates)
+    {
+
     }
 
 }

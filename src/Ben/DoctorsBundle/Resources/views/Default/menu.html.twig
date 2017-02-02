@@ -8,7 +8,7 @@
 {% set userMenu = ['ben_users','ben_show_user','ben_new_user','ben_edit_user'] %}
 
 
-<nav id="adminmenu">
+<!--<nav id="adminmenu">
     <ul class="top-menu">
         <li class="{% if route!='ben_dashboard' %}not-{% endif %}current"><a href="{{ path('ben_dashboard') }}"><span class="glyphicon glyphicon-stats "></span> <span class="menu-title">Statistiques</span></a></li>
         {% if not is_granted("ROLE_MANAGER") or is_granted("ROLE_ADMIN") %}
@@ -22,10 +22,62 @@
         {% endif %}
         {% if is_granted("ROLE_ADMIN") %}
         <li class="{% if route not in userMenu %}not-{% endif %}current"><a href="{{ path('ben_users') }}"><span class="glyphicon glyphicon-user"></span> <span class="menu-title">Médecins</span></a></li>
-        <li ><a href="{{ path('ben_doctors_calendar') }}" ><span class="glyphicon glyphicon-envelope"></span>  <span class="menu-title">Rendez_vous</span></a></li>
+        <li ><span class="glyphicon glyphicon-envelope"></span>  <span class="menu-title">Rendez_vous</span></a></li>
         <li class="{% if route not in configMenu %}not-{% endif %}current"><a href="{{ path('config') }}"><span class="glyphicon glyphicon-wrench "></span> <span class="menu-title">Préférences</span></a>
         </li>
         {% endif %}
         <li class="not-current"><a href="#" id="trigger-shelf"><span class="glyphicon glyphicon-chevron-left "></span>  <span class="menu-title">Collapse menu</span></a></li>
     </ul>
-</nav>
+</nav>-->
+<div class="col-md-3 left_col">
+  <div class="left_col scroll-view">
+    <div class="navbar nav_title" style="border: 0;">
+      <a href="/" class="site_title"><i class="fa fa-heartbeat"></i> <span>Medical Center</span></a>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <!-- menu profile quick info -->
+    <div class="profile clearfix">
+      <div class="profile_pic">
+        <img src="{{ asset('images/img.jpg')}}" alt="" class="img-circle profile_img">
+      </div>
+      <div class="profile_info">
+        <span>Bienvenue,</span>
+        <h2>{{ app.user.fullName }}</h2>
+      </div>
+    </div>
+    <!-- /menu profile quick info -->
+
+    <br />
+
+    <!-- sidebar menu -->
+    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+      <div class="menu_section">
+        <ul class="nav side-menu">
+          <li>
+            <a href="{{ path('ben_dashboard') }}"><i class="fa fa-home"></i> Statique </a>
+          </li>
+          <li>
+            {% if not is_granted("ROLE_MANAGER") or is_granted("ROLE_ADMIN") %}
+            <a href="{{ path('person') }}"><i class="fa fa-stethoscope"></i>Patients</a>
+            {% endif %}
+          </li>
+          <li>
+          {% if is_granted("ROLE_ADMIN") %}
+            <a href="{{ path('ben_users') }}"><i class="fa  fa-user-md"></i>Médecins</a>
+          </li>
+          <li>
+            <a href="{{ path('ben_doctors_calendar') }}" ><i class="fa  fa-calendar"></i>Rendez-vous</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+
+
+    </div>
+    <!-- /sidebar menu -->
+
+
+  </div>
+</div>

@@ -17,4 +17,21 @@ class AppointmentRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
+
+    /**
+     * get coming appointments
+     */
+    public function findComing()
+    {
+        return  $this->fetch("select distinct date from appointments where date > date(now())");
+    }
+
+    private function fetch($query)
+    {
+        $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+        $stmt->execute();
+        return  $stmt->fetchAll();
+    }
+
+
 }

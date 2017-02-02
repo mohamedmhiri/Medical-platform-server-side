@@ -25,7 +25,7 @@ class ConsultationType extends AbstractType
             ->add('name', 'text', array('label'=>'Specialité medicale'))
             ->add('motiftype','text',array('label'=>'Motif de consultation'))
             ->add('anamnese', 'textarea',  array('label'=>'Interrogatoire','required'  => false))
-            ->add('person')
+//            ->add('person')
             ->add('diagnosis', 'textarea', array('label'=>'Diagnostique','required' => false,))
             ->add('decision', 'textarea', array('label'=>'Conduite tenue','required' => false,))
             ->add('treatment', 'textarea', array('label'=>'Traitement préscrit', 'required'  => false))

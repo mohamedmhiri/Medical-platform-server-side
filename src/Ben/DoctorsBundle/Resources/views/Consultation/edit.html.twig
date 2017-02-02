@@ -3,27 +3,75 @@
 Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block body %}
-<h3><span class="glyphicon glyphicon-file"></span> Mettre à jour une consultation</h3>
+    <!-- page content -->
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3> Mettre à jour une consultation </h3>
+                </div>
 
-<form action="{{ path('consultation_update', { 'id': entity.id }) }}"  class="form-horizontal col-md-8" method="post" role="form" {{ form_enctype(form) }}>
-    <div class="form-group ">
-        <label class="col-md-6 control-label" for="user">Patient</label>
-        <div class="col-md-6">
-            <input id="user" class="form-control disabled" disabled="disabled" type="text" name="unused" value="{{ entity.person.fullName }}">
+
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <br />
+                            <form action="{{ path('consultation_update', { 'id': entity.id }) }}" method="POST" data-parsley-validate class="form-horizontal form-label-left">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="user">Patient </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control" disabled="disabled" name="unused" value="{{ entity.person.fullName }}">
+                                    </div>
+                                </div>
+                                {% include "BenDoctorsBundle:Consultation:form.html.twig" %}
+                                <div class="ln_solid">
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Mettre à jour</button>
+                                        <a href="#" id="js-delete" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Supprimer</a>
+                                    </div>
+                                </div>
+                            </form>
+                            <form id="deleteForm" action="{{ path('consultation_delete', { 'id': entity.id }) }}" method="DELETE" class="">
+                                {{ form_widget(delete_form) }}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
-    {% include "BenDoctorsBundle:Consultation:form.html.twig" %}
+    <!-- /page content -->
+{#<h3><span class="glyphicon glyphicon-file"></span> Mettre à jour une consultation</h3>#}
 
-    <div class="form-group">
-      <div class="col-sm-offset-6 col-sm-6">
-        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Mettre à jour</button>
-        <a href="#" id="js-delete" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Supprimer</a>
-      </div>
-    </div>
-</form>
-<form id="deleteForm" action="{{ path('consultation_delete', { 'id': entity.id }) }}" method="POST" class="">
-    {{ form_widget(delete_form) }}
-</form>
+{#<form action="{{ path('consultation_update', { 'id': entity.id }) }}"  class="form-horizontal col-md-8" method="post" role="form" {{ form_enctype(form) }}>#}
+    {#<div class="form-group ">#}
+        {#<label class="col-md-6 control-label" for="user">Patient</label>#}
+        {#<div class="col-md-6">#}
+            {#<input id="user" class="form-control disabled" disabled="disabled" type="text" name="unused" value="{{ entity.person.fullName }}">#}
+        {#</div>#}
+    {#</div>#}
+    {#{% include "BenDoctorsBundle:Consultation:form.html.twig" %}#}
+
+    {#<div class="form-group">#}
+      {#<div class="col-sm-offset-6 col-sm-6">#}
+        {#<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Mettre à jour</button>#}
+        {#<a href="#" id="js-delete" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Supprimer</a>#}
+      {#</div>#}
+    {#</div>#}
+{#</form>#}
+{#<form id="deleteForm" action="{{ path('consultation_delete', { 'id': entity.id }) }}" method="POST" class="">#}
+    {#{{ form_widget(delete_form) }}#}
+{#</form>#}
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}

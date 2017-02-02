@@ -82,6 +82,7 @@ class Consultation
     * @ORM\ManyToOne(targetEntity="Ben\DoctorsBundle\Entity\Person", inversedBy="consultations", cascade={"remove", "persist"})
     * @ORM\JoinColumn(name="person_id", referencedColumnName="id", nullable=false)
     */
+
     private $person;
 
     /**
@@ -364,5 +365,20 @@ class Consultation
     {
         return $this->decision;
     }
+
+    /**
+     * Set Diagnosis
+     *
+     * @param string $diagnosis
+     * @return Consultation
+     */
+    public function setDiagnosis($diagnosis)
+    {
+        $this->diagnosis = $diagnosis;
+
+        return $this;
+    }
+
+
     
 }

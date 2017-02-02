@@ -12,7 +12,7 @@
     {% if label is empty %}
         {% set label = name|humanize %}
     {% endif %}
-    <label class="col-md-6 control-label" {% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" {% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
 {% endspaceless %}
 {% endblock form_label %}
 
@@ -22,7 +22,7 @@
 {% spaceless %}
 	{% set type = type|default('text') %}
 		<div class="col-md-6">
-	    	<input {% if type != 'file' %}class="form-control"{% else %}class="input-md"{% endif %} id="{{ id }}" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+	    	<input {% if type != 'file' %}class="form-control col-md-7 col-xs-12"{% else %}class="input-md"{% endif %} id="{{ id }}" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
 	  	</div>
 {% endspaceless %}
 {% endblock form_widget_simple %}
@@ -40,7 +40,7 @@
 {# Textarea #}
 {% block textarea_widget %}
 {% spaceless %}
-    <div class="col-md-6">
+    <div class="col-sm-6">
     <textarea {{ block('widget_attributes') }} class="form-control">{{ value }}</textarea>
     </div>
 {% endspaceless %}
@@ -51,7 +51,7 @@
 {% block choice_widget_collapsed %}
 {% spaceless %}
 
-    <div class="col-md-6">
+    <div class="col-md-6 col-sm-6 col-xs-12">
     <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="form-control">
         {% if empty_value is not none %}
             <option value="">{{ empty_value|trans({}, translation_domain) }}</option>
@@ -73,19 +73,35 @@
 {# Date #}
 {% block date_widget %}
 {% spaceless %}
-<div class="col-md-6">
-<div class="input-group">
-      <input type="text" class="form-control has-datepicker" {{ block('widget_attributes') }} {% if value is defined %} value="{{ value}}"{% endif %} />
-  <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-</div>
-</div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="input-group">
+      <input id="birthday" type="date" class="date-picker form-control col-md-7 col-xs-12" {{ block('widget_attributes') }} {% if value is defined %} value="{{ value}}"{% endif %} />
+    </div>
+    </div>
 {% endspaceless %}
 {% endblock date_widget %} 
 
 {# checkbox #}
 {% block checkbox_widget %}
 {% spaceless %}
-<input type="checkbox" {{ block('widget_attributes') }} {% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}/>
+<div class="col-md-9 col-sm-9 col-xs-12">
+    <div class="">
+        <label>
+            <input type="checkbox" class="js-switch" {{ block('widget_attributes') }} {% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+        </label>
+    </div>
+</div>
+{#<div class="col-md-9 col-sm-9 col-xs-12">#}
+    {#<div class="checkbox">#}
+        {#<label>#}
+            {#<input type="checkbox" class="flat" checked="checked"> Checked#}
+        {#</label>#}
+    {#</div>#}
+{#</div>#}
+{#<div class="icheckbox_flat-green checked">#}
+    {#<input type="checkbox" class="flat" checked="checked"/>#}
+            {#{{ block('widget_attributes') }} {% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}#}
+{#</div>#}
 {% endspaceless %}
 {% endblock checkbox_widget %}
 

@@ -3,23 +3,66 @@
 Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block body %}
-<h3><span class="glyphicon glyphicon-tag"></span> Ajout d'un Antecedent</h3>
-<form action="{{ path('antecedent_create') }}" class="form-horizontal col-md-8" method="post" {{ form_enctype(form) }}>
-    <div class="form-group ">
-		<label class="col-md-6 control-label" for="user">Patient</label>
-		<div class="col-md-6">
-			<input id="user" class="form-control disabled" disabled="disabled" type="text" name="unused" value="{{ entity.person.fullName }}">
-		</div>
-	</div>
+    <!-- page content -->
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3> Ajout d'un Antécedent médical </h3>
+                </div>
 
-    {% include "BenDoctorsBundle:Antecedent:form.html.twig" %}
 
-    <div class="form-group">
-      <div class="col-md-offset-6 col-md-6">
-        <button type="submit" name="subvalider" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Ajouter</button>
-      </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <br />
+                            <form action="{{ path('antecedent_create') }}" method="post" {{ form_enctype(form) }}  data-parsley-validate class="form-horizontal form-label-left">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="user">Patient </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control" disabled="disabled" name="unused" value="{{ entity.person.fullName }}">
+                                    </div>
+                                </div>
+                                {% include "BenDoctorsBundle:Antecedent:form.html.twig" %}
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                        <button name="subvalider" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Ajouter</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
     </div>
-</form>
+    <!-- /page content -->
+{#<h3><span class="glyphicon glyphicon-tag"></span> Ajout d'un Antecedent</h3>#}
+{#<form action="{{ path('antecedent_create') }}" class="form-horizontal col-md-8" method="post" {{ form_enctype(form) }}>#}
+    {#<div class="form-group ">#}
+		{#<label class="col-md-6 control-label" for="user">Patient</label>#}
+		{#<div class="col-md-6">#}
+			{#<input id="user" class="form-control disabled" disabled="disabled" type="text" name="unused" value="{{ entity.person.fullName }}">#}
+		{#</div>#}
+	{#</div>#}
+
+    {#{% include "BenDoctorsBundle:Antecedent:form.html.twig" %}#}
+
+    {#<div class="form-group">#}
+      {#<div class="col-md-offset-6 col-md-6">#}
+        {#<button type="submit" name="subvalider" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Ajouter</button>#}
+      {#</div>#}
+    {#</div>#}
+{#</form>#}
 
 {% endblock body %}
 {% block javascripts %}
@@ -27,7 +70,7 @@ Tableau de bord | {{ parent() }}
 <script>
     (function($) {
         $('#ben_antecedent_person').closest('.form-group').hide();
-        $('select').removeClass('form-control').select2({minimumResultsForSearch: -1});
+{#//        $('select').removeClass('form-control').select2({minimumResultsForSearch: -1});#}
     })(jQuery);
 </script>
 {% endblock %}

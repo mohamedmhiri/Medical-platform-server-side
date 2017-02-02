@@ -1,79 +1,180 @@
-{#<!doctype html>#}
-{#<html lang="en">#}
-{#<head>#}
-    {#<meta charset="UTF-8">#}
-    {#<meta name="viewport"#}
-          {#content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">#}
-    {#<meta http-equiv="X-UA-Compatible" content="ie=edge">#}
-    {#<link href="{{ asset('css/fullcalendar.css') }}" rel="stylesheet">#}
-    {#<script src="{{ asset('js/moment.min.js') }}"></script>#}
-    {#<script src="{{ asset('js/jquery.min.js') }}"></script>#}
-    {#<script src="{{ asset('js/availability.js') }}"></script>#}
-
 {% extends "BenDoctorsBundle::layout.html.twig" %}
 {% block title %}
     Gestion des rendez_vous | {{ parent() }}
 {% endblock %}
 {% block body %}
-    <form  action="{{ path('take_appointment') }}" method="POST" class="">
-        <div id='external-events'>
-            <div id='external-events-listing'>
-                <h4>Ajouter rendez-vous</h4>
-            </div>
-            <p>
-            <div class="form-group ">
-                <label class="col-md-6 control-label" for="ben_person_familyname">
-                    Nom
-                </label>
-                <div class="col-md-6">
-                    <input class="form-control" id="ben_person_familyname" type="text" name="familyname" required="required" maxlength="255">
-                </div>
-            </div>
-            <div class="form-group ">
-                <label class="col-md-6 control-label" for="ben_person_firstname">
-                    Prenom
-                </label>
-                <div class="col-md-6">
-                    <input class="form-control" id="ben_person_firstname" type="text" name="firstname" required="required" maxlength="255">
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="btn-group">
-                            {#<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">#}
-                                {##}
-                                {#<span class="caret"></span>#}
-                            {#</button>#}
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                Date
-                                <span class="caret"></span>
-                            </button>
 
-                            <ul class="dropdown-menu scrollable-menu" role="menu">
-                                {#class="dropdown-menu" aria-labelledby="dropdownMenu1"#}
-                                {% for date in prepare %}
-                                    <li><a href="#" >{{ date }}</a></li>
-                                    <input type="hidden" value="{{ date }}" name="date">
-                                {% endfor %}
+    <!-- page content -->
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>Le calendrier </h3>
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Prendre un rendez-vous</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
                             </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <br />
+                            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="{{ path('take_appointment') }}" method="POST">
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Date <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <select class="select2_group form-control">
+                                            {% for patient in prepare.patients%}
+                                                <option value="{{ patient.id }}" name="patient">{{ patient.firstname }} {{ patient.familyname }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Date <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <select class="select2_group form-control">
+                                            {% for date in prepare.dates|sort %}
+                                                {#<optgroup label="year">#}
+                                                    <option value="{{ date }}" name="date">{{ date }}</option>
+                                                {#</optgroup>#}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                        <button id="rendez-vous" type="submit" class="btn btn-dark"><span class="glyphicon glyphicon-calendar"></span> Validez </button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="x_panel">
+
+                        <div class="x_content">
+
+                            <div id='calendar'></div>
+
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="dropdown">
+            {#<form  action="{{ path('take_appointment') }}" method="POST" class="">#}
+                {#<div id='external-events'>#}
+                    {#<div id='external-events-listing'>#}
+                        {#<h4>Ajouter rendez-vous</h4>#}
+                    {#</div>#}
+                    {#<p>#}
+                    {#<div class="form-group ">#}
+                        {#<label class="col-md-6 control-label" for="ben_person_familyname">#}
+                            {#Nom#}
+                        {#</label>#}
+                        {#<div class="col-md-2 col-sm-12 col-xs-12 form-group">#}
+                            {#<input class="form-control" placeholder="nom" id="ben_person_familyname" type="text" name="familyname" required="required" maxlength="255">#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="form-group ">#}
+                        {#<label class="col-md-6 control-label" for="ben_person_firstname">#}
+                            {#Prenom#}
+                        {#</label>#}
+                        {#<div class="col-md-2 col-sm-12 col-xs-12 form-group">#}
+                            {#<input placeholder="prenom" class="form-control" id="ben_person_firstname" type="text" name="firstname" required="required" maxlength="255">#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="container">#}
+                        {#<div class="row">#}
+                            {#<div class="col-lg-12">#}
+                                {#<div class="btn-group">#}
+                                    {#<div class="form-group">#}
+                                        {#<label class="control-label col-md-3 col-sm-3 col-xs-12">Rendez-vous</label>#}
+                                        {#<div class="col-md-9 col-sm-9 col-xs-12">#}
+                                            {#<select class="select2_group form-control">#}
+                                                {#{% for date in prepare %}#}
+                                                    {#<optgroup label="year">#}
+                                                        {#<option value="{{ date }}" name="date">{{ date }}</option>#}
+                                                    {#</optgroup>#}
+                                                    {#<li><a href="#" >{{ date }}</a></li>#}
+                                                    {#<input type="hidden" value="{{ date }}" name="date">#}
+                                                {#{% endfor %}#}
+                                            {#</select>#}
+                                        {#</div>#}
+                                    {#</div>#}
+                                    {#<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">#}
+                                        {#Date#}
+                                        {#<span class="caret"></span>#}
+                                    {#</button>#}
+                                    {#<ul class="dropdown-menu scrollable-menu" role="menu">#}
+                                        {#class="dropdown-menu" aria-labelledby="dropdownMenu1"#}
+                                        {#{% for date in prepare %}#}
+                                            {#<li><a href="#" >{{ date }}</a></li>#}
+                                            {#<input type="hidden" value="{{ date }}" name="date">#}
+                                        {#{% endfor %}#}
+                                    {#</ul>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="dropdown">#}
 
-            </div>
-            </p>
-            <div class="form-group">
-                <div class="col-sm-offset-6 col-sm-6">
-                    <button type="submit" class="btn btn-area"><span class="glyphicon glyphicon-calendar"></span> Validez </button>
-                    {#<a href="{{ path('') }}" id="js-delete" class="btn btn-area"><span class="glyphicon glyphicon-calendar"></span> </a>#}
-                </div>
-            </div>
-        </div>    </form>
+                    {#</div>#}
+                    {#</p>#}
+                    {#<div class="form-group">#}
+                        {#<div class="col-sm-offset-6 col-sm-6">#}
+                            {#<button type="submit" class="btn btn-area"><span class="glyphicon glyphicon-calendar"></span> Validez </button>#}
+                            {#<a href="{{ path('') }}" id="js-delete" class="btn btn-area"><span class="glyphicon glyphicon-calendar"></span> </a>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</form>#}
+
+            {#<div class="clearfix"></div>#}
+
+            {#<div class="row">#}
+                {#<div class="col-md-12">#}
+                    {#<div class="x_panel">#}
+
+                        {#<div class="x_content">#}
+
+                            {#<div id='calendar'></div>#}
+
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        </div>
+    </div>
+    <!-- /page content -->
 
 
-        <div id='calendar'></div>
+        {#<div id='calendar'></div>#}
 
 {% endblock body %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        (function($) {
+
+            $('#rendez-vous').on('click', function(){
+                console.log("salem");
+            });
+        })(jQuery);
+    </script>
+
+
+{% endblock %}

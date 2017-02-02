@@ -25,8 +25,9 @@ class DefaultController extends Controller
       $qb->select('co')
       ->from('BenDoctorsBundle:consultation','co')
       ->where('month(co.created)=month(now())')//
-      ->andWhere('YEAR(co.created)=YEAR (now()) ');//
-      return $qb->getQuery()->getResult();
+      ->andWhere('YEAR(co.created)-(YEAR (now())) <2');//
+
+        return $qb->getQuery()->getResult();
     }
     public function getPreviousMonth()
     {
@@ -36,8 +37,9 @@ class DefaultController extends Controller
       $qb->select('co')
       ->from('BenDoctorsBundle:consultation','co')
       ->where('month(co.created)=(month(now())-1)')//
-      ->andWhere('YEAR(co.created)=(YEAR (now())) ');//
-      return $qb->getQuery()->getResult();
+      ->andWhere('YEAR(co.created)-(YEAR (now())) <2');//
+
+        return $qb->getQuery()->getResult();
     }
     public function get2PreviousMonth()
     {
@@ -47,8 +49,9 @@ class DefaultController extends Controller
       $qb->select('co')
       ->from('BenDoctorsBundle:consultation','co')
       ->where('month(co.created)=(month(now())-2)')//
-      ->andWhere('YEAR(co.created)=(YEAR (now())) ');//
-      return $qb->getQuery()->getResult();
+      ->andWhere('YEAR(co.created)-(YEAR (now())) <2');//
+
+        return $qb->getQuery()->getResult();
     }
     public function get3PreviousMonth()
     {
@@ -58,8 +61,9 @@ class DefaultController extends Controller
       $qb->select('co')
       ->from('BenDoctorsBundle:consultation','co')
       ->where('month(co.created)=(month(now())-3)')//
-      ->andWhere('YEAR(co.created)=(YEAR (now())) ');//
-      return $qb->getQuery()->getResult();
+      ->andWhere('YEAR(co.created)-(YEAR (now())) <2');//
+
+        return $qb->getQuery()->getResult();
     }
     public function get4PreviousMonth()
     {
@@ -69,8 +73,9 @@ class DefaultController extends Controller
       $qb->select('co')
       ->from('BenDoctorsBundle:consultation','co')
       ->where('month(co.created)=(month(now())-4)')//
-      ->andWhere('YEAR(co.created)=(YEAR (now())) ');//
-      return $qb->getQuery()->getResult();
+      ->andWhere('YEAR(co.created)-(YEAR (now())) <2');//
+
+        return $qb->getQuery()->getResult();
     }
     public function get5PreviousMonth()
     {
@@ -80,8 +85,9 @@ class DefaultController extends Controller
       $qb->select('co')
       ->from('BenDoctorsBundle:consultation','co')
       ->where('month(co.created)=(month(now())-5)')//
-      ->andWhere('YEAR(co.created)=(YEAR (now())) ');//
-      return $qb->getQuery()->getResult();
+      ->andWhere('YEAR(co.created)-(YEAR (now())) <2');//
+
+        return $qb->getQuery()->getResult();
     }
     public function get6PreviousMonth()
     {
@@ -91,8 +97,9 @@ class DefaultController extends Controller
       $qb->select('co')
       ->from('BenDoctorsBundle:consultation','co')
       ->where('month(co.created)=(month(now())-6)')//
-      ->andWhere('YEAR(co.created)=(YEAR (now())) ');//
-      return $qb->getQuery()->getResult();
+      ->andWhere('YEAR(co.created)-(YEAR (now())) <2');//
+
+        return $qb->getQuery()->getResult();
     }
     public function get7PreviousMonth()
     {
@@ -102,8 +109,9 @@ class DefaultController extends Controller
       $qb->select('co')
       ->from('BenDoctorsBundle:consultation','co')
       ->where('month(co.created)=(month(now())-7)')//
-      ->andWhere('YEAR(co.created)=(YEAR (now())) ');//
-      return $qb->getQuery()->getResult();
+      ->andWhere('YEAR(co.created)-(YEAR (now())) <2');//
+
+        return $qb->getQuery()->getResult();
     }
     public function get8PreviousMonth()
     {
@@ -113,8 +121,9 @@ class DefaultController extends Controller
       $qb->select('co')
       ->from('BenDoctorsBundle:consultation','co')
       ->where('month(co.created)=(month(now())-8)')//
-      ->andWhere('YEAR(co.created)=(YEAR (now())) ');//
-      return $qb->getQuery()->getResult();
+      ->andWhere('YEAR(co.created)-(YEAR (now())) <2');//
+
+        return $qb->getQuery()->getResult();
     }
     public function get9PreviousMonth()
     {
@@ -124,8 +133,10 @@ class DefaultController extends Controller
       $qb->select('co')
       ->from('BenDoctorsBundle:consultation','co')
       ->where('month(co.created)=(month(now())-9)')//
-      ->andWhere('YEAR(co.created)=(YEAR (now())) ');//
-      return $qb->getQuery()->getResult();
+      ->andWhere('YEAR(co.created)=(YEAR (now())) ')
+          ->orWhere('YEAR(co.created)-(YEAR (now())) <2');//
+
+        return $qb->getQuery()->getResult();
     }
     public function get10PreviousMonth()
     {
@@ -135,7 +146,8 @@ class DefaultController extends Controller
       $qb->select('co')
       ->from('BenDoctorsBundle:consultation','co')
       ->where('month(co.created)=(month(now())-10)')//
-      ->andWhere('YEAR(co.created)=(YEAR (now())) ');//
+      ->andWhere('YEAR(co.created)=(YEAR (now())) ')
+          ->orWhere('YEAR(co.created)-(YEAR (now())) <2');//
       return $qb->getQuery()->getResult();
     }
     public function get11PreviousMonth()
@@ -146,7 +158,7 @@ class DefaultController extends Controller
       $qb->select('co')
       ->from('BenDoctorsBundle:consultation','co')
       ->where('month(co.created)=(month(now())-11)')//
-      ->andWhere('YEAR(co.created)=(YEAR (now())) ');//
+      ->andWhere('YEAR(co.created)-(YEAR (now())) <2 ');//
       return $qb->getQuery()->getResult();
     }
     public function get12PreviousMonth()
@@ -157,7 +169,7 @@ class DefaultController extends Controller
       $qb->select('co')
       ->from('BenDoctorsBundle:consultation','co')
       ->where('month(co.created)=(month(now())-12)')//
-      ->andWhere('YEAR(co.created)=(YEAR (now())) ');//
+      ->andWhere('YEAR(co.created)-(YEAR (now())) <2');//
       return $qb->getQuery()->getResult();
     }
     public function getBirthdays()

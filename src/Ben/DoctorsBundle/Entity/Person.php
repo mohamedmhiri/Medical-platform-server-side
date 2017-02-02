@@ -50,12 +50,12 @@ class Person
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
      */
     private $email;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="oldemail", type="string", length=255, nullable=true)
-     */
-    private $oldemail;
+//    /**
+//     * @var string
+//     *
+//     * @ORM\Column(name="oldemail", type="string", length=255, nullable=true)
+//     */
+//    private $oldemail;
 
     /**
      * @var \DateTime
@@ -109,6 +109,13 @@ class Person
     private $gsm;
 
 
+    /**
+     * @var integer
+     *
+     *
+     */
+    private $nb_tests;
+
 
     /**
      * @var string
@@ -132,12 +139,12 @@ class Person
      */
     private $parentGsm;
 
-    /**
-    *@var boolean
-    *
-    *@ORM\Column(name="isnp", type="boolean")
-    */
-    private $isnp;
+//    /**
+//    *@var boolean
+//    *
+//    *@ORM\Column(name="isnp", type="boolean")
+//    */
+//    private $isnp;
     /**
      * @var \DateTime $created
      *
@@ -149,17 +156,19 @@ class Person
     * @ORM\OneToMany(targetEntity="Ben\DoctorsBundle\Entity\Antecedent", mappedBy="person", cascade={"remove", "persist"})
     */
     protected $antecedents;
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="npid", type="integer")
-     */
-    private $npid;
+//    /**
+//     * @var integer
+//     *
+//     * @ORM\Column(name="npid", type="integer")
+//     */
+//    private $npid;
 
     /**
     * @ORM\OneToMany(targetEntity="Ben\DoctorsBundle\Entity\Consultation", mappedBy="person", cascade={"all"})
     */
     protected $consultations;
+
+
 
     /**
      * @ORM\OneToMany(targetEntity="Ben\DoctorsBundle\Entity\Appointment", mappedBy="person", cascade={"all"})
@@ -208,26 +217,26 @@ class Person
         return $this->id;
     }
 
-    /**
-    * Set npid
-    *
-    * @param integer $npid
-    * @return Person
-    */
-    public function setNpid($npid)
-    {
-      $this->npid=$npid;
-      return $this;
-    }
-   /**
-     * Get npid
-     *
-     * @return integer
-     */
-    public function getNpid()
-    {
-        return $this->npid;
-    }
+//    /**
+//    * Set npid
+//    *
+//    * @param integer $npid
+//    * @return Person
+//    */
+//    public function setNpid($npid)
+//    {
+//      $this->npid=$npid;
+//      return $this;
+//    }
+//   /**
+//     * Get npid
+//     *
+//     * @return integer
+//     */
+//    public function getNpid()
+//    {
+//        return $this->npid;
+//    }
 
     /**
      * Get FullName
@@ -342,28 +351,28 @@ class Person
     {
         return $this->email;
     }
-    /**
-     * Set oldemail
-     *
-     * @param string $oldemail
-     * @return Person
-     */
-    public function setOldemail($oldemail)
-    {
-        $this->oldemail = $oldemail;
-
-        return $this;
-    }
-
-    /**
-     * Get oldemail
-     *
-     * @return string
-     */
-    public function getOldemail()
-    {
-        return $this->oldemail;
-    }
+//    /**
+//     * Set oldemail
+//     *
+//     * @param string $oldemail
+//     * @return Person
+//     */
+//    public function setOldemail($oldemail)
+//    {
+//        $this->oldemail = $oldemail;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get oldemail
+//     *
+//     * @return string
+//     */
+//    public function getOldemail()
+//    {
+//        return $this->oldemail;
+//    }
     /**
      * @return boolean
      */
@@ -613,28 +622,53 @@ class Person
     {
         return $this->parentGsm;
     }
-  /**
-     * Set isnp
+
+    /**
+     * Get nb_tests
      *
-     * @param boolean $isnp
      * @return Person
      */
-    public function setISNP($isnp)
+    public function getNb_Tests()
     {
-        $this->isnp = $isnp;
-
-        return $this;
+        foreach ($this->consultations as $consultation)
+            foreach ($consultation->getTests() as $test)
+                $this->nb_tests ++;
+        return $this->nb_tests;
     }
 
     /**
-     * Get isnp
      *
-     * @return boolean
+     * Set nb_tests
+     *
+     * @param integer $nb_tests
      */
-    public function getISNP()
+    public function setNb_Tests($nb_tests)
     {
-        return $this->isnp;
+        $this->nb_tests = $nb_tests;
     }
+
+//  /**
+//     * Set isnp
+//     *
+//     * @param boolean $isnp
+//     * @return Person
+//     */
+//    public function setISNP($isnp)
+//    {
+//        $this->isnp = $isnp;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get isnp
+//     *
+//     * @return boolean
+//     */
+//    public function getISNP()
+//    {
+//        return $this->isnp;
+//    }
 
 
     /**
@@ -701,8 +735,7 @@ class Person
     {
         return $this->appointments;
     }
-
-    /**
+     /**
      * Add consultations
      *
      * @param \Ben\DoctorsBundle\Entity\Consultation $consultations

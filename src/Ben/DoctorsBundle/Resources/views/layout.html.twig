@@ -6,20 +6,49 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="application-name" content="doctors"/>
-        <meta name="author" content="mohamed.mohamed.mhiri@gmail.com">
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         {% block meta %}{% endblock %}
         {% block stylesheet %}
-            <link href="{{ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+          <!-- Bootstrap -->
+          <link href="{{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+          <!-- Font Awesome -->
+          <link href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+          <!-- NProgress -->
+          <link href="{{ asset('vendors/nprogress/nprogress.css') }}" rel="stylesheet">
+          <!-- iCheck -->
+          <link href="{{ asset('vendors/iCheck/skins/flat/green.css') }}" rel="stylesheet">
+          <!-- bootstrap-progressbar -->
+          <link href="{{ asset('vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
+          <!-- JQVMap -->
+          <link href="{{ asset('vendors/jqvmap/dist/jqvmap.min.css') }}" rel="stylesheet">
+          <!-- bootstrap-daterangepicker -->
+          <link href="{{ asset('vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+          <!-- Custom Theme Style -->
+          <link href="{{ asset('build/css/custom.min.css') }}" rel="stylesheet">
+          <!-- bootstrap-daterangepicker -->
+          <link href="{{ asset('vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+          <!-- bootstrap-wysiwyg -->
+          <link href="{{ asset('vendors/google-code-prettify/bin/prettify.min.css') }}" rel="stylesheet">
+          <!-- Select2 -->
+          <link href="{{ asset('vendors/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+          <!-- Switchery -->
+          <link href="{{ asset('vendors/switchery/dist/switchery.min.css') }}" rel="stylesheet">
+          <!-- starrr -->
+          <link href="{{ asset('vendors/starrr/dist/starrr.css') }}" rel="stylesheet">
+          <!-- FullCalendar -->
+          <link href="{{ asset('vendors/fullcalendar/dist/fullcalendar.min.css') }}" rel="stylesheet">
+          <link href="{{ asset('vendors/fullcalendar/dist/fullcalendar.print.css') }}" rel="stylesheet" media="print">
+
+            <!-- <link href="{{ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet">
             <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
             <link href="{{ asset('css/main.css') }}" rel="stylesheet">
             <link href="{{ asset('css/select2.css') }}" rel="stylesheet">
             <link href="{{ asset('css/button.css') }}" rel="stylesheet">
             <link href="{{ asset('css/appointment.css') }}" rel="stylesheet">
             <link href="{{ asset('css/files_popup.css') }}" rel="stylesheet">
-            <link href="{{ asset('css/menu.css') }}" rel="stylesheet">
+            <link href="{{ asset('css/menu.css') }}" rel="stylesheet"> -->
 
-            {#<link href="{{ asset('/css/form.css') }}" rel="stylesheet">#}
+            <!--<link href="{{ asset('/css/form.css') }}" rel="stylesheet">-->
             <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.0/fullcalendar.min.css"
                   rel="stylesheet">
 
@@ -41,12 +70,13 @@
 </head>
 
 {% block container %}
-    <body class="theme1">
-    {% include "BenDoctorsBundle:Default:menu.html.twig" %}
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+{% include "BenDoctorsBundle:Default:menu.html.twig" %}
 
-    <div class="visible-print col-md-12 text-left"><img src="{{ asset('images/header.PNG') }}" alt="logo"/></div>
-    <section class="wrap">
-        <header id="adminbar">
+    {#<div class="visible-print col-md-12 text-left"><img src="{{ asset('images/header.PNG') }}" alt="logo"/></div>#}
+        <!-- <header id="adminbar">
             <div id="logo"><img src="{{ asset( app_config.app_logo ) }}" alt="logo" class="img-small"/>
                 <span>Medical</span></div>
 
@@ -89,24 +119,167 @@
                     </li>
                 </ul>
             </div>
-        </header>
+        </header> -->
+        <!-- top navigation -->
+        <div class="top_nav">
+          <div class="nav_menu">
+            <nav>
+              <div class="hidden-print nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+              </div>
+
+              <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                  <a class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <img src="{{ asset('images/img.jpg')}}" alt="">{{ app.user.fullName }}
+                    <span class=" fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li><a href="{{ path('fos_user_profile_edit') }}"> Profile</a></li>
+
+                    <li><a href="/logout"><i class="fa fa-sign-out pull-right"></i> Déconnexion</a></li>
+                  </ul>
+                </li>
+
+
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <!-- /top navigation -->
+
         <div class="container">
             {% include "BenDoctorsBundle:Default:flashes.html.twig" %}
             {% block breadcrumb %} {% endblock %}
             {% block body %}{% endblock %}
         </div>
-    </section>
+    </div>
+    <!-- footer content -->
+    <footer>
+        <div class="pull-right">
+            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+    <!-- /footer content -->
+</div>
 
     {% block javascripts %}
+    <!-- jQuery -->
+        <script src="{{ asset('vendors/jquery/dist/jquery.min.js')}}"></script>
+        <!-- Bootstrap -->
+        <script src="{{ asset('vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+        <!-- FastClick -->
+        <script src="{{ asset('vendors/fastclick/lib/fastclick.js')}}"></script>
+        <!-- NProgress -->
+        <script src="{{ asset('vendors/nprogress/nprogress.js')}}"></script>
+        <!-- Chart.js -->
+        <script src="{{ asset('vendors/Chart.js/dist/Chart.min.js')}}"></script>
+        <!-- gauge.js -->
+        <script src="{{ asset('vendors/gauge.js/dist/gauge.min.js')}}"></script>
+        <!-- bootstrap-progressbar -->
+        <script src="{{ asset('vendors/bootstrap-progressbar/bootstrap-progressbar.min.js')}}"></script>
+        <!-- iCheck -->
+        <script src="{{ asset('vendors/iCheck/icheck.min.js')}}"></script>
+        <!-- Skycons -->
+        <script src="{{ asset('vendors/skycons/skycons.js')}}"></script>
+        <!-- Flot -->
+        <script src="{{ asset('vendors/Flot/jquery.flot.js')}}"></script>
+        <script src="{{ asset('vendors/Flot/jquery.flot.pie.js')}}"></script>
+        <script src="{{ asset('vendors/Flot/jquery.flot.time.js')}}"></script>
+        <script src="{{ asset('vendors/Flot/jquery.flot.stack.js')}}"></script>
+        <script src="{{ asset('vendors/Flot/jquery.flot.resize.js')}}"></script>
+        <!-- Flot plugins -->
+        <script src="{{ asset('vendors/flot.orderbars/js/jquery.flot.orderBars.js')}}"></script>
+        <script src="{{ asset('vendors/flot-spline/js/jquery.flot.spline.min.js')}}"></script>
+        <script src="{{ asset('vendors/flot.curvedlines/curvedLines.js')}}"></script>
+        <!-- DateJS -->
+        <script src="{{ asset('vendors/DateJS/build/date.js')}}"></script>
+        <!-- JQVMap -->
+        <script src="{{ asset('vendors/jqvmap/dist/jquery.vmap.js')}}"></script>
+        <script src="{{ asset('vendors/jqvmap/dist/maps/jquery.vmap.world.js')}}"></script>
+        <script src="{{ asset('vendors/jqvmap/examples/js/jquery.vmap.sampledata.js')}}"></script>
+        <!-- bootstrap-daterangepicker -->
+        <script src="{{ asset('vendors/moment/min/moment.min.js')}}"></script>
+        <script src="{{ asset('vendors/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+        <!-- application.js needed for printing -->
+        <script src="{{ asset('js/mine.js') }}"></script>
+        <!-- Custom Theme Scripts -->
+        <script src="{{ asset('build/js/custom.min.js')}}"></script>
+        <!-- bootstrap-daterangepicker -->
+        <script src="{{ asset('vendors/moment/min/moment.min.js')}}"></script>
+        <script src="{{ asset('vendors/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+        <!-- bootstrap-wysiwyg -->
+        <script src="{{ asset('vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js')}}"></script>
+        <script src="{{ asset('vendors/jquery.hotkeys/jquery.hotkeys.js')}}"></script>
+        <script src="{{ asset('vendors/google-code-prettify/src/prettify.js')}}"></script>
+        <!-- jQuery Tags Input -->
+        <script src="{{ asset('vendors/jquery.tagsinput/src/jquery.tagsinput.js')}}"></script>
+        <!-- Switchery -->
+        <script src="{{ asset('vendors/switchery/dist/switchery.min.js')}}"></script>
+        <!-- Select2 -->
+        <script src="{{ asset('vendors/select2/dist/js/select2.full.min.js')}}"></script>
+        <!-- Parsley -->
+        <script src="{{ asset('vendors/parsleyjs/dist/parsley.min.js')}}"></script>
+        <!-- Autosize -->
+        <script src="{{ asset('vendors/autosize/dist/autosize.min.js')}}"></script>
+        <!-- jQuery autocomplete -->
+        <script src="{{ asset('vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js')}}"></script>
+        <!-- starrr -->
+        <script src="{{ asset('vendors/starrr/dist/starrr.js')}}"></script>
+        <!-- fullcalendar-->
+        <script src="{{ asset('js/fullcalendar.js') }}"></script>
+        <script src="{{ asset('js/availability.js') }}"></script>
+        <!-- Doughnut Chart -->
+        <script>
+          $(document).ready(function(){
+            var options = {
+              legend: false,
+              responsive: false
+            };
 
-        <script src="{{ asset('js/jquery.min.js') }}"></script>
+            new Chart(document.getElementById("canvas1"), {
+              type: 'doughnut',
+              tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+              data: {
+                labels: [
+                  "Symbian",
+                  "Blackberry",
+                  "Other",
+                  "Android",
+                  "IOS"
+                ],
+                datasets: [{
+                  data: [15, 20, 30, 10, 30],
+                  backgroundColor: [
+                    "#BDC3C7",
+                    "#9B59B6",
+                    "#E74C3C",
+                    "#26B99A",
+                    "#3498DB"
+                  ],
+                  hoverBackgroundColor: [
+                    "#CFD4D8",
+                    "#B370CF",
+                    "#E95E4F",
+                    "#36CAAB",
+                    "#49A9EA"
+                  ]
+                }]
+              },
+              options: options
+            });
+          });
+        </script>
+
+        <!-- <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/moment.min.js') }}"></script>
         <script src="{{ asset('js/select2.min.js') }}"></script>
         <script src="{{ asset('js/fullcalendar.js') }}"></script>
         <script src="{{ asset('js/availability.js') }}"></script>
         <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('js/jquery.cookie.js') }}"></script>
-        <script src="{{ asset('js/application.js') }}"></script>
+
 
 {#/*******Mini AJAX File Upload Form needs some config ***/#}
 
@@ -126,8 +299,8 @@
             {#var Dropzone = require("js/dropzone");#}
             {#Dropzone.autoDiscover = false;#}
         {#</script>#}
-        <!-- jQuery rest -->
-        <script src="{{ asset('js/jquery.rest.min.js') }}"></script>
+        <! jQuery rest -->
+        <!-- <script src="{{ asset('js/jquery.rest.min.js') }}"></script>
         <script>
 //            reframe('#calendar');
 //            reframe('#external-events');
@@ -137,7 +310,7 @@
             //reframe('.container');
 
 
-        </script>
+        </script> -->
 
     {% endblock javascripts %}
     </body>

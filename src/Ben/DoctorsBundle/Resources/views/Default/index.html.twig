@@ -2,66 +2,282 @@
 {% block title %}
 Tableau de bord | {{ parent() }}
 {% endblock %}
-    {% block stylesheet %}
-   {{ parent() }}
-        <link rel="stylesheet" href="{{ asset('bower_components/chartist/dist/chartist.min.css') }}">
-        <link href="{{ asset('css/daterangepicker-bs3.css') }}" rel="stylesheet"><!-- Loading my css -->
-        <style>
-			.links #reportrange, .links .btn {margin-top: 20px; margin-left: 5px;}
-			.links .btn{padding: 7px 16px !important;}
-        </style>
-        <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
-        <script src="{{ asset('js/jquery.min.js') }}"></script>
-    {% endblock %}
-{% block body -%}
+    {#{% block stylesheet %}#}
+   {#{{ parent() }}#}
+        {#<link rel="stylesheet" href="{{ asset('bower_components/chartist/dist/chartist.min.css') }}">#}
+        {#<link href="{{ asset('css/daterangepicker-bs3.css') }}" rel="stylesheet"><!-- Loading my css -->#}
+        {#<style>#}
+			{#.links #reportrange, .links .btn {margin-top: 20px; margin-left: 5px;}#}
+			{#.links .btn{padding: 7px 16px !important;}#}
+        {#</style>#}
+        {#<script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>#}
+        {#<script src="{{ asset('js/jquery.min.js') }}"></script>#}
+    {#{% endblock %}#}
+{% block body %}
 
 
-<div class="container">
+{#<div class="container">#}
 
 
-<form action="#" id="js-form">
-<div class="row">
-	<div class="col-md-6">
-		<h3><span class="glyphicon glyphicon-stats"></span> Statistiques</h3>
-	</div>
-	<div id="graph" class="col-md-6 links hidden-print">
-		<a  class="btn btn-primary pull-right" onclick="onDrawClick()"><span class="glyphicon glyphicon-filter"></span>Graphe de variation de patients</a>
-    	</div>
-</div>
+{#<form action="#" id="js-form">#}
+{#<div class="row">#}
+	{#<div class="col-md-6">#}
+		{#<h3><span class="glyphicon glyphicon-stats"></span> Statistiques</h3>#}
+	{#</div>#}
+	{#<div id="graph" class="col-md-6 links hidden-print">#}
+		{#<a  class="btn btn-primary pull-right" onclick="onDrawClick()"><span class="glyphicon glyphicon-filter"></span>Graphe de variation de patients</a>#}
+    	{#</div>#}
+{#</div>#}
+
+
+    <!-- page content -->
+    <div class="right_col" role="main">
+        <!-- top tiles -->
+        <div class="row tile_count">
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> Total de patients</span>
+                <div class="count">{{nb_patients_this_month}}</div>
+                patient(s) ce mois
+
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> Variation</span>
+                    {%if evolution >0%}
+                        <div class="count green"> + {{evolution}} </div>
+                    {%elseif evolution <0%}
+                        <div class="count red"> - {{evolution|abs}} </div>
+                    {%else%}
+                        pas de variation
+                    {%endif%}
+                    patients par </br>rapport au mois préc
+                </span>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-clock-o"></i> Meilleure periode </span>
+                <div class="count green">123.50</div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> Total Hommes</span>
+                <div class="count blue">{{p_hommes|round}} %</div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> Total Femmes</span>
+                <div class="count purple">{{p_femmes|round}} %</div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> Age moyen</span>
+                <div class="count">{{age}} ans</div>
+            </div>
+        </div>
+        <!-- /top tiles -->
+
+        <br />
+
+        <div class="row">
+
+
+            <div class="col-md-5 col-sm-6 col-xs-12">
+                <div class="x_panel tile fixed_height_320">
+                    <div class="x_title">
+                        <h2>App Versions</h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <h4>App Usage across versions</h4>
+                        <div class="widget_summary">
+                            <div class="w_left w_25">
+                                <span>0.1.5.2</span>
+                            </div>
+                            <div class="w_center w_55">
+                                <div class="progress">
+                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 66%;">
+                                        <span class="sr-only">60% Complete</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w_right w_20">
+                                <span>123k</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="widget_summary">
+                            <div class="w_left w_25">
+                                <span>0.1.5.3</span>
+                            </div>
+                            <div class="w_center w_55">
+                                <div class="progress">
+                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
+                                        <span class="sr-only">60% Complete</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w_right w_20">
+                                <span>53k</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="widget_summary">
+                            <div class="w_left w_25">
+                                <span>0.1.5.4</span>
+                            </div>
+                            <div class="w_center w_55">
+                                <div class="progress">
+                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+                                        <span class="sr-only">60% Complete</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w_right w_20">
+                                <span>23k</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="widget_summary">
+                            <div class="w_left w_25">
+                                <span>0.1.5.5</span>
+                            </div>
+                            <div class="w_center w_55">
+                                <div class="progress">
+                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 5%;">
+                                        <span class="sr-only">60% Complete</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w_right w_20">
+                                <span>3k</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="widget_summary">
+                            <div class="w_left w_25">
+                                <span>0.1.5.6</span>
+                            </div>
+                            <div class="w_center w_55">
+                                <div class="progress">
+                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 2%;">
+                                        <span class="sr-only">60% Complete</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w_right w_20">
+                                <span>1k</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="x_panel tile fixed_height_320 overflow_hidden">
+                    <div class="x_title">
+                        <h2>Device Usage</h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <table class="" style="width:100%">
+                            <tr>
+                                <th style="width:37%;">
+                                    <p>Top 5</p>
+                                </th>
+                                <th>
+                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <p class="">Device</p>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                        <p class="">Progress</p>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <canvas id="canvas1" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
+                                </td>
+                                <td>
+                                    <table class="tile_info">
+                                        <tr>
+                                            <td>
+                                                <p><i class="fa fa-square blue"></i>IOS </p>
+                                            </td>
+                                            <td>30%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p><i class="fa fa-square green"></i>Android </p>
+                                            </td>
+                                            <td>10%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p><i class="fa fa-square purple"></i>Blackberry </p>
+                                            </td>
+                                            <td>20%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p><i class="fa fa-square aero"></i>Symbian </p>
+                                            </td>
+                                            <td>15%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p><i class="fa fa-square red"></i>Others </p>
+                                            </td>
+                                            <td>30%</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
 
 
-<div id="statical-array" class="col-md-12">
-  <div class="box">
-      <table class="table table-hover table-bordered">
-          <thead>
-              <tr>
-                  <th>Age moyen des patients</th>
-                  <th>Pourcentage des femmes</th>
-                  <th>Pourcentage des hommes</th>
-                  <th>Nombre de patients pour ce mois</th>
-                  <th>Variation du nombre de patients</br>par rapport au mois précédent</th>
-              </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>{{age}} ans </strong></td>
-              <td><strong>{{p_femmes|round}} %</strong></td>
-              <td><strong>{{p_hommes|round}} %</strong></td>
-              <td><strong>{{nb_patients_this_month}} patient(s)</strong></td>
-              {%if evolution >0%}
-              <td><strong>nombre de patients a augmenté de {{evolution}} patient(s)</strong></td>
-              {%elseif evolution <0%}
-              <td><strong>nombre de patients a diminué de {{evolution|abs}} patient(s)</strong></td>
-              {%else%}
-              <td><strong>pas de variation</strong></td>
-              {%endif%}
-            </tr>
 
-          </tbody>
-      </table>
-  </div>
-  <div class="ct-chart ct-perfect-fourth"></div>
+        </div>
+
+
+
+    </div>
+    <!-- /page content -->
+
+{#<div id="statical-array" class="col-md-12">#}
+  {#<div class="box">#}
+      {#<table class="table table-hover table-bordered">#}
+          {#<thead>#}
+              {#<tr>#}
+                  {#<th>Age moyen des patients</th>#}
+                  {#<th>Pourcentage des femmes</th>#}
+                  {#<th>Pourcentage des hommes</th>#}
+                  {#<th>Nombre de patients pour ce mois</th>#}
+                  {#<th>Variation du nombre de patients</br>par rapport au mois précédent</th>#}
+              {#</tr>#}
+          {#</thead>#}
+          {#<tbody>#}
+            {#<tr>#}
+              {#<td><strong>{{age}} ans </strong></td>#}
+              {#<td><strong>{{p_femmes|round}} %</strong></td>#}
+              {#<td><strong>{{p_hommes|round}} %</strong></td>#}
+              {#<td><strong>{{nb_patients_this_month}} patient(s)</strong></td>#}
+              {#{%if evolution >0%}#}
+              {#<td><strong>nombre de patients a augmenté de {{evolution}} patient(s)</strong></td>#}
+              {#{%elseif evolution <0%}#}
+              {#<td><strong>nombre de patients a diminué de {{evolution|abs}} patient(s)</strong></td>#}
+              {#{%else%}#}
+              {#<td><strong>pas de variation</strong></td>#}
+              {#{%endif%}#}
+            {#</tr>#}
+
+          {#</tbody>#}
+      {#</table>#}
+  {#</div>#}
+  {#<div class="ct-chart ct-perfect-fourth"></div>#}
   <script>
   function onDrawClick() {
       var this_month,previous_month,twoprevious_month,threeprevious_month,fourprevious_month,fiveprevious_month,sixprevious_month,

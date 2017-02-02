@@ -39,7 +39,7 @@ class UserRepository extends EntityRepository
                 ->leftJoin('u.image', 'img')
                 ->addSelect('img');
         if(!empty($keyword))
-            $qb->andWhere('concat(u.familyname, u.firstname) like :keyword or u.email like :keyword u.username like :keyword or u.roles like :keyword')
+            $qb->andWhere('concat(u.familyName, u.firstName) like :keyword or u.email like :keyword or u.username like :keyword or u.roles like :keyword')
                 ->setParameter('keyword', '%'.$keyword.'%');
 
         if(!empty($ids))

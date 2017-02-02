@@ -22,7 +22,7 @@ class TestType extends AbstractType
     {
 
             $builder
-                ->add('consultation')
+//                ->add('consultation')
                 ->add('typeexam', 'text', array('label'=>'Type de l examen'))
                 ->add('lieu', 'text', array('label'=>'Lieu'))
                 ->add('conclusion', 'textarea', array('label'=>'conclusion','required'  => false))

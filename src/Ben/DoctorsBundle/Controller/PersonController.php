@@ -26,10 +26,10 @@ class PersonController extends Controller
 
 
 
-    public function linkAction()
-    {
-      return new RedirectResponse('http://medical.placeholder.tn/booking2/public/admin/appointments');
-    }
+//    public function linkAction()
+//    {
+//      return new RedirectResponse('http://medical.placeholder.tn/booking2/public/admin/appointments');
+//    }
     /**
      * Lists all Person entities.
      * @Secure(roles="ROLE_USER")
@@ -43,19 +43,19 @@ class PersonController extends Controller
         return $this->render('BenDoctorsBundle:Person:index.html.twig', array(
             'entitiesLength' => $entitiesLength));
     }
-    public function prepareJWT()
-    {
-      if(count($usersCo=$this->getDoctrine()->getManager()->getRepository('BenUserBundle:User')->findByIsActivated(1))==0)
-      {
-        //go to /login
-        return 'http://localhost:8080/admin';
-      }
-      else
-      {
-        return $usersCo[0]->getFirstName().' '.$usersCo[0]->getFamilyName();
-
-      }
-    }
+//    public function prepareJWT()
+//    {
+//      if(count($usersCo=$this->getDoctrine()->getManager()->getRepository('BenUserBundle:User')->findByIsActivated(1))==0)
+//      {
+//        //go to /login
+//        return 'http://localhost:8080/admin';
+//      }
+//      else
+//      {
+//        return $usersCo[0]->getFirstName().' '.$usersCo[0]->getFamilyName();
+//
+//      }
+//    }
     /**
      * persons list using ajax
      * @Secure(roles="ROLE_USER")
@@ -65,14 +65,14 @@ class PersonController extends Controller
         $em = $this->getDoctrine()->getManager();
         $searchParam = $request->get('searchParam');
         $persons=array();
-        if(!strpos($this->prepareJWT()," "))
-        {
-          //hedhi heya eli trajaa f response
-          return new RedirectResponse("http://localhost:8080/admin");
-
-        }
-        else
-        {
+//        if(!strpos($this->prepareJWT()," "))
+//        {
+//          //hedhi heya eli trajaa f response
+//          return new RedirectResponse("http://localhost:8080/admin");
+//
+//        }
+//        else
+//        {
         /*$list=$this->listNonPatients();
         $persons=$this->storeNonPatients($list,$persons);
         for($i=0;$i<count($persons) ;$i++) {
@@ -86,7 +86,7 @@ class PersonController extends Controller
                     'entities' => $entities,
                     'pagination' => $pagination
                   ));
-        }
+        //}
     }
     /**utility
     *
@@ -105,7 +105,7 @@ class PersonController extends Controller
         return $data;
     }
     /**
-    *persons list wia web Api
+    *persons list via web Api
     *
     */
     public function listNonPatients/*Action*/()
@@ -148,27 +148,27 @@ class PersonController extends Controller
       else
         return false;
     }
-    /**
-    *
-    * get the notpatient's email
-    * to test weather old_email is up to date or not
-    */
-    public function oldEmail($entity)
-    {
-      $npatients=$this->listNonPatients();
-
-      if($entity->getISNP()==true)
-        {$i=0;
-        while($i<count($npatients))
-        {
-          if($npatients[$i]->id==$entity->getNpid())
-            return $npatients[$i]->email;
-          else
-            $i++;
-        }
-      }
-
-    }
+//    /**
+//    *
+//    * get the notpatient's email
+//    * to test weather old_email is up to date or not
+//    */
+//    public function oldEmail($entity)
+//    {
+//      $npatients=$this->listNonPatients();
+//
+//      if($entity->getISNP()==true)
+//        {$i=0;
+//        while($i<count($npatients))
+//        {
+//          if($npatients[$i]->id==$entity->getNpid())
+//            return $npatients[$i]->email;
+//          else
+//            $i++;
+//        }
+//      }
+//
+//    }
 
     /**
     * store nonpatients entities into an array
@@ -190,7 +190,7 @@ class PersonController extends Controller
           $entity=$entity->setCin(" ");
           $entity=$entity->setGender(" ");
           $entity=$entity->setCnsstype(" ");
-          $entity=$entity->setISNP(true);
+//          $entity=$entity->setISNP(true);
           $entity=$entity->setNpid($list[$i]->id);
           $entity=$entity->setCreated(null);
           array_push($persons,$entity);
@@ -208,6 +208,7 @@ class PersonController extends Controller
     public function createAction(Request $request)
     {
         $entity = new Person();
+        $entity->setIsDeleted(false);
         $form = $this->createForm(new PersonType(), $entity);
         $form->handleRequest($request);
         $em = $this->getDoctrine()->getManager();
@@ -216,12 +217,12 @@ class PersonController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('info', "Le patient a été ajouté avec succès.");
+//            $this->get('session')->getFlashBag()->add('info', "Le patient a été ajouté avec succès.");
             return $this->redirect($this->generateUrl('person_show', array('id' => $entity->getId())));
         }
         // $cities = $em->getRepository('BenDoctorsBundle:Person')->getCities();
 
-        $this->get('session')->getFlashBag()->add('danger', "Il y a des erreurs dans le formulaire soumis !");
+//        $this->get('session')->getFlashBag()->add('danger', "Il y a des erreurs dans le formulaire soumis !");
         return $this->render('BenDoctorsBundle:Person:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
@@ -356,14 +357,18 @@ class PersonController extends Controller
 
             //$r=file_get_contents('http://medical.placeholder.tn/booking2/public/updatePatient/'.$jsonInfo);
             //}
+        if ($editForm->isValid()) {
+            $em->persist($entity);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('info', "Le patient a été mis à jour avec succès.");
             return $this->redirect($this->generateUrl('person_edit', array('id' => $id)));
+        }
+
+//            $this->get('session')->getFlashBag()->add('info', "Le patient a été mis à jour avec succès.");
         //}
         // $cities = $em->getRepository('BenDoctorsBundle:Person')->getCities();
 
-        $this->get('session')->getFlashBag()->add('danger', "Il y a des erreurs dans le formulaire soumis !");
+//        $this->get('session')->getFlashBag()->add('danger', "Il y a des erreurs dans le formulaire soumis !");
         return $this->render('BenDoctorsBundle:Person:edit.html.twig', array(
             'entity'      => $entity,
             'form'   => $editForm->createView(),
@@ -410,7 +415,7 @@ class PersonController extends Controller
             $entity->setIsDeleted(true);
             $em->persist($entity);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('info', "Action effectué avec succès !");
+//            $this->get('session')->getFlashBag()->add('info', "Action effectué avec succès !");
 
 
         return $this->redirect($this->generateUrl('person'));

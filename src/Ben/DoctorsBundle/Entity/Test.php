@@ -58,6 +58,7 @@ class Test
     private $conclusion;
 
 
+
     /**
     * @ORM\ManyToOne(targetEntity="Ben\DoctorsBundle\Entity\Consultation", inversedBy="tests", cascade={"all"})
     * @ORM\JoinColumn(name="consultation_id", referencedColumnName="id", nullable=false)
@@ -154,6 +155,8 @@ class Test
     {
         return $this->conclusion;
     }
+
+
     /**
      * Set date
      *

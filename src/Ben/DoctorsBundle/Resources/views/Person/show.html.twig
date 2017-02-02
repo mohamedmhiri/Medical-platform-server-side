@@ -3,311 +3,839 @@
 Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block body %}
-<div class="btn-group pull-right" style="margin-top: 15px;">
-  <button class="btn btn-primary "><span class="glyphicon glyphicon-cog"></span> Selectioner une action</button>
-  <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" role="menu">
-    <li><a href="{{ path('person_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span> modifier</a></li>
-    <li><a href="{{ path('antecedent_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Antécedent</a></li>
-    <li><a href="{{ path('consultation_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Consultation </a></li>
-    {#<li><a href="{{ path('appointment_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Rendes_vous </a></li>#}
-    <li><a id="btnPrint"><span class="glyphicon glyphicon-print"></span> imprimer</a></li>
-    <li><a href="#" id="js-delete"><span class="glyphicon glyphicon-trash"></span> Supprimer</a></li>
-  </ul>
-</div>
-<h3><span class="glyphicon glyphicon-user"></span> {{ entity.fullName }}</h3>
 
-<div class="row">
-<div class="col-md-12">
-    <div class="box">
-      <header>
-          <h4><span class="glyphicon glyphicon-file"></span>Informations relatives à {{ entity.fullName }} </h4>
-      </header>
+    <!-- page content -->
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3><span class="glyphicon glyphicon-user"></span> {{ entity.fullName }} </h3>
+                </div>
+                    <div class="hidden-print btn-group pull-right" style="margin-top: 15px;">
+                        <button class="btn btn-primary "><span class="glyphicon glyphicon-cog"></span> Selectioner une action</button>
+                        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ path('person_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span> modifier</a></li>
+                            <li><a href="{{ path('antecedent_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Antécedent</a></li>
+                            <li><a href="{{ path('consultation_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Consultation </a></li>
+                            {#<li><a href="{{ path('appointment_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Rendes_vous </a></li>#}
+                            <li><a id="btnPrint"><span class="glyphicon glyphicon-print"></span> imprimer</a></li>
+                            <li><a href="#" id="js-delete"><span class="glyphicon glyphicon-trash"></span> Supprimer</a></li>
+                        </ul>
+                    </div>
+                </br>
+                <h3> </h3>
+            </div>
 
+            <div class="clearfix"></div>
 
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2><span class="glyphicon glyphicon-file"></span> Identité du patient </h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="hidden-print collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
 
-      <table class="table table-hover table-bordered">
-          <thead>
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <th scope="row">Nom</th>
+                                    <td>{{ entity.familyname }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Prenom</th>
+                                    <td>{{ entity.firstname }}</td>
+                                </tr>
+                                {% if entity.cin %}
+                                <tr>
+                                    <th scope="row">CIN</th>
+                                    <td>{{ entity.cin }}</td>
+                                </tr>
+                                {% endif %}
+                                <tr>
+                                    <th scope="row">Sexe</th>
+                                    <td>{{ entity.gender }}</td>
+                                </tr>
+                                {% if entity.birthday %}
+                                <tr>
+                                    <th scope="row">Date de naissance</th>
+                                    <td>{{ entity.birthday|date('d/m/Y') }}</td>
+                                </tr>
+                                {% endif %}
+                                </tbody>
+                            </table>
 
-              <tr>
-                  <th>Identité du patient</th>
-                  <th>Informations générale</th>
-                  <th></th>
-              </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-              <ul class="list-group">
-                <li class="list-group-item"><strong>Nom :</strong> {{ entity.familyname }}</li>
-                <li class="list-group-item"><strong>Prenom :</strong>  {{ entity.firstname }} </li>
-                <li class="list-group-item"><strong>CIN :</strong> {{ entity.cin }}</li>
-                <li class="list-group-item"><strong>Sexe :</strong> {{ entity.gender }}</li>
-                <li class="list-group-item"><strong>Date de naissance :</strong> {% if entity.birthday %}{{ entity.birthday|date('d/m/Y') }}{% endif %}</li>
-              </ul>
-              </td>
-              <td>
-                <ul class="list-group">
-                  <li class="list-group-item"><strong>Lieu de naissance :</strong> {{ entity.birthcity }}</li>
-                  <li class="list-group-item"><strong>Adresse :</strong> {{ entity.address }}</li>
-                  <li class="list-group-item"><strong>Province :</strong> {{ entity.city }}</li>
-                  <li class="list-group-item"><strong>adresse email :</strong> <a href="mailto:{{ entity.email }}">{{ entity.email }}</a></li>
-
-               </ul>
-              </td>
-              <td>
-              <ul class="list-group">
-                <li class="list-group-item"><strong>Gsm 1:</strong> {{ entity.gsm }}</li>
-                <li class="list-group-item"><strong>Gsm 2:</strong> {{ entity.parentGsm }}</li>
-                <li class="list-group-item"><strong>Pays :</strong> {{ entity.contry }}</li>
-                <li class="list-group-item"><strong>type de couverture sociale :</strong> {{ entity.cnsstype }}</li>
-                <li class="list-group-item"><strong>numéro de couverture sociale :</strong> {{ entity.cnssnum }}</li>
-              </ul>
-
-              </td>
-            </tr>
-          </tbody>
-      </table>
-
-    </div>
-</div>
-
-<div class="col-md-12">
-      <div class="box">
-        <header>
-            <h4><span class="glyphicon glyphicon-tag"></span> Histoire de la maladie</h4>
-
-        </header>
-        <table class="table table-hover table-bordered">
-          <thead>
-              <tr>
-              </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <table class="table table-hover table-bordered">
-                    <thead>
-
-                        <tr>
-                            <th>type</th>
-                            <th>medicaux</th>
-                            <th>Chirurgicaux & gynécologiques</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for item in entity.antecedents %}
-                      <tr>
-                        <td><a href="{{ path('antecedent_edit', { 'id': item.id }) }}">{{ item.type }}</a></td>
-                        <td>{{ item.medicaux|nl2br }}</td>
-                        <td>{{ item.chirurgicaux|nl2br }}</td>
-                      </tr>
-                    {% endfor %}
-                    </tbody>
-                  </table>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                  <table class="table table-hover table-bordered">
-                    <thead>
-
-                        <tr>
-                            <th>type</th>
-                            <th>description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for item in entity.antecedents %}
-                      <tr>
-                        <td><a href="{{ path('antecedent_edit', { 'id': item.id }) }}">{{ item.type }}</a></td>
-                        <td></td>
-                      </tr>
-                    {% endfor %}
-                    </tbody>
-                  </table>
-              </td>
-            </tr>
-
-        </tbody>
-        </table>
-
-
-    </div>
-</div>
-
-<div class="col-md-12">
-      <div class="box">
-        <header>
-            <h4><span class="glyphicon glyphicon-tag"></span> Motifs de consultation</h4>
-        </header>
-        <table class="table table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th>Anamnese</th>
-
-                </tr>
-            </thead>
-            <tbody>
-            {% for item in entity.consultations %}
-              <tr>
-                {% if item.anamnese %}
-                <td>{{ item.anamnese|truncate(50) }}</td>
-                {% endif %}
-              </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
-        <table class="table table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th>Examen clinique</th>
-                    <th>Date</th>
-                    <th>Medecin</th>
-                    <th>Diagnostic</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for item in entity.consultations %}
-              <tr>
-                <td><a href="{{ path('consultation_show', { 'id': item.id }) }}">{{ item.name }}</a></td>
-                <td>{{ item.created|date('d/m/Y') }}</td>
-                <td><a href="{{ path('ben_show_user', { 'id': item.user.id }) }}">{{ item.user.fullname }}</a></td>
-                <td>{{ item.diagnosis|truncate(50) }}</td>
-              </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <header>
-            <h4><span class="glyphicon glyphicon-tag"></span> Examen complémentaire</h4>
-        </header>
-        <table class="table table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Type de l'examen</th>
-                    <th>Lieu</th>
-                    <th>Conclusion</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for item in entity.consultations %}
-            {% for i in item.tests %}
-              {#{% if i.typeexam %}#}
-              <tr>
-                <td>{{ i.date|date('d/m/Y') }}</td>
-                <td>{{ i.typeexam}}</td>
-                <td>{{ i.lieu}}</td>
-                {#<td></td>#}
-                <td>
-                    {%if i.images|length > 0%}
-                    <script>
-                        var id= {{ i.id }};
-                    </script>
-
-                        {#<a class="" href="#">Lanuch</a>#}
-                    <a class="trigger btn btn-info btn-block" onclick="modalAction( {{ i.id }} )" id="modal-button" data-target="#_modal" data-toggle="modal" href="#">
-                            Consulter les fichiers
-                    </a>
-
-                    <div id="modal" class="modal-wrapper" tabindex="-1">
-
-                        <div class="modal">
-
-                            <div class="head">
-                                <a class="btn-close trigger" onclick="deletePhotos()" href="#">
-                                    x
-                                </a>
-
-                                <h3 class="header">
-                                    Aperçu sur les fichiers
-                                </h3>
-
-                            </div>
-                            <div class="content" id="modal-content"></div>
                         </div>
                     </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2><span class="glyphicon glyphicon-file"></span> Informations générale </h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="hidden-print collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <table class="table">
+                                <tbody>
+                                {% if entity.address %}
+                                    <tr>
+                                        <th scope="row">Adresse</th>
+                                        <td>{{ entity.address }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if entity.city %}
+                                    <tr>
+                                        <th scope="row">Province</th>
+                                        <td>{{ entity.city }}</td>
+                                    </tr>
+                                {% endif %}
 
-                    {%else%}
-                        {{ i.conclusion}}
-                    {%endif%}
-                </td>
-              </tr>
-              {#{% endif %}#}
-            {% endfor %}
-            {% endfor %}
-            </tbody>
-        </table>
+                                {% if entity.contry %}
+                                    <tr>
+                                        <th scope="row">Pays</th>
+                                        <td>{{ entity.contry }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if entity.birthcity %}
+                                    <tr>
+                                        <th scope="row">Lieu de naissance</th>
+                                        <td>{{ entity.birthcity }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if entity.cnsstype %}
+                                    <tr>
+                                        <th scope="row">Type de couverture sociale</th>
+                                        <td>{{ entity.cnsstype }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if entity.cnssnum %}
+                                    <tr>
+                                        <th scope="row">Numéro de couverture sociale</th>
+                                        <td>{{ entity.cnssnum }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if entity.gsm %}
+                                    <tr>
+                                        <th scope="row">Gsm 1</th>
+                                        <td>{{ entity.gsm }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if entity.parentGsm %}
+                                    <tr>
+                                        <th scope="row">Gsm 2</th>
+                                        <td>{{ entity.parentGsm }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if entity.email %}
+                                    <tr>
+                                        <th scope="row">Adresse mail</th>
+                                        <td><a href="mailto:{{ entity.email }}">{{ entity.email }}</a></td>
+                                    </tr>
+                                {% endif %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2><span class="glyphicon glyphicon-plus"></span>  Histoire de la maladie </h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li>
+                                    <a class="hidden-print collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="x_content">
+
+                            <div class="table-responsive">
+                                <table class="table table-striped jambo_table bulk_action">
+                                    <thead>
+                                    <tr class="headings">
+                                        {% if entity.antecedents|length > 0 %}
+                                        <th class="column-title">Type </th>
+                                        <th class="column-title">Médicaux </th>
+                                        <th class="column-title">Chirurgicaux & gynécologiques </th>
+                                        <th class="column-title">Description </th>
+                                        {% endif %}
+                                        <th class="column-title no-link last">
+                                            <span class="nobr">
+                                                Action
+                                            </span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    {% if entity.antecedents|length > 0 %}
+                                    {% for item in entity.antecedents %}
+                                    <tr class="even pointer">
+                                        <td class=" ">{{ item.type }}</td>
+                                        <td class=" ">{{ item.medicaux|nl2br }}</td>
+                                        <td class=" ">{{ item.chirurgicaux|nl2br }} </td>
+                                        <td class=" ">{{ item.traitement }}</td>
+                                        <td class=" last">
+                                            <a href="{{ path('antecedent_edit', { 'id': item.id }) }}">
+                                                Modifier l'antécédent
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% else %}
+                                    <tr class="even pointer">
+                                        <td class=" last">
+                                            <a href="{{ path('antecedent_new', { 'id': entity.id }) }}">
+                                                 Ajouter un antécédent
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2><span class="glyphicon glyphicon-tag"></span> Motifs de consultation </h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li>
+                                    <a class="hidden-print collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="x_content">
+
+                            <div class="table-responsive">
+
+                                <table class="table table-striped jambo_table bulk_action">
+                                    <thead>
+                                    <tr class="headings">
+                                        {% if entity.consultations|length > 0 %}
+                                        <th class="column-title">Anamnese </th>
+                                        {% endif %}
+                                        <th class="column-title no-link last">
+                                            <span class="nobr">
+                                                Action
+                                            </span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if entity.consultations|length > 0 %}
+                                    {% for item in entity.consultations %}
+                                    <tr class="even pointer">
+                                        <td class=" ">{{ item.anamnese }}</td>
+                                        <td class=" last">
+                                            <a href="{{ path('consultation_edit', { 'id': item.id }) }}">
+                                                Modifier la consultation
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% else %}
+                                        <tr class="even pointer">
+                                            <td class=" last">
+                                                <a href="{{ path('consultation_new', { 'id': entity.id }) }}">
+                                                    Ajouter une consultation
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                                <table class="table table-striped jambo_table bulk_action">
+                                    <thead>
+                                    <tr class="headings">
+                                        {% if entity.consultations|length > 0 %}
+                                            <th class="column-title">Examen clinique </th>
+                                            <th class="column-title">Date </th>
+                                            <th class="column-title">Médecin </th>
+                                            <th class="column-title">Diagnostiques </th>
+                                        {% endif %}
+                                        <th class="column-title no-link last">
+                                            <span class="nobr">
+                                                Action
+                                            </span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if entity.consultations|length > 0 %}
+                                        {% for item in entity.consultations %}
+                                            <tr class="even pointer">
+                                                <td class=" ">{{ item.name }}</td>
+                                                <td class=" ">{{ item.created|date('d/m/Y') }}</td>
+                                                <td class=" ">{{ item.user.fullname }}</td>
+                                                <td class=" ">{{ item.diagnosis|truncate(50) }}</td>
+                                                <td class=" last">
+                                                    <a href="{{ path('consultation_edit', { 'id': item.id }) }}">
+                                                        Modifier la consultation
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr class="even pointer">
+                                            <td class=" last">
+                                                <a href="{{ path('consultation_new', { 'id': entity.id }) }}">
+                                                    Ajouter une consultation
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2><span class="glyphicon glyphicon-plus"></span>  Examen complémentaire </h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li>
+                                    <a class="hidden-print collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="x_content">
+
+                            <div class="table-responsive">
+                                <table class="table table-striped jambo_table bulk_action">
+                                    <thead>
+                                    <tr class="headings">
+                                        {% if entity.nb_tests > 0 %}
+                                            <th class="column-title">Date </th>
+                                            <th class="column-title">Type de l'examen </th>
+                                            <th class="column-title">Lieu </th>
+                                            <th class="column-title">Conclusion </th>
+                                        {% endif %}
+                                        <th class="column-title no-link last">
+                                            <span class="nobr">
+                                                Action
+                                            </span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if entity.consultations|length > 0 %}
+                                    {% if entity.nb_tests > 0 %}
+                                        {% for item in entity.consultations %}
+                                            {% for i in item.tests %}
+                                            <tr class="even pointer">
+                                                <td class=" ">{{ i.date|date('d/m/Y') }}</td>
+                                                <td class=" ">{{ i.typeexam}}</td>
+                                                <td class=" ">{{ i.lieu}} </td>
+                                                <td class=" ">
+                                                {%if i.images|length > 0%}
+                                                    <script>
+                                                        var id= {{ i.id }};
+                                                    </script>
+
+                                                    <a class="" href="#">Lanuch</a>
+                                                    <a class="trigger btn btn-info btn-block" onclick="modalAction( {{ i.id }} )" id="modal-button" data-target="#_modal" data-toggle="modal" href="#">
+                                                        Consulter les fichiers
+                                                    </a>
+
+                                                    <div id="modal" class="modal-wrapper" tabindex="-1">
+
+                                                        <div class="modal">
+
+                                                            <div class="head">
+                                                                <a class="btn-close trigger" onclick="deletePhotos()" href="#">
+                                                                    x
+                                                                </a>
+
+                                                                <h3 class="header">
+                                                                    Aperçu sur les fichiers
+                                                                </h3>
+
+                                                            </div>
+                                                            <div class="content" id="modal-content"></div>
+                                                        </div>
+                                                    </div>
+
+                                                {%else%}
+                                                    {{ i.conclusion}}
+                                                {%endif%}
+                                                </td>
+
+                                                <td class=" last">
+                                                    <a href="{{ path('test_edit', { 'id': i.id }) }}">
+                                                        Modifier l'examen complémentaire
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr class="even pointer">
+                                            <td class=" last">
+                                                <a href="{{ path('test_new') }}">
+                                                    Ajouter un examen complémentaire
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    {% endif %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2><span class="glyphicon glyphicon-plus"></span>  Conduites tenues </h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li>
+                                    <a class="hidden-print collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="x_content">
+
+                            <div class="table-responsive">
+                                <table class="table table-striped jambo_table bulk_action">
+                                    <thead>
+                                    <tr class="headings">
+                                        {% if entity.consultations|length > 0 %}
+                                            <th class="column-title">Date </th>
+                                            <th class="column-title">Conduite à tenir </th>
+                                        {% endif %}
+                                        <th class="column-title no-link last">
+                                            <span class="nobr">
+                                                Action
+                                            </span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    {% if entity.consultations|length > 0 %}
+                                        {% for item in entity.consultations %}
+                                            <tr class="even pointer">
+                                                <td class=" ">{{ item.created|date('d/m/Y') }}</td>
+                                                <td class=" ">{{ item.decision|truncate(50) }}</td>
+                                                <td class=" last">
+                                                    <a href="{{ path('consultation_edit', { 'id': item.id }) }}">
+                                                        Modifier la conduite tenue
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr class="even pointer">
+                                            <td class=" last">
+                                                <a href="{{ path('consultation_new', { 'id': entity.id }) }}">
+                                                    Ajouter une conduite à tenir
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2><span class="glyphicon glyphicon-plus"></span>  Traitements </h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li>
+                                    <a class="hidden-print collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="x_content">
+
+                            <div class="table-responsive">
+                                <table class="table table-striped jambo_table bulk_action">
+                                    <thead>
+                                    <tr class="headings">
+                                        {% if entity.consultations|length > 0 %}
+                                            <th class="column-title">Consultation </th>
+                                            <th class="column-title">Traitement </th>
+                                        {% endif %}
+                                        <th class="column-title no-link last">
+                                            <span class="nobr">
+                                                Action
+                                            </span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    {% if entity.consultations|length > 0 %}
+                                        {% for item in entity.consultations %}
+                                            <tr class="even pointer">
+                                                <td class=" ">{{ item.created|date('d/m/Y') }}</td>
+                                                <td class=" ">{{ item.treatment|truncate(50) }}</td>
+                                                <td class=" last">
+                                                    <a href="{{ path('consultation_edit', { 'id': item.id }) }}">
+                                                        Modifier le traitement
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr class="even pointer">
+                                            <td class=" last">
+                                                <a href="{{ path('consultation_new', { 'id': entity.id }) }}">
+                                                    Ajouter un traitement
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-<div class="col-md-12">
-      <div class="box">
-        <header>
-            <h4><span class="glyphicon glyphicon-tag"></span> Conduites tenues</h4>
+<!-- /page content -->
 
-        </header>
-        <table class="table table-hover table-bordered">
-        <thead>
-              <tr>
-                  <th>Date</th>
-                  <th>Conduite à tenir</th>
-              </tr>
-          </thead>
-          <tbody>
-          {% for item in entity.consultations %}
-            {% if item.decision %}
-            <tr>
-              <td>{{ item.created|date('d/m/Y') }}</td>
-              <td>{{ item.decision|truncate(50) }}</td>
-            </tr>
-            {% endif %}
-          {% endfor %}
-        </tbody>
-        </table>
-    </div>
-</div>
-<div class="col-md-12">
-      <div class="box">
-        <header>
-            <h4><span class="glyphicon glyphicon-tag"></span> Traitements</h4>
+{#<div class="row">#}
+{#<div class="col-md-12">#}
+{#<div class="box">#}
+{#<header>#}
+  {#<h4><span class="glyphicon glyphicon-file"></span>Informations relatives à {{ entity.fullName }} </h4>#}
+{#</header>#}
 
-        </header>
-        <table class="table table-hover table-bordered">
-        <thead>
-              <tr>
-                  <th>Consultation</th>
-                  <th>Traitement</th>
-              </tr>
-          </thead>
-          <tbody>
-          {% for item in entity.consultations %}
-            <tr>
-              <td>{{ item.created|date('d/m/Y') }}</td>
-              <td>{{ item.treatment|truncate(50) }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-        </table>
-    </div>
-</div>
 
-</div>
+
+{#<table class="table table-hover table-bordered">#}
+  {#<thead>#}
+
+      {#<tr>#}
+          {#<th>Identité du patient</th>#}
+          {#<th>Informations générale</th>#}
+          {#<th></th>#}
+      {#</tr>#}
+  {#</thead>#}
+  {#<tbody>#}
+    {#<tr>#}
+      {#<td>#}
+      {#<ul class="list-group">#}
+        {#<li class="list-group-item"><strong>Nom :</strong> {{ entity.familyname }}</li>#}
+        {#<li class="list-group-item"><strong>Prenom :</strong>  {{ entity.firstname }} </li>#}
+        {#<li class="list-group-item"><strong>CIN :</strong> {{ entity.cin }}</li>#}
+        {#<li class="list-group-item"><strong>Sexe :</strong> {{ entity.gender }}</li>#}
+        {#<li class="list-group-item"><strong>Date de naissance :</strong> {% if entity.birthday %}{{ entity.birthday|date('d/m/Y') }}{% endif %}</li>#}
+      {#</ul>#}
+      {#</td>#}
+      {#<td>#}
+        {#<ul class="list-group">#}
+          {#<li class="list-group-item"><strong>Lieu de naissance :</strong> {{ entity.birthcity }}</li>#}
+          {#<li class="list-group-item"><strong>Adresse :</strong> {{ entity.address }}</li>#}
+          {#<li class="list-group-item"><strong>Province :</strong> {{ entity.city }}</li>#}
+          {#<li class="list-group-item"><strong>adresse email :</strong> <a href="mailto:{{ entity.email }}">{{ entity.email }}</a></li>#}
+
+       {#</ul>#}
+      {#</td>#}
+      {#<td>#}
+      {#<ul class="list-group">#}
+        {#<li class="list-group-item"><strong>Gsm 1:</strong> {{ entity.gsm }}</li>#}
+        {#<li class="list-group-item"><strong>Gsm 2:</strong> {{ entity.parentGsm }}</li>#}
+        {#<li class="list-group-item"><strong>Pays :</strong> {{ entity.contry }}</li>#}
+        {#<li class="list-group-item"><strong>type de couverture sociale :</strong> {{ entity.cnsstype }}</li>#}
+        {#<li class="list-group-item"><strong>numéro de couverture sociale :</strong> {{ entity.cnssnum }}</li>#}
+      {#</ul>#}
+
+      {#</td>#}
+    {#</tr>#}
+  {#</tbody>#}
+{#</table>#}
+
+{#</div>#}
+{#</div>#}
+
+{#<div class="col-md-12">#}
+{#<div class="box">#}
+{#<header>#}
+    {#<h4><span class="glyphicon glyphicon-tag"></span> Histoire de la maladie</h4>#}
+
+{#</header>#}
+{#<table class="table table-hover table-bordered">#}
+  {#<thead>#}
+      {#<tr>#}
+      {#</tr>#}
+  {#</thead>#}
+  {#<tbody>#}
+    {#<tr>#}
+      {#<td>#}
+        {#<table class="table table-hover table-bordered">#}
+            {#<thead>#}
+
+                {#<tr>#}
+                    {#<th>type</th>#}
+                    {#<th>medicaux</th>#}
+                    {#<th>Chirurgicaux & gynécologiques</th>#}
+                {#</tr>#}
+            {#</thead>#}
+            {#<tbody>#}
+            {#{% for item in entity.antecedents %}#}
+              {#<tr>#}
+                {#<td><a href="{{ path('antecedent_edit', { 'id': item.id }) }}">{{ item.type }}</a></td>#}
+                {#<td>{{ item.medicaux|nl2br }}</td>#}
+                {#<td>{{ item.chirurgicaux|nl2br }}</td>#}
+              {#</tr>#}
+            {#{% endfor %}#}
+            {#</tbody>#}
+          {#</table>#}
+      {#</td>#}
+    {#</tr>#}
+    {#<tr>#}
+      {#<td>#}
+          {#<table class="table table-hover table-bordered">#}
+            {#<thead>#}
+
+                {#<tr>#}
+                    {#<th>type</th>#}
+                    {#<th>description</th>#}
+                {#</tr>#}
+            {#</thead>#}
+            {#<tbody>#}
+            {#{% for item in entity.antecedents %}#}
+              {#<tr>#}
+                {#<td><a href="{{ path('antecedent_edit', { 'id': item.id }) }}">{{ item.type }}</a></td>#}
+                {#<td></td>#}
+              {#</tr>#}
+            {#{% endfor %}#}
+            {#</tbody>#}
+          {#</table>#}
+      {#</td>#}
+    {#</tr>#}
+
+{#</tbody>#}
+{#</table>#}
+
+
+{#</div>#}
+{#</div>#}
+
+{#<div class="col-md-12">#}
+{#<div class="box">#}
+{#<header>#}
+    {#<h4><span class="glyphicon glyphicon-tag"></span> Motifs de consultation</h4>#}
+{#</header>#}
+{#<table class="table table-hover table-bordered">#}
+    {#<thead>#}
+        {#<tr>#}
+            {#<th>Anamnese</th>#}
+
+        {#</tr>#}
+    {#</thead>#}
+    {#<tbody>#}
+    {#{% for item in entity.consultations %}#}
+      {#<tr>#}
+        {#{% if item.anamnese %}#}
+        {#<td>{{ item.anamnese|truncate(50) }}</td>#}
+        {#{% endif %}#}
+      {#</tr>#}
+    {#{% endfor %}#}
+    {#</tbody>#}
+{#</table>#}
+
+{#<table class="table table-hover table-bordered">#}
+    {#<thead>#}
+        {#<tr>#}
+            {#<th>Examen clinique</th>#}
+            {#<th>Date</th>#}
+            {#<th>Medecin</th>#}
+            {#<th>Diagnostic</th>#}
+        {#</tr>#}
+    {#</thead>#}
+    {#<tbody>#}
+    {#{% for item in entity.consultations %}#}
+      {#<tr>#}
+        {#<td><a href="{{ path('consultation_show', { 'id': item.id }) }}">{{ item.name }}</a></td>#}
+        {#<td>{{ item.created|date('d/m/Y') }}</td>#}
+        {#<td><a href="{{ path('ben_show_user', { 'id': item.user.id }) }}">{{ item.user.fullname }}</a></td>#}
+        {#<td>{{ item.diagnosis|truncate(50) }}</td>#}
+      {#</tr>#}
+    {#{% endfor %}#}
+    {#</tbody>#}
+{#</table>#}
+{#<header>#}
+    {#<h4><span class="glyphicon glyphicon-tag"></span> Examen complémentaire</h4>#}
+{#</header>#}
+{#<table class="table table-hover table-bordered">#}
+    {#<thead>#}
+        {#<tr>#}
+            {#<th>Date</th>#}
+            {#<th>Type de l'examen</th>#}
+            {#<th>Lieu</th>#}
+            {#<th>Conclusion</th>#}
+        {#</tr>#}
+    {#</thead>#}
+    {#<tbody>#}
+    {#{% for item in entity.consultations %}#}
+    {#{% for i in item.tests %}#}
+      {#{% if i.typeexam %}#}
+      {#<tr>#}
+        {#<td>{{ i.date|date('d/m/Y') }}</td>#}
+        {#<td>{{ i.typeexam}}</td>#}
+        {#<td>{{ i.lieu}}</td>#}
+        {#<td></td>#}
+        {#<td>#}
+            {#{%if i.images|length > 0%}#}
+            {#<script>#}
+                {#var id= {{ i.id }};#}
+            {#</script>#}
+
+                {#<a class="" href="#">Lanuch</a>#}
+            {#<a class="trigger btn btn-info btn-block" onclick="modalAction( {{ i.id }} )" id="modal-button" data-target="#_modal" data-toggle="modal" href="#">#}
+                    {#Consulter les fichiers#}
+            {#</a>#}
+
+            {#<div id="modal" class="modal-wrapper" tabindex="-1">#}
+
+                {#<div class="modal">#}
+
+                    {#<div class="head">#}
+                        {#<a class="btn-close trigger" onclick="deletePhotos()" href="#">#}
+                            {#x#}
+                        {#</a>#}
+
+                        {#<h3 class="header">#}
+                            {#Aperçu sur les fichiers#}
+                        {#</h3>#}
+
+                    {#</div>#}
+                    {#<div class="content" id="modal-content"></div>#}
+                {#</div>#}
+            {#</div>#}
+
+            {#{%else%}#}
+                {#{{ i.conclusion}}#}
+            {#{%endif%}#}
+        {#</td>#}
+      {#</tr>#}
+      {#{% endif %}#}
+    {#{% endfor %}#}
+    {#{% endfor %}#}
+    {#</tbody>#}
+{#</table>#}
+{#</div>#}
+{#</div>#}
+{#<div class="col-md-12">#}
+{#<div class="box">#}
+{#<header>#}
+    {#<h4><span class="glyphicon glyphicon-tag"></span> Conduites tenues</h4>#}
+
+{#</header>#}
+{#<table class="table table-hover table-bordered">#}
+{#<thead>#}
+      {#<tr>#}
+          {#<th>Date</th>#}
+          {#<th>Conduite à tenir</th>#}
+      {#</tr>#}
+  {#</thead>#}
+  {#<tbody>#}
+  {#{% for item in entity.consultations %}#}
+    {#{% if item.decision %}#}
+    {#<tr>#}
+      {#<td>{{ item.created|date('d/m/Y') }}</td>#}
+      {#<td>{{ item.decision|truncate(50) }}</td>#}
+    {#</tr>#}
+    {#{% endif %}#}
+  {#{% endfor %}#}
+{#</tbody>#}
+{#</table>#}
+{#</div>#}
+{#</div>#}
+{#<div class="col-md-12">#}
+{#<div class="box">#}
+{#<header>#}
+    {#<h4><span class="glyphicon glyphicon-tag"></span> Traitements</h4>#}
+
+{#</header>#}
+{#<table class="table table-hover table-bordered">#}
+{#<thead>#}
+      {#<tr>#}
+          {#<th>Consultation</th>#}
+          {#<th>Traitement</th>#}
+      {#</tr>#}
+  {#</thead>#}
+  {#<tbody>#}
+  {#{% for item in entity.consultations %}#}
+    {#<tr>#}
+      {#<td>{{ item.created|date('d/m/Y') }}</td>#}
+      {#<td>{{ item.treatment|truncate(50) }}</td>#}
+    {#</tr>#}
+  {#{% endfor %}#}
+{#</tbody>#}
+{#</table>#}
+{#</div>#}
+{#</div>#}
+{#</div>#}
 <form id="deleteForm" action="{{ path('person_delete', { 'id': entity.id }) }}" method="GET">
-    {{ form_widget(delete_form) }}
+{{ form_widget(delete_form) }}
 </form>
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
 <script>
-    (function($) {
+(function($) {
 
-        $('#js-delete').on('click', function(){
-            $('#deleteForm').submit();
-            return false;
-        });
+$('#js-delete').on('click', function(){
+    $('#deleteForm').submit();
+    return false;
+});
 //        $('#modal-button').on('click', function(){
 //            $('div').innerHTML(function (data){
 //                console.log(data);
@@ -315,15 +843,15 @@ Tableau de bord | {{ parent() }}
 //        });
 
 
-    })(jQuery);
-    function modalAction(data){
-        $.ajax({
-            type: 'GET',
-            url: "http://localhost:8000/examen/images/" + data,
-            dataType: "json",
-            success: function (images) {
-                console.log(  images.response.id_images );
-                {#<a href="{{ path('test_show_img',{'id':i.id,'id_image':i.images|first.id}) }}">#}
+})(jQuery);
+function modalAction(data){
+$.ajax({
+    type: 'GET',
+    url: "http://localhost:8000/examen/images/" + data,
+    dataType: "json",
+    success: function (images) {
+        console.log(  images.response.id_images );
+        {#<a href="{{ path('test_show_img',{'id':i.id,'id_image':i.images|first.id}) }}">#}
                 {#<img src="{{asset('uploads/img/'~i.images|first.path)}}" class="img-responsive" alt="fiche">#}
                         {#</a>#}
                 //"<p><a href='http://www.google.com'>Google</a></p>"
