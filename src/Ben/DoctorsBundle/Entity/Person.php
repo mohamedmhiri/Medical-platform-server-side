@@ -180,7 +180,10 @@ class Person
      *@ORM\Column(name="isDeleted", type="boolean")
      */
     private $isDeleted;
-
+    /**
+     * @ORM\OneToMany(targetEntity="Ben\DoctorsBundle\Entity\Test", mappedBy="person", cascade={"all"})
+     */
+    protected $tests;
 
 
     /************ constructeur ************/
@@ -192,6 +195,7 @@ class Person
         $this->antecedents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->consultations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->appointments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tests = new \Doctrine\Common\Collections\ArrayCollection();
 
     }
 
@@ -801,5 +805,37 @@ class Person
      */
     public function getCreated() {
         return $this->created;
+    }
+    /**
+     * Add tests
+     *
+     * @param \Ben\DoctorsBundle\Entity\Test $tests
+     * @return Consultation
+     */
+    public function addTest(\Ben\DoctorsBundle\Entity\Test $tests)
+    {
+        $this->tests[] = $tests;
+
+        return $this;
+    }
+
+    /**
+     * Remove tests
+     *
+     * @param \Ben\DoctorsBundle\Entity\Test $tests
+     */
+    public function removeTest(\Ben\DoctorsBundle\Entity\Test $tests)
+    {
+        $this->tests->removeElement($tests);
+    }
+
+    /**
+     * Get tests
+     *
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getTests()
+    {
+        return $this->tests;
     }
 }

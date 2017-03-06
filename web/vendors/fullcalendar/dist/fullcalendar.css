@@ -8,6 +8,7 @@
 .fc {
 	direction: ltr;
 	text-align: left;
+	height: 200px;
 }
 
 .fc-rtl {

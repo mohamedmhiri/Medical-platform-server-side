@@ -44,6 +44,7 @@ class AntecedentController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $entity->setPerson($em->getRepository('BenDoctorsBundle:Person')->find((int)$request->get("person")));
             $em->persist($entity);
             $em->flush();
 
@@ -142,7 +143,7 @@ class AntecedentController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('antecedent_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('person_show', array('id' => $entity->getPerson()->getId())));
         }
 
         return $this->render('BenDoctorsBundle:Antecedent:edit.html.twig', array(
@@ -160,10 +161,10 @@ class AntecedentController extends Controller
     {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('BenDoctorsBundle:Antecedent')->find($id);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('BenDoctorsBundle:Antecedent')->find($id);
+//        if ($form->isValid()) {
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Antecedent entity.');
@@ -171,9 +172,9 @@ class AntecedentController extends Controller
 
             $em->remove($entity);
             $em->flush();
-        }
+//        }
 
-        return $this->redirect($this->generateUrl('antecedent'));
+        return $this->redirect($this->generateUrl('person_show', array('id' => $entity->getPerson()->getId())));
     }
 
     /**

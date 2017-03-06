@@ -26,7 +26,7 @@
 {% endblock %}
 
 {% block fos_user_content %}
-<form class="form-inline formstyle" action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+<form data-parsley-validate class="form-inline formstyle" action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
    <fieldset>
         <legend>Récupération du Mot de passe</legend>
 

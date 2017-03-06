@@ -66,8 +66,9 @@ class CalendarController extends  Controller
      */
     public function indexAction()
     {
-        return $this->render(
-            '/var/www/html/medical/src/Ben/DoctorsBundle/Resources/views/Calendar/calendar.html.twig',
+        return $this->render('BenDoctorsBundle:Calendar:calendar.html.twig',
+//        return $this->render(
+//            '/var/www/html/medical/src/Ben/DoctorsBundle/Resources/views/Calendar/calendar.html.twig',
             array("prepare"=>$this->prepare())
         );
 //        return $this->prepare();

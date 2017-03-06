@@ -27,9 +27,9 @@ class PersonType extends AbstractType
             ->add('city', 'text',array('required' => false,))
             ->add('address')
             ->add('gsm', 'text',array('required' => false,))
-            ->add('cnsstype', 'choice', array('choices' => array('Cnam' => 'Cnam','Cnrps' => 'Cnrps','Cnss' => 'Cnss','Assurance privé' => 'Assurance privé','sans' => 'sans')))
-            ->add('cnssnum', 'text',array('required' => false,))
             ->add('parentGsm', 'text',array('label'=>'GSM2','required' => false,))
+            ->add('cnsstype', 'choice', array('choices' => array('Cnam' => 'Cnam','Cnrps' => 'Cnrps','Cnss' => 'Cnss','Assurance privée' => 'Assurance privée','sans' => 'sans', 'autre'=>'autre')))
+            ->add('cnssnum', 'text',array('required' => false,))
         ;
     }
 

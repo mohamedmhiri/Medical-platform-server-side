@@ -57,4 +57,13 @@ ben_fine_upload:
   path:       /fine_upload
   defaults:    {_controller: "BenDoctorsBundle:Utility:fineUpload"}
   requirements: { _method: get }
-
+#trial
+ben_trial:
+  path:       /trial/{int}
+  defaults:    {_controller: "BenDoctorsBundle:Default:trial"}
+  requirements: {_method: get}
+#file upload
+ben_file_upload:
+  path:       /upload
+  defaults:   {_controller: "BenDoctorsBundle:Default:upload"}
+  requirements: {_method: get}

@@ -25,6 +25,6 @@ ben_appointment_delete:
     defaults: { _controller: "BenDoctorsBundle:Appointment:delete" }
     methods:  [POST, DELETE]
 take_appointment:
-    path:     /take_appointment
+    path:     /take_appointment/{date}/{person}
     defaults:  { _controller: "BenDoctorsBundle:Appointment:takeAppointment" }
     methods: POST

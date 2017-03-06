@@ -70,7 +70,7 @@ class AppointmentController extends Controller
      */
     public function createAction($date,$person)
     {
-        if(strlen($date)===14){
+//        if(strlen($date)===14){
             $entity = new Appointment();
             $_date=$this->dateTimeFormatter($date);
             $entity->setDate($_date);
@@ -78,14 +78,13 @@ class AppointmentController extends Controller
             $entity->setPerson($em->getRepository('BenDoctorsBundle:Person')->findById($person)[0]);
             $em->persist($entity);
             $em->flush();
-            $tab=$this->jsonFormatter($entity);
-            $tab["response"]="ok";
-            return new JsonResponse($tab);
-        }
-        else
-        {
-            return new JsonResponse(["response"=>"error"]);
-        }
+            return $this->redirect($this->generateUrl('ben_doctors_calendar'));
+
+//        }
+//        else
+//        {
+//            return new JsonResponse(["response"=>"error"]);
+//        }
 
     }
 
@@ -157,12 +156,19 @@ class AppointmentController extends Controller
 
     /**
      * @param Request $request
+     * @return JsonResponse
      */
-    public function takeAppointmentAction(Request $request){
-        $fam_name = $request->get("familyname");
-        $fir_name = $request->get("firstname");
-        $date = $request->get("date");
-        return new JsonResponse(["fam"=>$fam_name,"fir"=>$fir_name,"date"=>$date]);
+    public function takeAppointmentAction($date, $patient){
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('BenDoctorsBundle:Person')->find($patient);
+        $appointment = new Appointment();
+        $_date = str_replace("%20"," ",$date);
+        $appointment->setDate(date_create($_date));
+        $appointment->setPerson($entity);
+        $em->persist($appointment);
+        $em->flush();
+        return $this->redirect($this->generateUrl('ben_doctors_calendar'));
+//        return new JsonResponse(["patient"=>$patient,"date"=>$date]);
     }
 
 }

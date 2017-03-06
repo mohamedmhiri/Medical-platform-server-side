@@ -2,6 +2,7 @@
 
 namespace Ben\DoctorsBundle\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Httpfoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -61,20 +62,17 @@ class ConsultationController extends Controller
         $entity = new Consultation();
         $form = $this->createForm(new ConsultationType($type), $entity);
         $form->handleRequest($request);
-
         if ($form->isValid()) {
             $currentUser = $this->container->get('security.context')->getToken()->getUser();
             $entity->setUser($currentUser);
-            $entity->getImage()->upload();
+//            $entity->getImage()->upload();
             $em = $this->getDoctrine()->getManager();
-            foreach ($entity->getConsultationmeds() as $item) {
-                $item->getMeds()->minusCount($item->getCount());
-            }
+            $entity->setPerson($em->getRepository('BenDoctorsBundle:Person')->find((int)$request->get("person")));
+
             $em->persist($entity);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('info', "La consultation a été enregistré avec succès.");
-            return $this->redirect($this->generateUrl('consultation_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('person_show', array('id' => $entity->getPerson()->getId())));
         }
 
         return $this->render('BenDoctorsBundle:Consultation:new.html.twig', array(
@@ -119,7 +117,6 @@ class ConsultationController extends Controller
 
         return $this->render('BenDoctorsBundle:Consultation:show.html.twig', array(
             'entity'      => $entity,
-            'avas'        => $this->prepare(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -161,33 +158,19 @@ class ConsultationController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Consultation entity.');
         }
-        $originalMeds = new \Doctrine\Common\Collections\ArrayCollection();
-//        foreach ($entity->getConsultationmeds() as $item) {
-//            $originalMeds->add($item);
-//        }
-
         $editForm = $this->createForm( new ConsultationType( ),$entity);
         $deleteForm = $this->createDeleteForm($id);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-//            foreach ($originalMeds as $item) {
-//                if (false === $entity->getConsultationmeds()->contains($item)) {
-//                    $em->remove($item);
-//                }
-//            }
-//            foreach ($entity->getConsultationmeds() as $item) {
-//                $item->getMeds()->minusCount($item->getCount());
-//            }
-
             $em->persist($entity);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('info', "La consultation a été modifiée avec succès.");
-            return $this->redirect($this->generateUrl('consultation_show', array('id' => $id)));
+//            $this->get('session')->getFlashBag()->add('info', "La consultation a été modifiée avec succès.");
+            return $this->redirect($this->generateUrl('person_show', array('id' => $entity->getPerson()->getId())));
         }
 
-        $this->get('session')->getFlashBag()->add('danger', "Il y a des erreurs dans le formulaire soumis !");
+//        $this->get('session')->getFlashBag()->add('danger', "Il y a des erreurs dans le formulaire soumis !");
         return $this->render('BenDoctorsBundle:Consultation:edit.html.twig', array(
             'entity'      => $entity,
             'form'   => $editForm->createView(),
@@ -219,7 +202,7 @@ class ConsultationController extends Controller
                 $this->get('session')->getFlashBag()->add('info', "Action effectué avec succès !");
             }
         }
-        return $this->redirect($this->generateUrl('consultation'));
+        return $this->redirect($this->generateUrl('person'));
     }
 
     /**

@@ -32,7 +32,7 @@ consultation_update:
 consultation_delete:
     path:     /{id}/delete
     defaults: { _controller: "BenDoctorsBundle:Consultation:delete" }
-    requirements: { _method: post|delete }
+    requirements: { _method: post|delete|get }
 
 consultation_remove:
     path:     /remove

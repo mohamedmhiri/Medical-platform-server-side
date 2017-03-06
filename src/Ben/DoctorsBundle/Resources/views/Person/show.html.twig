@@ -20,17 +20,19 @@ Tableau de bord | {{ parent() }}
                             <li><a href="{{ path('person_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span> modifier</a></li>
                             <li><a href="{{ path('antecedent_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Antécedent</a></li>
                             <li><a href="{{ path('consultation_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Consultation </a></li>
-                            {#<li><a href="{{ path('appointment_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Rendes_vous </a></li>#}
+                            <li><a href="{{ path('test_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Examen Médical </a></li>
+                            <li><a href="{{ path('ben_doctors_calendar') }}"><span class="glyphicon glyphicon-plus"></span> Prendre un rendez-vous </a></li>
                             <li><a id="btnPrint"><span class="glyphicon glyphicon-print"></span> imprimer</a></li>
                             <li><a href="#" id="js-delete"><span class="glyphicon glyphicon-trash"></span> Supprimer</a></li>
                         </ul>
                     </div>
-                </br>
                 <h3> </h3>
             </div>
 
-            <div class="clearfix"></div>
 
+            <div class="clearfix"></div>
+            </br>
+            </br>
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <div class="x_panel">
@@ -153,7 +155,7 @@ Tableau de bord | {{ parent() }}
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2><span class="glyphicon glyphicon-plus"></span>  Histoire de la maladie </h2>
+                            <h2><span class="glyphicon glyphicon-plus"></span>  Observation médicale </h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li>
                                     <a class="hidden-print collapse-link">
@@ -194,18 +196,23 @@ Tableau de bord | {{ parent() }}
                                         <td class=" ">{{ item.chirurgicaux|nl2br }} </td>
                                         <td class=" ">{{ item.traitement }}</td>
                                         <td class=" last">
-                                            <a href="{{ path('antecedent_edit', { 'id': item.id }) }}">
-                                                Modifier l'antécédent
-                                            </a>
+                                            <button type="button" class="btn btn-warning">
+                                                <a href="{{ path('antecedent_edit', { 'id': item.id }) }}">
+                                                    Modifier l'antécédent
+                                                </a>
+                                            </button>
+
                                         </td>
                                     </tr>
                                     {% endfor %}
                                     {% else %}
                                     <tr class="even pointer">
                                         <td class=" last">
+                                            <button type="button" class="btn btn-warning">
                                             <a href="{{ path('antecedent_new', { 'id': entity.id }) }}">
                                                  Ajouter un antécédent
                                             </a>
+                                            </button>
                                         </td>
                                     </tr>
                                     {% endif %}
@@ -218,7 +225,7 @@ Tableau de bord | {{ parent() }}
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2><span class="glyphicon glyphicon-tag"></span> Motifs de consultation </h2>
+                            <h2><span class="glyphicon glyphicon-tag"></span> Historiques de consultation </h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li>
                                     <a class="hidden-print collapse-link">
@@ -253,18 +260,22 @@ Tableau de bord | {{ parent() }}
                                     <tr class="even pointer">
                                         <td class=" ">{{ item.anamnese }}</td>
                                         <td class=" last">
-                                            <a href="{{ path('consultation_edit', { 'id': item.id }) }}">
-                                                Modifier la consultation
-                                            </a>
+                                            <button type="button" class="btn btn-warning">
+                                                <a href="{{ path('consultation_edit', { 'id': item.id }) }}">
+                                                    Modifier la consultation
+                                                </a>
+                                            </button>
                                         </td>
                                     </tr>
                                     {% endfor %}
                                     {% else %}
                                         <tr class="even pointer">
                                             <td class=" last">
+                                                <button type="button" class="btn btn-warning">
                                                 <a href="{{ path('consultation_new', { 'id': entity.id }) }}">
                                                     Ajouter une consultation
                                                 </a>
+                                                </button>
                                             </td>
                                         </tr>
                                     {% endif %}
@@ -295,18 +306,22 @@ Tableau de bord | {{ parent() }}
                                                 <td class=" ">{{ item.user.fullname }}</td>
                                                 <td class=" ">{{ item.diagnosis|truncate(50) }}</td>
                                                 <td class=" last">
+                                                    <button type="button" class="btn btn-warning">
                                                     <a href="{{ path('consultation_edit', { 'id': item.id }) }}">
                                                         Modifier la consultation
                                                     </a>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         {% endfor %}
                                     {% else %}
                                         <tr class="even pointer">
                                             <td class=" last">
+                                                <button type="button" class="btn btn-warning">
                                                 <a href="{{ path('consultation_new', { 'id': entity.id }) }}">
                                                     Ajouter une consultation
                                                 </a>
+                                                </button>
                                             </td>
                                         </tr>
                                     {% endif %}
@@ -339,7 +354,7 @@ Tableau de bord | {{ parent() }}
                                 <table class="table table-striped jambo_table bulk_action">
                                     <thead>
                                     <tr class="headings">
-                                        {% if entity.nb_tests > 0 %}
+                                        {% if entity.tests|length > 0 %}
                                             <th class="column-title">Date </th>
                                             <th class="column-title">Type de l'examen </th>
                                             <th class="column-title">Lieu </th>
@@ -353,42 +368,46 @@ Tableau de bord | {{ parent() }}
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% if entity.consultations|length > 0 %}
-                                    {% if entity.nb_tests > 0 %}
-                                        {% for item in entity.consultations %}
-                                            {% for i in item.tests %}
+                                    {% if entity.tests|length > 0 %}
+                                            {% for i in entity.tests %}
+                                            {% if i.isdeleted == 0 %}
                                             <tr class="even pointer">
                                                 <td class=" ">{{ i.date|date('d/m/Y') }}</td>
                                                 <td class=" ">{{ i.typeexam}}</td>
                                                 <td class=" ">{{ i.lieu}} </td>
                                                 <td class=" ">
                                                 {%if i.images|length > 0%}
-                                                    <script>
-                                                        var id= {{ i.id }};
-                                                    </script>
 
-                                                    <a class="" href="#">Lanuch</a>
-                                                    <a class="trigger btn btn-info btn-block" onclick="modalAction( {{ i.id }} )" id="modal-button" data-target="#_modal" data-toggle="modal" href="#">
-                                                        Consulter les fichiers
-                                                    </a>
+                                                    {#<a class="" href="#">Lanuch</a>#}
+                                                    {#<button type="button" class="btn btn-c"></button>
+                                                     {#<a class="trigger btn btn-info btn-block" onclick="modalAction( {{ i.id }} )" id="modal-button" data-target="#_modal" data-toggle="modal" href="#">#}
+                                                    {% for im in i.images %}
+                                                    {#<button type="button" class="btn btn-warning">#}
+                                                        <a href="{{ path('test_show_img', { 'id': i.id, 'id_image':im.id  }) }}">
+                                                            <i class="fa fa-file"></i>
+                                                            {#Aperçu sur le fichier#}
+                                                        </a>
+                                                    {#</button>#}
+                                                    {% endfor %}
+                                                    {#</a>#}
 
-                                                    <div id="modal" class="modal-wrapper" tabindex="-1">
+                                                    {#<div id="modal" class="modal-wrapper" tabindex="-1">#}
 
-                                                        <div class="modal">
+                                                        {#<div class="modal">#}
 
-                                                            <div class="head">
-                                                                <a class="btn-close trigger" onclick="deletePhotos()" href="#">
-                                                                    x
-                                                                </a>
+                                                            {#<div class="head">#}
+                                                                {#<a class="btn-close trigger" onclick="deletePhotos()" href="#">#}
+                                                                    {#x#}
+                                                                {#</a>#}
 
-                                                                <h3 class="header">
-                                                                    Aperçu sur les fichiers
-                                                                </h3>
+                                                                {#<h3 class="header">#}
+                                                                    {#Aperçu sur les fichiers#}
+                                                                {#</h3>#}
 
-                                                            </div>
-                                                            <div class="content" id="modal-content"></div>
-                                                        </div>
-                                                    </div>
+                                                            {#</div>#}
+                                                            {#<div class="content" id="modal-content"></div>#}
+                                                        {#</div>#}
+                                                    {#</div>#}
 
                                                 {%else%}
                                                     {{ i.conclusion}}
@@ -396,24 +415,27 @@ Tableau de bord | {{ parent() }}
                                                 </td>
 
                                                 <td class=" last">
+                                                    <button type="button" class="btn btn-warning">
+
                                                     <a href="{{ path('test_edit', { 'id': i.id }) }}">
                                                         Modifier l'examen complémentaire
                                                     </a>
+                                                    </button>
                                                 </td>
                                             </tr>
+                                            {% endif %}
                                             {% endfor %}
-                                        {% endfor %}
                                     {% else %}
                                         <tr class="even pointer">
                                             <td class=" last">
-                                                <a href="{{ path('test_new') }}">
+                                                <button type="button" class="btn btn-warning">
+                                                <a href="{{ path('test_new', { 'id': entity.id })}}">
                                                     Ajouter un examen complémentaire
                                                 </a>
+                                                </button>
                                             </td>
                                         </tr>
                                     {% endif %}
-                                    {% endif %}
-
                                     </tbody>
                                 </table>
                             </div>
@@ -460,18 +482,24 @@ Tableau de bord | {{ parent() }}
                                                 <td class=" ">{{ item.created|date('d/m/Y') }}</td>
                                                 <td class=" ">{{ item.decision|truncate(50) }}</td>
                                                 <td class=" last">
+                                                    <button type="button" class="btn btn-warning">
+
                                                     <a href="{{ path('consultation_edit', { 'id': item.id }) }}">
                                                         Modifier la conduite tenue
                                                     </a>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         {% endfor %}
                                     {% else %}
                                         <tr class="even pointer">
                                             <td class=" last">
+                                                <button type="button" class="btn btn-warning">
+
                                                 <a href="{{ path('consultation_new', { 'id': entity.id }) }}">
                                                     Ajouter une conduite à tenir
                                                 </a>
+                                                </button>
                                             </td>
                                         </tr>
                                     {% endif %}
@@ -522,18 +550,23 @@ Tableau de bord | {{ parent() }}
                                                 <td class=" ">{{ item.created|date('d/m/Y') }}</td>
                                                 <td class=" ">{{ item.treatment|truncate(50) }}</td>
                                                 <td class=" last">
+                                                    <button type="button" class="btn btn-warning">
                                                     <a href="{{ path('consultation_edit', { 'id': item.id }) }}">
                                                         Modifier le traitement
                                                     </a>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         {% endfor %}
                                     {% else %}
                                         <tr class="even pointer">
                                             <td class=" last">
+                                                <button type="button" class="btn btn-warning">
+
                                                 <a href="{{ path('consultation_new', { 'id': entity.id }) }}">
                                                     Ajouter un traitement
                                                 </a>
+                                                </button>
                                             </td>
                                         </tr>
                                     {% endif %}

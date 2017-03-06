@@ -91,10 +91,7 @@ class Consultation
     */
     private $user;
 
-    /**
-    * @ORM\OneToMany(targetEntity="Ben\DoctorsBundle\Entity\Test", mappedBy="consultation", cascade={"all"})
-    */
-    protected $tests;
+
 
 
 
@@ -104,8 +101,6 @@ class Consultation
     public function __construct()
     {
         $this->created = new \DateTime;
-        $this->tests = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->image= new \Ben\DoctorsBundle\Entity\image();
     }
 
     /************ getters & setters  ************/
@@ -228,38 +223,7 @@ class Consultation
         return $this->user;
     }
 
-    /**
-     * Add tests
-     *
-     * @param \Ben\DoctorsBundle\Entity\Test $tests
-     * @return Consultation
-     */
-    public function addTest(\Ben\DoctorsBundle\Entity\Test $tests)
-    {
-        $this->tests[] = $tests;
 
-        return $this;
-    }
-
-    /**
-     * Remove tests
-     *
-     * @param \Ben\DoctorsBundle\Entity\Test $tests
-     */
-    public function removeTest(\Ben\DoctorsBundle\Entity\Test $tests)
-    {
-        $this->tests->removeElement($tests);
-    }
-
-    /**
-     * Get tests
-     *
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getTests()
-    {
-        return $this->tests;
-    }
 
 
 

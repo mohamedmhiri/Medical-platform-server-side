@@ -9,36 +9,33 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         {% block meta %}{% endblock %}
         {% block stylesheet %}
-          <!-- Bootstrap -->
-          <link href="{{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-          <!-- Font Awesome -->
-          <link href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
-          <!-- NProgress -->
-          <link href="{{ asset('vendors/nprogress/nprogress.css') }}" rel="stylesheet">
-          <!-- iCheck -->
-          <link href="{{ asset('vendors/iCheck/skins/flat/green.css') }}" rel="stylesheet">
-          <!-- bootstrap-progressbar -->
-          <link href="{{ asset('vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
-          <!-- JQVMap -->
-          <link href="{{ asset('vendors/jqvmap/dist/jqvmap.min.css') }}" rel="stylesheet">
-          <!-- bootstrap-daterangepicker -->
-          <link href="{{ asset('vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
-          <!-- Custom Theme Style -->
-          <link href="{{ asset('build/css/custom.min.css') }}" rel="stylesheet">
-          <!-- bootstrap-daterangepicker -->
-          <link href="{{ asset('vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
-          <!-- bootstrap-wysiwyg -->
-          <link href="{{ asset('vendors/google-code-prettify/bin/prettify.min.css') }}" rel="stylesheet">
-          <!-- Select2 -->
-          <link href="{{ asset('vendors/select2/dist/css/select2.min.css') }}" rel="stylesheet">
-          <!-- Switchery -->
-          <link href="{{ asset('vendors/switchery/dist/switchery.min.css') }}" rel="stylesheet">
-          <!-- starrr -->
-          <link href="{{ asset('vendors/starrr/dist/starrr.css') }}" rel="stylesheet">
-          <!-- FullCalendar -->
-          <link href="{{ asset('vendors/fullcalendar/dist/fullcalendar.min.css') }}" rel="stylesheet">
-          <link href="{{ asset('vendors/fullcalendar/dist/fullcalendar.print.css') }}" rel="stylesheet" media="print">
-
+            <!-- Bootstrap -->
+            <link href="{{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+            <!-- Font Awesome -->
+            <link href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+            <!-- NProgress -->
+            <link href="{{ asset('vendors/nprogress/nprogress.css') }}" rel="stylesheet">
+            <!-- iCheck -->
+            <link href="{{ asset('vendors/iCheck/skins/flat/green.css') }}" rel="stylesheet">
+            <!-- bootstrap-progressbar -->
+            <link href="{{ asset('vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
+            <!-- JQVMap -->
+            <link href="{{ asset('vendors/jqvmap/dist/jqvmap.min.css') }}" rel="stylesheet">
+            <!-- bootstrap-daterangepicker -->
+            <link href="{{ asset('vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+            <!-- Custom Theme Style -->
+            <link href="{{ asset('build/css/custom.min.css') }}" rel="stylesheet">
+            <!-- bootstrap-wysiwyg -->
+            <link href="{{ asset('vendors/google-code-prettify/bin/prettify.min.css') }}" rel="stylesheet">
+            <!-- Select2 -->
+            <link href="{{ asset('vendors/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+            <!-- Switchery -->
+            <link href="{{ asset('vendors/switchery/dist/switchery.min.css') }}" rel="stylesheet">
+            <!-- starrr -->
+            <link href="{{ asset('vendors/starrr/dist/starrr.css') }}" rel="stylesheet">
+            <!-- FullCalendar -->
+            <link href="{{ asset('vendors/fullcalendar/dist/fullcalendar.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('vendors/fullcalendar/dist/fullcalendar.print.css') }}" rel="stylesheet" media="print">
             <!-- <link href="{{ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet">
             <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
             <link href="{{ asset('css/main.css') }}" rel="stylesheet">
@@ -49,8 +46,8 @@
             <link href="{{ asset('css/menu.css') }}" rel="stylesheet"> -->
 
             <!--<link href="{{ asset('/css/form.css') }}" rel="stylesheet">-->
-            <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.0/fullcalendar.min.css"
-                  rel="stylesheet">
+            {#<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.0/fullcalendar.min.css"#}
+                  {#rel="stylesheet">#}
 
             <link rel="stylesheet" href="{{ asset('bower_components/chartist/dist/chartist.min.css') }}">
 
@@ -150,14 +147,14 @@
 
         <div class="container">
             {% include "BenDoctorsBundle:Default:flashes.html.twig" %}
-            {% block breadcrumb %} {% endblock %}
+            {#{% block  %} {% endblock %}#}
             {% block body %}{% endblock %}
         </div>
     </div>
     <!-- footer content -->
     <footer>
         <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            Médical - Solution fournie par <a href="http://placeholder.tn">Placeholder</a>
         </div>
         <div class="clearfix"></div>
     </footer>
@@ -165,7 +162,7 @@
 </div>
 
     {% block javascripts %}
-    <!-- jQuery -->
+        <!-- jQuery -->
         <script src="{{ asset('vendors/jquery/dist/jquery.min.js')}}"></script>
         <!-- Bootstrap -->
         <script src="{{ asset('vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
@@ -237,48 +234,56 @@
               legend: false,
               responsive: false
             };
+              $.ajax({
+                  url: "http://localhost:8000/chart",
+                  async: false,
+                  dataType: 'json',
+                  success: function (data) {
+                      new Chart(document.getElementById("canvas1"), {
+                          type: 'doughnut',
+                          tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+                          data: {
+                              labels: [
+                                  data.date_0,
+                                  data.date_1,
+                                  data.date_2,
+                                  data.date_3,
+                                  data.date_4
+                              ],
+                              datasets: [{
+                                  data: [data.month_0, data.month_1, data.month_2, data.month_3, data.month_4],
+                                  backgroundColor: [
+                                      "#BDC3C7",
+                                      "#9B59B6",
+                                      "#E74C3C",
+                                      "#26B99A",
+                                      "#3498DB"
+                                  ],
+                                  hoverBackgroundColor: [
+                                      "#CFD4D8",
+                                      "#B370CF",
+                                      "#E95E4F",
+                                      "#36CAAB",
+                                      "#49A9EA"
+                                  ]
+                              }]
+                          },
+                          options: options
+                      });
 
-            new Chart(document.getElementById("canvas1"), {
-              type: 'doughnut',
-              tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-              data: {
-                labels: [
-                  "Symbian",
-                  "Blackberry",
-                  "Other",
-                  "Android",
-                  "IOS"
-                ],
-                datasets: [{
-                  data: [15, 20, 30, 10, 30],
-                  backgroundColor: [
-                    "#BDC3C7",
-                    "#9B59B6",
-                    "#E74C3C",
-                    "#26B99A",
-                    "#3498DB"
-                  ],
-                  hoverBackgroundColor: [
-                    "#CFD4D8",
-                    "#B370CF",
-                    "#E95E4F",
-                    "#36CAAB",
-                    "#49A9EA"
-                  ]
-                }]
-              },
-              options: options
-            });
+                  }});
+
+
           });
         </script>
 
-        <!-- <script src="{{ asset('js/jquery.min.js') }}"></script>
-        <script src="{{ asset('js/moment.min.js') }}"></script>
-        <script src="{{ asset('js/select2.min.js') }}"></script>
-        <script src="{{ asset('js/fullcalendar.js') }}"></script>
-        <script src="{{ asset('js/availability.js') }}"></script>
-        <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('js/jquery.cookie.js') }}"></script>
+        {#<!-- <script src="{{ asset('js/jquery.min.js') }}"></script>#}
+        {#<script src="{{ asset('js/moment.min.js') }}"></script>#}
+        {#<script src="{{ asset('js/select2.min.js') }}"></script>#}
+        {#<script src="{{ asset('js/fullcalendar.js') }}"></script>#}
+        {#<script src="{{ asset('js/availability.js') }}"></script>#}
+        {#<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>#}
+        {#<script src="{{ asset('js/jquery.cookie.js') }}"></script>#}
 
 
 {#/*******Mini AJAX File Upload Form needs some config ***/#}
@@ -300,17 +305,17 @@
             {#Dropzone.autoDiscover = false;#}
         {#</script>#}
         <! jQuery rest -->
-        <!-- <script src="{{ asset('js/jquery.rest.min.js') }}"></script>
-        <script>
-//            reframe('#calendar');
-//            reframe('#external-events');
+        {#<!-- <script src="{{ asset('js/jquery.rest.min.js') }}"></script>#}
+        {#<script>#}
+{#//            reframe('#calendar');#}
+{#//            reframe('#external-events');#}
 
-            reframe('.graph');
-            reframe('#ct-chart ct-perfect-fourth');
-            //reframe('.container');
+            {#reframe('.graph');#}
+            {#reframe('#ct-chart ct-perfect-fourth');#}
+            {#//reframe('.container');#}
 
 
-        </script> -->
+        {#</script> -->#}
 
     {% endblock javascripts %}
     </body>

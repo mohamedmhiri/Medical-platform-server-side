@@ -1,12 +1,12 @@
 {% extends "BenDoctorsBundle::layout.html.twig" %}
-{#{% block head %}#}
-    {#{% block stylesheet %}#}
-        {#{{ parent() }}#}
+{% block head %}
+    {% block stylesheet %}
+        {{ parent() }}
 
-        {#<link href="{{ asset('css/style.css') }}" rel="stylesheet" />#}
-    {#{% endblock %}#}
+        <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
+    {% endblock %}
 
-{#{% endblock %}#}
+{% endblock %}
 
 {% block body %}
 <div class="container" id="container">

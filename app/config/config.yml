@@ -157,10 +157,23 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+#oneup_uploader:
+#    mappings:
+#        gallery:
+#            frontend: blueimp
+#            root_folder: true
+#            storage:
+#                directory: "%kernel.root_dir%/../web/uploads/img"
+
 oneup_uploader:
     mappings:
         gallery:
             frontend: blueimp
+            enable_progress: true
+            use_orphanage: false
+            allowed_mimetypes: [image/png, image/jpg, image/jpeg, image/gif]
+            max_size: 200M
+            root_folder: true
             storage:
                 directory: "%kernel.root_dir%/../web/uploads/img"
 #services:
@@ -168,3 +181,12 @@ oneup_uploader:
 #        class: Ben\DoctorsBundle\Services\MyService
 #        calls:
 #            - [setRequest, ["@request_stack"]]
+#vich_uploader:
+#    db_driver: orm
+#    mappings:
+#            product_image:
+#                uri_prefix:         /uploads/img
+#                upload_destination: "%kernel.root_dir%/../web/uploads/img"
+#                inject_on_load:     false
+#                delete_on_update:   true
+#                delete_on_remove:   true

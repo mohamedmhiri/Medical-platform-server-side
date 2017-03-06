@@ -11,8 +11,9 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
         - { name: twig.extension }
-#    ben.upload_listener:
-#            class: Ben\DoctorsBundle\EventListener\UploadListener
-#            arguments: ["@doctrine.orm.entity_manager","@request_stack"]
-#            tags:
-#                - { name: kernel.event_listener, event: oneup_uploader.post_persist,method: onUpload }
+    ben.upload_listener:
+            class: Ben\DoctorsBundle\EventListener\UploadListener
+            arguments: ["@doctrine.orm.entity_manager","@request_stack"]
+            tags:
+                - { name: kernel.event_listener, event: oneup_uploader.post_persist.gallery, method: onUpload }
+                - { name: kernel.event_listener, event: oneup_uploader.post_persist.gallery, method: onPostUpload }

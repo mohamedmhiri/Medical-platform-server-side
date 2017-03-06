@@ -1,10 +1,20 @@
 {% for entity in entities %}
     <tr>
-        <td class="flat"><input type="checkbox" name="entities[]" value="{{ entity.id }}"></td>
+        <td class="flat"><input type="checkbox" name="entities[]" value="{{ entity.id }}" name="table_records"></td>
         <td>{{ entity.familyname }}</td>
         <td>{{ entity.firstname }}</td>
         <td>
-        {% if entity.appointments is not null %}{% for app in entity.appointments %}{{ app.date|date('d/m/Y H:i:s') }}{% endfor %}{% else  %}{{ "ce parient n'a pas de rendez-vous" }}{% endif %}
+            {#{% if entity.appointments|length >0 %}#}
+                {#{{ entity.appointments.date|date('d/m/Y')}}#}
+            {#{% endif %}#}
+            {% for app in appointments %}
+                {% if app.person_id == entity.id  %}
+                    {{ app.date|date('d/m/Y H:i') }}
+                {% endif %}
+            {% endfor %}
+
+        {#{% if appointments|length > 0  %}{% for app in appointments %}{% if app.person_id == entity.id %}{{ app.date|date('d/m/Y H:i:s') }}{% endif %}{% endfor %}{% endif %}#}
+            {#{% if appointments|length > 0  %}{% for app in appointments %}{{ app.person_id }}{% endfor %}{% endif %}#}
         </td>
         <td class="hidden-print">
             <div class="text-center">

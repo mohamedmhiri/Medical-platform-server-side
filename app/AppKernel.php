@@ -25,7 +25,10 @@ class AppKernel extends Kernel
             new Ben\DoctorsBundle\BenDoctorsBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
-            new Oneup\UploaderBundle\OneupUploaderBundle(),
+            new Oneup\UploaderBundle\OneupUploaderBundle()
+//        ,
+//            new faparicior\FARSymfony2UploadBundle\FARSymfony2UploadBundle(),
+//            new PunkAve\FileUploaderBundle\PunkAveFileUploaderBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

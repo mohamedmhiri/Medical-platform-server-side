@@ -4,6 +4,7 @@ namespace Ben\DoctorsBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Doctrine\ORM\Query\Expr;
 
 /**
  * ConsultationRepository
@@ -58,13 +59,52 @@ class ConsultationRepository extends EntityRepository
       ->andWhere('YEAR(co.created)=YEAR (now()) ');//
       return $qb->getQuery()->getResult();
     }
-    public function getPreviousMonth()
+    public function getPreviousMonth($month,$year)
     {
       $qb = $this->createQueryBuilder();
       $qb->select('co')
       ->from('BenDoctorsBundle:consultation','co')
-      ->where('month(co.created)=(month(now())-1)')//
-      ->andWhere('YEAR(co.created)=(YEAR (now())) ');//
+      ->where('month(co.created)=:month')//
+      ->andWhere('YEAR(co.created)=:year ')
+      ->setParameter('month',$month)->setParameter('year',$year);//
       return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param $month, $year
+     * @return array
+     * this function gets the month and the year
+     * and returns the number of consultations
+     * of that month
+     */
+    public function findByNbCustomersInMonth($month,$year)
+    {
+        $qb=$this->createQueryBuilder('c');
+        $qb->select('co')
+            ->from('BenDoctorsBundle:consultation','co')
+            ->where('month(co.created)=:month')
+            ->andWhere('YEAR(co.created)=:year')
+            ->setParameter('month', $month)
+            ->setParameter('year',$year)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findByMonthOrderedByNbConsultation()
+    {
+        return $this->fetch('SELECT rendezvous, COUNT(rendezvous) total 
+                      FROM 
+                        (SELECT CONCAT_WS(\', \',month(created), year(created)) as rendezvous 
+                        FROM consultation as co) as r 
+                      GROUP BY rendezvous
+                      ORDER BY total DESC;');
+    }
+
+    private function fetch($query)
+    {
+        $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+        $stmt->execute();
+        return  $stmt->fetchAll();
     }
 }

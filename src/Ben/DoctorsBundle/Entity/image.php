@@ -2,6 +2,7 @@
 
 namespace Ben\DoctorsBundle\Entity;
 
+use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -36,7 +37,7 @@ class image
     private $test;
 
     /**
-    * @var file $file
+    * @var File $file
     * @Assert\File(
     *      maxSize = "2M",
     *      mimeTypes = {"image/jpeg", "image/pjpeg", "image/png", "image/x-png", "image/gif"},
@@ -71,16 +72,37 @@ class image
     {
         return $this->id;
     }
-
+//    /**
+//     * @return File|null
+//     */
+//    public function getFile()
+//    {
+//        return $this->file;
+//    }
+//    /**
+//     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+//     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+//     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+//     * must be able to accept an instance of 'File' as the bundle will inject one here
+//     * during Doctrine hydration.
+//     *
+//     * @param UploadedFile $file
+//     *
+//     * @return image
+//     */
+//    public function setFile(UploadedFile $file)
+//    {
+//        $this->file = $file;
+//
+//        return $this;
+//    }
     public function getFile()
     {
         return $this->file;
     }
-
     public function setFile($file)
     {
         $this->file = $file;
-
         return $this;
     }
 
@@ -97,8 +119,8 @@ class image
      /**
      * Set path
      *
-     * @param \Ben\DoctorsBundle\Entity\image $path
-     * @return profil
+     * @param String $path
+     * @return image
      */
     public function setPath($path)
     {
@@ -191,4 +213,49 @@ class image
     {
         return $this->test;
     }
+
+//    /**
+//     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+//     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+//     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+//     * must be able to accept an instance of 'File' as the bundle will inject one here
+//     * during Doctrine hydration.
+//     *
+//     * @param UploadedFile $image
+//     *
+//     * @return image
+//     */
+//    public function setImageFile(UploadedFile $image = null)
+//    {
+//        $this->imageFile = $image;
+//        return $this;
+//    }
+//
+//    /**
+//     * @return File|null
+//     */
+//    public function getImageFile()
+//    {
+//        return $this->imageFile;
+//    }
+//
+//    /**
+//     * @param string $imageName
+//     *
+//     * @return image
+//     */
+//    public function setImageName($imageName)
+//    {
+//        $this->imageName = $imageName;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * @return string|null
+//     */
+//    public function getImageName()
+//    {
+//        return $this->imageName;
+//    }
 }

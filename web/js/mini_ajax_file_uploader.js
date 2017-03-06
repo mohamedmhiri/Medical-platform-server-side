@@ -74,29 +74,60 @@ $(function() {
             // myDropzone.on("success", function(file) {
             //
             //  });
+            // $('#fileupload').bind('fileuploadsubmit', function (e, data) {
+            //     data.formData = {
+            //         typeexam: $('#ben_test_typeexam').val(),
+            //         lieu: $('#ben_test_lieu').val(),
+            //         conclusion: $('#ben_test_conclusion').val(),
+            //         date: $('#ben_test_date').val()
+            //     };
+            //     console.log(data);
+            // });
+            // myDropzone.on("complete", function(files) {
+            //
+            //     $.each(files, function (index,value) {
+            //         $.ajax({
+            //             type: 'POST',
+            //             url: "http://localhost:8000/examen/create/",
+            //             success: function () {
+            //
+            //
+            //
+            //                 myDropzone.removeFile(value);
+            //             }
+            //         });
+            //     });
+            // });
 
-            /*myDropzone.on("complete", function(file) {
-             console.log( file.fullPath );
-             });*/
+            // $.ajaxSetup({
+            //     beforeSend: function (jqXHR, settings) {
+            //         if(settings.type === "POST")
+            //             console.log("salem");
+            //     }
+            // });
 
 
+            // myDropzone.on("addedfiles", function (file) {
+            //     console.log(file.name);
+            // });
             // Update the total progress bar
-            myDropzone.on("totaluploadprogress", function (progress) {
-                document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
-            });
+            // myDropzone.on("totaluploadprogress", function (progress) {
+            //     document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
+            // });
 
-            myDropzone.on("sending", function (file) {
-                // Show the total progress bar when upload starts
-                document.querySelector("#total-progress").style.opacity = "1";
-                //alert(file.fullPath);
-
-                // And disable the start button
-                //file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
-            });
+            // myDropzone.on("sending", function (file) {
+            //     // Show the total progress bar when upload starts
+            //     // document.querySelector("#total-progress").style.opacity = "1";
+            //     //alert(file.fullPath);
+            //
+            //     // And disable the start button
+            //     //file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
+            //     console.log(file.name);
+            // });
 
             // Hide the total progress bar when nothing's uploading anymore
             myDropzone.on("queuecomplete", function (progress) {
-                document.querySelector("#total-progress").style.opacity = "0";
+                // document.querySelector("#total-progress").style.opacity = "0";
             });
 
             // Setup the buttons for all transfers
@@ -108,27 +139,61 @@ $(function() {
             document.querySelector("#actions .cancel").onclick = function () {
                 myDropzone.removeAllFiles(true);
             };
-            $(document).on('click','#addFiles', function () {
+            if(!myDropzone.previewsContainer){
+                document.querySelector('#actions .previews').remove();
+            }
+            $(document).on('click','#addFiles', function (data) {
+                var formData={
+                    typeexam: $('.ben_test_typeexam').val(),
+                    lieu: $('.ben_test_lieu').val(),
+                    conclusion:$('.ben_test_conclusion').val(),
+                    date:$('.ben_test_date').val(),
+                    files:[]
+                };
                 var files = myDropzone.getAcceptedFiles();
 
                 $.each(files, function (index,value) {
+                    // formData.files.push(value.name);
+                    // myDropzone.removeFile(value);
+                    var name = $('.name');
+                    $('\<input type="hidden" name ="file'+index+'" value="'+value.name+'"\>').appendTo(name);
+                    // alert(value.fullPath);
+                });
+                // alert(formData.files.length);
                     $.ajax({
                         type: 'POST',
-                        url: "http://localhost:8000/examen/add_image/"+value.name+"/1",
-                        success: function () {
-                            $.each(value, function (i, val) {
-                                console.log(val);
-                            });
-
-                            myDropzone.removeFile(value);
+                        url: "http://localhost:8000/examen/create/",
+                        data:formData,
+                        success: function (data) {
+                            //     console.log(val);
+                            // });
+                            // $('#fileupload').bind('fileuploadsubmit', function (e, data) {
+                            //     data.formData = {
+                            //         typeexam: $('.ben_test_typeexam').val(),
+                            //         lieu: $('.ben_test_lieu').val(),
+                            //         conclusion:$('.ben_test_conclusion').val(),
+                            //         date:$('.ben_test_date').val()
+                            //     };
+                            // });
+                            // $.ajaxSetup({
+                            //     beforeSend: function (jqXHR, settings) {
+                            //         if(settings.type === "POST")
+                            //             console.log("salem");
+                            //     }
+                            // });
+                            // myDropzone.removeFile(value);
                         }
                     });
-                });
+                      // console.log(value.name);
+                 });
+            // });
 
-            });
+            // $(document).on('show','#previews', function (file) {
+            //    console.log(file);
+            // });
             /*$( ).onclick = function () {
-                console.log( 2 );
-            };*/
+             console.log( 2 );
+             };*/
             // document.querySelector("#template > div > div > button").onclick = function () {
             //     console.log( 1 );
             // };

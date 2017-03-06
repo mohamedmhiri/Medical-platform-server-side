@@ -40,8 +40,9 @@ class PersonController extends Controller
         // var_dump($this);die;
         $em = $this->getDoctrine()->getManager();
         $entitiesLength = $em->getRepository('BenDoctorsBundle:Person')->counter();
-        return $this->render('BenDoctorsBundle:Person:index.html.twig', array(
-            'entitiesLength' => $entitiesLength));
+        return $this->render('BenDoctorsBundle:Person:index.html.twig'
+//            ,array('entitiesLength' => $entitiesLength)
+        );
     }
 //    public function prepareJWT()
 //    {
@@ -64,7 +65,7 @@ class PersonController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $searchParam = $request->get('searchParam');
-        $persons=array();
+//        $persons=array();
 //        if(!strpos($this->prepareJWT()," "))
 //        {
 //          //hedhi heya eli trajaa f response
@@ -80,11 +81,21 @@ class PersonController extends Controller
           $em->flush();
           $em->clear();
         }*/
+
         $entities = $em->getRepository('BenDoctorsBundle:Person')->search($searchParam)/*findAll()*/;
+        $appointments = [];
+        foreach ($entities as $entity)
+        {
+            if(count($appointment = $this->getDoctrine()->getManager()->getRepository('BenDoctorsBundle:Appointment')
+                ->findByPerson($entity->getId()))>0)
+                array_push($appointments,$appointment[0]);
+        }
         $pagination = (new Paginator())->setItems(count($entities), $searchParam['perPage'])->setPage($searchParam['page'])->toArray();
-            return $this->render('BenDoctorsBundle:Person:ajax_list.html.twig', array(
+            return $this->render('BenDoctorsBundle:Person:ajax_list.html.twig',
+                array(
                     'entities' => $entities,
-                    'pagination' => $pagination
+                    'pagination' => $pagination,
+                    'appointments' => $appointments
                   ));
         //}
     }
@@ -239,8 +250,8 @@ class PersonController extends Controller
     {
         $entity = new Person();
         $form = $this->createForm(new PersonType(), $entity);
-        $em = $this->getDoctrine()->getManager();
-        // $cities = $em->getRepository('BenDoctorsBundle:Person')->getCities();
+//        $em = $this->getDoctrine()->getManager();
+//        // $cities = $em->getRepository('BenDoctorsBundle:Person')->getCities();
 
         return $this->render('BenDoctorsBundle:Person:new.html.twig', array(
             'entity' => $entity,
@@ -316,7 +327,7 @@ class PersonController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Person entity.');
         }
-        $email=$entity->getEmail();
+//        $email=$entity->getEmail();
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new PersonType(), $entity);
         $editForm->handleRequest($request);

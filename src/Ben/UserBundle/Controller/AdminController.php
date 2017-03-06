@@ -47,7 +47,8 @@ class AdminController extends Controller
     {
         $entity = new User();
         $form = $this->createForm(new userType(), $entity);
-        return $this->render('BenUserBundle:admin:new.html.twig', array('entity' => $entity, 'form' => $form->createView()));
+        return $this->render('BenUserBundle:admin:new.html.twig'
+            , array('entity' => $entity, 'form' => $form->createView()));
     }
 
     /**
@@ -60,14 +61,15 @@ class AdminController extends Controller
         $form = $this->createForm(new userType(), $entity);
         $form->bind($request);
         if ($form->isValid()) {
+            $entity->setIsActivated(1);
             $em->updateUser($entity, false);
             $entity->getImage()->upload();
 
             $this->getDoctrine()->getManager()->flush();
-            $this->get('session')->getFlashBag()->add('info', "L'utilisateur a été ajouté avec succès.");
+//            $this->get('session')->getFlashBag()->add('info', "L'utilisateur a été ajouté avec succès.");
             return $this->redirect($this->generateUrl('ben_show_user', array('id' => $entity->getId())));
         }
-        $this->get('session')->getFlashBag()->add('danger', "Il y a des erreurs dans le formulaire soumis !");
+//        $this->get('session')->getFlashBag()->add('danger', "Il y a des erreurs dans le formulaire soumis !");
 
         return $this->render('BenUserBundle:admin:new.html.twig', array('entity' => $entity, 'form' => $form->createView()));
     }
@@ -90,7 +92,8 @@ class AdminController extends Controller
     public function editAction(User $entity)
     {
         $form = $this->createForm(new userType(), $entity);
-        return $this->render('BenUserBundle:admin:edit.html.twig', array('entity' => $entity, 'form' => $form->createView()));
+        return $this->render('BenUserBundle:admin:edit.html.twig'
+            , array('entity' => $entity, 'form' => $form->createView()));
     }
 
     /**
@@ -236,4 +239,5 @@ class AdminController extends Controller
                     'form' => $form->createView(),
                 ));
     }
+
 }

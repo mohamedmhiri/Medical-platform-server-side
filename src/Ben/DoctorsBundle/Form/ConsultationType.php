@@ -22,7 +22,6 @@ class ConsultationType extends AbstractType
     {
 
         $builder
-            ->add('name', 'text', array('label'=>'Specialité medicale'))
             ->add('motiftype','text',array('label'=>'Motif de consultation'))
             ->add('anamnese', 'textarea',  array('label'=>'Interrogatoire','required'  => false))
 //            ->add('person')

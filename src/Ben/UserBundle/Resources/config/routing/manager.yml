@@ -77,3 +77,4 @@ ben_pdf:
 ben_badge_user:
     pattern:  /badge/{users}
     defaults: { _controller: "BenUserBundle:Admin:showBadge" }
+

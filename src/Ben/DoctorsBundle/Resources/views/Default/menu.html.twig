@@ -56,7 +56,7 @@
       <div class="menu_section">
         <ul class="nav side-menu">
           <li>
-            <a href="{{ path('ben_dashboard') }}"><i class="fa fa-home"></i> Statique </a>
+            <a href="{{ path('ben_dashboard') }}"><i class="fa fa-home"></i> Accueil </a>
           </li>
           <li>
             {% if not is_granted("ROLE_MANAGER") or is_granted("ROLE_ADMIN") %}
@@ -65,7 +65,7 @@
           </li>
           <li>
           {% if is_granted("ROLE_ADMIN") %}
-            <a href="{{ path('ben_users') }}"><i class="fa  fa-user-md"></i>Médecins</a>
+            <a href="{{ path('ben_users') }}"><i class="fa  fa-user-md"></i>Utilisateurs</a>
           </li>
           <li>
             <a href="{{ path('ben_doctors_calendar') }}" ><i class="fa  fa-calendar"></i>Rendez-vous</a>

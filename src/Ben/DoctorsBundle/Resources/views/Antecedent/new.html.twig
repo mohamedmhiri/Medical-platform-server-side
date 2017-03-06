@@ -27,6 +27,7 @@ Tableau de bord | {{ parent() }}
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="user">Patient </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input type="text" class="form-control" disabled="disabled" name="unused" value="{{ entity.person.fullName }}">
+                                        <input type="hidden" name="person" value="{{ entity.person.id }}">
                                     </div>
                                 </div>
                                 {% include "BenDoctorsBundle:Antecedent:form.html.twig" %}

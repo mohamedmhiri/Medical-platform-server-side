@@ -36,37 +36,49 @@ Tableau de bord | {{ parent() }}
         <div class="row tile_count">
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                 <span class="count_top"><i class="fa fa-user"></i> Total de patients</span>
-                <div class="count">{{nb_patients_this_month}}</div>
+                <div class="count">
+                    {{nb_patients_this_month}}
+                </div>
                 patient(s) ce mois
 
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                 <span class="count_top"><i class="fa fa-user"></i> Variation</span>
                     {%if evolution >0%}
-                        <div class="count green"> + {{evolution}} </div>
+                        <div class="count green">
+                            + {{evolution}}
+                        </div>
                     {%elseif evolution <0%}
-                        <div class="count red"> - {{evolution|abs}} </div>
+                        <div class="count red">
+                            - {{evolution|abs}}
+                        </div>
                     {%else%}
                         pas de variation
                     {%endif%}
-                    patients par </br>rapport au mois préc
+                    patients par rapport </br> au mois précédent
                 </span>
             </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-                <span class="count_top"><i class="fa fa-clock-o"></i> Meilleure periode </span>
-                <div class="count green">123.50</div>
-            </div>
+            {#<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">#}
+                {#<span class="count_top"><i class="fa fa-clock-o"></i> Meilleure periode </span>#}
+                {#<div class="count green">123.50</div>#}
+            {#</div>#}
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                 <span class="count_top"><i class="fa fa-user"></i> Total Hommes</span>
-                <div class="count blue">{{p_hommes|round}} %</div>
+                <div class="count blue">
+                    {{p_hommes|round}} %
+                </div>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                 <span class="count_top"><i class="fa fa-user"></i> Total Femmes</span>
-                <div class="count purple">{{p_femmes|round}} %</div>
+                <div class="count purple">
+                    {{p_femmes|round}} %
+                </div>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                 <span class="count_top"><i class="fa fa-user"></i> Age moyen</span>
-                <div class="count">{{age}} ans</div>
+                <div class="count">
+                    {{age}} ans
+                </div>
             </div>
         </div>
         <!-- /top tiles -->
@@ -79,15 +91,16 @@ Tableau de bord | {{ parent() }}
             <div class="col-md-5 col-sm-6 col-xs-12">
                 <div class="x_panel tile fixed_height_320">
                     <div class="x_title">
-                        <h2>App Versions</h2>
+                        <h2>Top mois</h2>
 
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <h4>App Usage across versions</h4>
+                        <h4>Nombre de consultations par mois</h4>
+                        {% if top_0 %}
                         <div class="widget_summary">
                             <div class="w_left w_25">
-                                <span>0.1.5.2</span>
+                                <span>{{ top_0 }}</span>
                             </div>
                             <div class="w_center w_55">
                                 <div class="progress">
@@ -97,14 +110,15 @@ Tableau de bord | {{ parent() }}
                                 </div>
                             </div>
                             <div class="w_right w_20">
-                                <span>123k</span>
+                                <span>{{ nb_0 }}</span>
                             </div>
                             <div class="clearfix"></div>
                         </div>
-
+                        {% endif %}
+                        {% if top_1 %}
                         <div class="widget_summary">
                             <div class="w_left w_25">
-                                <span>0.1.5.3</span>
+                                <span>{{ top_1 }}</span>
                             </div>
                             <div class="w_center w_55">
                                 <div class="progress">
@@ -114,13 +128,15 @@ Tableau de bord | {{ parent() }}
                                 </div>
                             </div>
                             <div class="w_right w_20">
-                                <span>53k</span>
+                                <span>{{ nb_1 }}</span>
                             </div>
                             <div class="clearfix"></div>
                         </div>
+                        {% endif %}
+                        {% if top_2 %}
                         <div class="widget_summary">
                             <div class="w_left w_25">
-                                <span>0.1.5.4</span>
+                                <span>{{ top_2 }}</span>
                             </div>
                             <div class="w_center w_55">
                                 <div class="progress">
@@ -130,13 +146,15 @@ Tableau de bord | {{ parent() }}
                                 </div>
                             </div>
                             <div class="w_right w_20">
-                                <span>23k</span>
+                                <span>{{ nb_2 }}</span>
                             </div>
                             <div class="clearfix"></div>
                         </div>
+                        {% endif %}
+                        {% if top_3 %}
                         <div class="widget_summary">
                             <div class="w_left w_25">
-                                <span>0.1.5.5</span>
+                                <span>{{ top_3 }}</span>
                             </div>
                             <div class="w_center w_55">
                                 <div class="progress">
@@ -146,13 +164,15 @@ Tableau de bord | {{ parent() }}
                                 </div>
                             </div>
                             <div class="w_right w_20">
-                                <span>3k</span>
+                                <span>{{ nb_3 }}</span>
                             </div>
                             <div class="clearfix"></div>
                         </div>
+                        {% endif %}
+                        {% if top_4 is not null %}
                         <div class="widget_summary">
                             <div class="w_left w_25">
-                                <span>0.1.5.6</span>
+                                <span>{{ top_4 }}</span>
                             </div>
                             <div class="w_center w_55">
                                 <div class="progress">
@@ -162,10 +182,11 @@ Tableau de bord | {{ parent() }}
                                 </div>
                             </div>
                             <div class="w_right w_20">
-                                <span>1k</span>
+                                <span>{{ nb_4}}</span>
                             </div>
                             <div class="clearfix"></div>
                         </div>
+                        {% endif %}
 
                     </div>
                 </div>
@@ -174,7 +195,7 @@ Tableau de bord | {{ parent() }}
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="x_panel tile fixed_height_320 overflow_hidden">
                     <div class="x_title">
-                        <h2>Device Usage</h2>
+                        <h2>Statistiques des consultations des 5 derniers mois</h2>
 
                         <div class="clearfix"></div>
                     </div>
@@ -182,14 +203,14 @@ Tableau de bord | {{ parent() }}
                         <table class="" style="width:100%">
                             <tr>
                                 <th style="width:37%;">
-                                    <p>Top 5</p>
+                                    <p>Graphe</p>
                                 </th>
                                 <th>
                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                                        <p class="">Device</p>
+                                        <p class="">Mois</p>
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                        <p class="">Progress</p>
+                                        <p class="">Pourcentage</p>
                                     </div>
                                 </th>
                             </tr>
@@ -201,33 +222,33 @@ Tableau de bord | {{ parent() }}
                                     <table class="tile_info">
                                         <tr>
                                             <td>
-                                                <p><i class="fa fa-square blue"></i>IOS </p>
+                                                <p><i class="fa fa-square aero"></i>{{ date_0 }} </p>
                                             </td>
-                                            <td>30%</td>
+                                            <td>{{ month_0 }}%</td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <p><i class="fa fa-square green"></i>Android </p>
+                                                <p><i class="fa fa-square purple"></i>{{ date_1 }} </p>
                                             </td>
-                                            <td>10%</td>
+                                            <td>{{ month_1 }}%</td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <p><i class="fa fa-square purple"></i>Blackberry </p>
+                                                <p><i class="fa fa-square red"></i>{{ date_2 }} </p>
                                             </td>
-                                            <td>20%</td>
+                                            <td>{{ month_2 }}%</td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <p><i class="fa fa-square aero"></i>Symbian </p>
+                                                <p><i class="fa fa-square green"></i>{{ date_3 }} </p>
                                             </td>
-                                            <td>15%</td>
+                                            <td>{{ month_3 }}%</td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <p><i class="fa fa-square red"></i>Others </p>
+                                                <p><i class="fa fa-square blue"></i>{{ date_4 }} </p>
                                             </td>
-                                            <td>30%</td>
+                                            <td>{{ month_4 }}%</td>
                                         </tr>
                                     </table>
                                 </td>

@@ -33,5 +33,10 @@ class AppointmentRepository extends EntityRepository
         return  $stmt->fetchAll();
     }
 
+    public function findByPerson($id)
+    {
+        return $this->fetch('SELECT * FROM `appointments` WHERE date > now() AND id='.$id.' ORDER BY date');
+    }
+
 
 }

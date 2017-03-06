@@ -2,6 +2,7 @@
 
 namespace Ben\DoctorsBundle\Controller;
 
+use Ben\DoctorsBundle\Entity\Person;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Httpfoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,7 +16,6 @@ use Ben\DoctorsBundle\Pagination\Paginator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-
 
 
 /**
@@ -66,17 +66,66 @@ class TestController extends Controller
         $entity = new Test();
         $form = $this->createForm(new TestType(), $entity);
         $form->handleRequest($request);
-
+//        return new JsonResponse(["files"=>$request->files]);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $entity->setPerson($em->getRepository('BenDoctorsBundle:Person')->find((int)$request->get("person")));
+
             $em->persist($entity);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('info', "L'examen a été ajouté avec succès.");
-            return $this->redirect($this->generateUrl('consultation_show', array('id' => $entity->getConsultation()->getId())));
+//            $this->get('session')->getFlashBag()->add('info', "L'examen a été ajouté avec succès.");
+//            return new JsonResponse(["response" => $entity->getId()]);
+            $images = [];
+            $i=0;
+            while($files = $request->get('file'.$i))
+            {
+//                echo $files;
+                $image = new image();
+                $image->setTest($entity);
+                $image->setPath($files);
+
+//                $tmp = $image->getFile();
+                array_push($images,$tmp);
+//                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+//
+//                // Move the file to the directory where brochures are stored
+//                $file->move(
+//                    $this->getParameter('brochures_directory'),
+//                    $fileName
+//                );
+                $em->persist($image);
+                $em->flush();
+                $i++;
+            }
+
+
+//            return new JsonResponse(["files"=>$images]);
+//            if(is_array($files))
+//            {
+//                foreach ($files as $file)
+//                {
+//                    $image = new image();
+//                    $image->setTest($entity);
+//                    $image->setPath($file);
+//                    $em->persist($image);
+//                    $em->flush();
+//                }
+//            }else
+//            {
+//                $image = new image();
+//                $image->setTest($entity);
+//                $image->setPath($files);
+//                $em->persist($image);
+//                $em->flush();
+//            }
+
+//            sleep(100000);
+
+            return $this->redirect($this->generateUrl('person_show', array('id' => $entity->getPerson()->getId())));
         }
 
-        $this->get('session')->getFlashBag()->add('danger', "Il y a des erreurs dans le formulaire soumis !");
+//        $this->get('session')->getFlashBag()->add('danger', "Il y a des erreurs dans le formulaire soumis !");
         return $this->render('BenDoctorsBundle:Test:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
@@ -111,10 +160,10 @@ class TestController extends Controller
      * @Secure(roles="ROLE_USER")
      *
      */
-    public function newAction()
+    public function newAction(Person $person)
     {
         $entity = new Test();
-        //$entity->setConsultation($consultation);
+        $entity->setPerson($person);
         $form   = $this->createForm(new TestType(), $entity);
 
         return $this->render('BenDoctorsBundle:Test:new.html.twig', array(
@@ -197,11 +246,9 @@ class TestController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('info', "L'examen a été mis à jour avec succès.");
-            return $this->redirect($this->generateUrl('consultation_show', array('id' => $entity->getConsultation()->getId())));
+            return $this->redirect($this->generateUrl('person_show', array('id' => $entity->getPerson()->getId())));
         }
 
-        $this->get('session')->getFlashBag()->add('danger', "Il y a des erreurs dans le formulaire soumis !");
         return $this->render('BenDoctorsBundle:Test:edit.html.twig', array(
             'entity'      => $entity,
             'form'   => $editForm->createView(),
@@ -217,25 +264,24 @@ class TestController extends Controller
     {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
-        $consultation_id = 0;
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('BenDoctorsBundle:Test')->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('BenDoctorsBundle:Test')->find($id);
             if (!$entity)
-                throw $this->createNotFoundException('Unable to find Consultation entity.');
+                throw $this->createNotFoundException('Unable to find Test entity.');
 
-            $consultation = $entity->getConsultation();
-            $currentUser = $this->get('security.context')->getToken()->getUser();
-            if ($currentUser != $consultation->getUser() && !$this->get('security.context')->isGranted('ROLE_ADMIN'))
-                $this->get('session')->getFlashBag()->add('danger', "Unauthorized access.");
-            else{
-                $em->remove($entity);
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('info', "Action effectué avec succès !");
-            }
-        }
+//            $consultation = $entity->getConsultation();
+//            $currentUser = $this->get('security.context')->getToken()->getUser();
+//            if ($currentUser != $consultation->getUser() && !$this->get('security.context')->isGranted('ROLE_ADMIN'))
+//            {}
+////                $this->get('session')->getFlashBag()->add('danger', "Unauthorized access.");
+//            else{
+            $entity->setIsDeleted(true);
+            $em->persist($entity);
+            $em->flush();
+//                $this->get('session')->getFlashBag()->add('info', "Action effectué avec succès !");
+//            }
 
-        return $this->redirect($this->generateUrl('consultation_show', array('id' => $consultation->getId())));
+        return $this->redirect($this->generateUrl('person_show', array('id' => $entity->getPerson()->getId())));
     }
 
     /**

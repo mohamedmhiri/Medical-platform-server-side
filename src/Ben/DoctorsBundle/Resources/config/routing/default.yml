@@ -8,3 +8,6 @@ ben_stats:
 ben_chart_api:
     pattern: /chart
     defaults: {_controller: BenDoctorsBundle:Default:chartApi}
+ben_top_chart_api:
+    pattern: /top_chart
+    defaults: {_controller: BenDoctorsBundle:Default:topChartApi}

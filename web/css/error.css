@@ -21,7 +21,7 @@ body {
     padding-top: 50px;
     color: #aaa;
     text-align: center;
-    content: 'error...';
+    content: '404 Not Found';
 }
 
 .ele {

@@ -1,7 +1,14 @@
 {% extends "BenDoctorsBundle::layout.html.twig" %}
-{% block title %}
-    Gestion des rendez_vous | {{ parent() }}
-{% endblock %}
+    {#{% block stylesheet %}#}
+        {#{{ parent() }}#}
+
+        {#<link href="{{ asset('css/calendar.css') }}" rel="stylesheet" />#}
+    {#{% endblock %}#}
+
+    {% block title %}
+        Gestion des rendez_vous | {{ parent() }}
+    {% endblock %}
+
 {% block body %}
 
     <!-- page content -->
@@ -27,15 +34,16 @@
                         </div>
                         <div class="x_content">
                             <br />
-                            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="{{ path('take_appointment') }}" method="POST">
+                            <div id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" >
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Date <span class="required">*</span>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Patient <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <select class="select2_group form-control">
                                             {% for patient in prepare.patients%}
-                                                <option value="{{ patient.id }}" name="patient">{{ patient.firstname }} {{ patient.familyname }}</option>
+                                                <option id="person" value="{{ patient.id }}" >{{ patient.firstname }} {{ patient.familyname }}</option>
+                                                {#<input type="hidden" name="patient" >                                            #}
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -47,7 +55,10 @@
                                         <select class="select2_group form-control">
                                             {% for date in prepare.dates|sort %}
                                                 {#<optgroup label="year">#}
-                                                    <option value="{{ date }}" name="date">{{ date }}</option>
+                                                    <option id=date" name="ben_appointment[date]" value="{{ date }}" >{{ date }}
+                                                        {#<input type="hidden" name="date" value="{{ date }}">#}
+                                                    </option>
+
                                                 {#</optgroup>#}
                                             {% endfor %}
                                         </select>
@@ -60,17 +71,18 @@
                                     </div>
                                 </div>
 
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-8">
                     <div class="x_panel">
+                        <div id="content">
+                            <div class="x_content">
 
-                        <div class="x_content">
+                                <div id='calendar'></div>
 
-                            <div id='calendar'></div>
-
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -159,6 +171,7 @@
             {#</div>#}
         </div>
     </div>
+
     <!-- /page content -->
 
 
@@ -170,11 +183,39 @@
     <script>
         (function($) {
 
-            $('#rendez-vous').on('click', function(){
-                console.log("salem");
+//            $('#rendez-vous').on('click', function(){
+//                var personId = $('select > option:selected').val();
+//                alert(personId);
+//                var date =  $('select > option:selected').val();
+//                alert(date);
+//            });
+            var values =[];
+
+            $('#rendez-vous').on('click', function() {
+                $('select > option:selected').each(function() {
+                    values.push( $(this).val());
+                });
+//                alert(values[1]);
+                var date = (((values[1].replace(":","")).replace(" ","")).replace("-","")).replace("-","")+"00";
+                $.ajax({
+                    type: 'POST',
+                    url: "http://localhost:8000/ben_appointment/create/"+date+"/"+values[0],
+                    success: function () {
+                        window.location.reload();
+                    }
+                });
             });
+
         })(jQuery);
     </script>
+    {#<script>#}
+        {#(function ($) {#}
+            {#if($(window).height()<600 && $(window).width()<400) {#}
+                {#$('#calendar').fullCalendar('option', 'defaultView', 'agendaDay');#}
+            {#}#}
+
+        {#})(jQuery);#}
+    {#</script>#}
 
 
 {% endblock %}

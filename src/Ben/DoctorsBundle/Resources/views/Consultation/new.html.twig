@@ -27,6 +27,7 @@ Tableau de bord | {{ parent() }}
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="user">Patient </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input type="text" class="form-control" disabled="disabled" name="unused" value="{{ entity.person.fullName }}">
+                                        <input type="hidden" name="person" value="{{ entity.person.id }}">
                                     </div>
                                 </div>
                                 {% include "BenDoctorsBundle:Consultation:form.html.twig" %}
@@ -71,57 +72,57 @@ Tableau de bord | {{ parent() }}
 {% endblock body %}
 {% block javascripts %}
 {{ parent() }}
-<script>
-    (function($) {
-//        $('#ben_consultation_person').closest('.form-group').hide();
+{#<script>#}
+    {#(function($) {#}
+{#//        $('#ben_consultation_person').closest('.form-group').hide();#}
 
-//        var datacontainer = $('#ben_consultation_consultationmeds'),
-           var prototype = datacontainer.attr('data-prototype'),
-            diagnosticInput = $('#ben_consultation_diagnosis');
+{#//        var datacontainer = $('#ben_consultation_consultationmeds'),#}
+           {#var prototype = datacontainer.attr('data-prototype'),#}
+            {#diagnosticInput = $('#ben_consultation_diagnosis');#}
 
-//        datacontainer.find('label').removeClass('col-md-6').addClass('col-md-4');
+{#//        datacontainer.find('label').removeClass('col-md-6').addClass('col-md-4');#}
 
-//        $('#add-another-item').on('click', function() {
-//            newWidget = prototype.replace(/__name__/g, itemCount++);
-//            item = $(newWidget);
-//            item.find('label').removeClass('col-md-6').addClass('col-md-4');
-//            item.appendTo(datacontainer);
-//            addTagFormDeleteLink(item);
-//        $('select').removeClass('form-control').select2();
-//
-//            return false;
-//        });
+{#//        $('#add-another-item').on('click', function() {#}
+{#//            newWidget = prototype.replace(/__name__/g, itemCount++);#}
+{#//            item = $(newWidget);#}
+{#//            item.find('label').removeClass('col-md-6').addClass('col-md-4');#}
+{#//            item.appendTo(datacontainer);#}
+{#//            addTagFormDeleteLink(item);#}
+{#//        $('select').removeClass('form-control').select2();#}
+{#//#}
+{#//            return false;#}
+{#//        });#}
 
-//        datacontainer.children('.form-group').each(function() {
-//            addTagFormDeleteLink($(this));
-//        });
+{#//        datacontainer.children('.form-group').each(function() {#}
+{#//            addTagFormDeleteLink($(this));#}
+{#//        });#}
 
-//        function addTagFormDeleteLink(tagFormLi) {
-//            var removeFormA = $('<a class="js-remove" href="#">x</a>');
-//            tagFormLi.append(removeFormA);
-//        }
+{#//        function addTagFormDeleteLink(tagFormLi) {#}
+{#//            var removeFormA = $('<a class="js-remove" href="#">x</a>');#}
+{#//            tagFormLi.append(removeFormA);#}
+{#//        }#}
 
-//        datacontainer.on('click', '.js-remove', function(e) {
-//            e.preventDefault();
-//            $(this).parent().remove();
-//        });
-//
-//        $('select').removeClass('form-control').select2();
-        diagnosticData = "Grippe_Angines_Bronchite_Caries dentaires_Colopathie_Pharyngites_Déficiences visuelles_Conjonctivites_Dysménorrhée_Acnés_Intoxications Alimentaires_Asthme_Leucorrhées_Phtiriasis_Urétrites_Depression nerveuse_Rhinites_Gastrite_Gâle_Diabète_Hypertension artérielle_Cardiopathies_Hystérie_Otites_Céphalées_Allergies_Traumatismes_Lombalgies_Psoriasis_Stress_Rhinopharyngite_Toxicomanie_Arthralgies_RAA_Dysurie_Tuberculose_Hépatite virale_Migraine_Parasitose_Syphilis_Eczéma_Leshmaniose_Brûlures_Paludisme_Méningites_Typhoide_Appendicite_Herpès buccal_Obésité_Arthroses_Hypotension artérielle_Varicelle_Epilépsie_Anxiété_Blennoragies_Stomatites_Dermatoses_Anémie_Pneumopathie_scoliose_dhysthyroîdie_diarhées infectieuse_dysenterie_courbatures musculaires".split('_');
-        diagnosticInput.removeClass('form-control').select2({ tags: diagnosticData });
+{#//        datacontainer.on('click', '.js-remove', function(e) {#}
+{#//            e.preventDefault();#}
+{#//            $(this).parent().remove();#}
+{#//        });#}
+{#//#}
+{#//        $('select').removeClass('form-control').select2();#}
+        {#diagnosticData = "Grippe_Angines_Bronchite_Caries dentaires_Colopathie_Pharyngites_Déficiences visuelles_Conjonctivites_Dysménorrhée_Acnés_Intoxications Alimentaires_Asthme_Leucorrhées_Phtiriasis_Urétrites_Depression nerveuse_Rhinites_Gastrite_Gâle_Diabète_Hypertension artérielle_Cardiopathies_Hystérie_Otites_Céphalées_Allergies_Traumatismes_Lombalgies_Psoriasis_Stress_Rhinopharyngite_Toxicomanie_Arthralgies_RAA_Dysurie_Tuberculose_Hépatite virale_Migraine_Parasitose_Syphilis_Eczéma_Leshmaniose_Brûlures_Paludisme_Méningites_Typhoide_Appendicite_Herpès buccal_Obésité_Arthroses_Hypotension artérielle_Varicelle_Epilépsie_Anxiété_Blennoragies_Stomatites_Dermatoses_Anémie_Pneumopathie_scoliose_dhysthyroîdie_diarhées infectieuse_dysenterie_courbatures musculaires".split('_');#}
+        {#diagnosticInput.removeClass('form-control').select2({ tags: diagnosticData });#}
 
-        var typeInput = $('#ben_consultation_motiftype'),
-            motifInput = typeInput.closest('.form-group').next().hide()
-        typeInput.on('change', function(){
-            html = ($(this)[0].selectedIndex === 1)
-                ? '<select name="ben_consultation[name]" class="form-control"><option value="Certificat d\'aptitude physique">Certificat d\'aptitude physique</option><option value="Certificat de bonne santé">Certificat de bonne santé</option></select>'
-                : '<input class="form-control" id="ben_consultation_name" type="text" name="ben_consultation[name]" required="required">';
+        {#var typeInput = $('#ben_consultation_motiftype'),#}
+            {#motifInput = typeInput.closest('.form-group').next().hide()#}
+        {#typeInput.on('change', function(){#}
+            {#html = ($(this)[0].selectedIndex === 1)#}
+                {#? '<select name="ben_consultation[name]" class="form-control"><option value="Certificat d\'aptitude physique">Certificat d\'aptitude physique</option><option value="Certificat de bonne santé">Certificat de bonne santé</option></select>'#}
+                {#: '<input class="form-control" id="ben_consultation_name" type="text" name="ben_consultation[name]" required="required">';#}
 
-            motifInput.show().find('div').html(html);
-        });
+            {#motifInput.show().find('div').html(html);#}
+        {#});#}
 
 
 
-    })(jQuery);
-</script>
+    {#})(jQuery);#}
+{#</script>#}
 {% endblock %}

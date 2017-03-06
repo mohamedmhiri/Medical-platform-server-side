@@ -46,7 +46,7 @@ class Test
     private $lieu;
 
     /**
-    * @ORM\OneToMany(targetEntity="Ben\DoctorsBundle\Entity\image", mappedBy="test",cascade={"remove", "persist"})
+     * @ORM\OneToMany(targetEntity="Ben\DoctorsBundle\Entity\image", mappedBy="test",cascade={"remove", "persist"})
     */
     private $images;
 
@@ -60,10 +60,35 @@ class Test
 
 
     /**
-    * @ORM\ManyToOne(targetEntity="Ben\DoctorsBundle\Entity\Consultation", inversedBy="tests", cascade={"all"})
-    * @ORM\JoinColumn(name="consultation_id", referencedColumnName="id", nullable=false)
+    * @ORM\ManyToOne(targetEntity="Ben\DoctorsBundle\Entity\Person", inversedBy="tests", cascade={"all"})
+    * @ORM\JoinColumn(name="person_id", referencedColumnName="id", nullable=false)
     */
-    private $consultation;
+    private $person;
+    /**
+    *@var boolean
+    *
+    *@ORM\Column(name="isDeleted", type="boolean")
+    */
+    private $isDeleted;
+
+    /**
+     * @return boolean
+     */
+    public function getIsDeleted()
+    {
+        return $this->isDeleted;
+    }
+
+    /**
+     * @return Test
+     * @param boolean $isDeleted
+     */
+    public function setIsDeleted($isDeleted)
+    {
+        $this->isDeleted = $isDeleted;
+        return $this;
+    }
+
 
     /************ constructeur ************/
 
@@ -88,26 +113,26 @@ class Test
 
 
     /**
-     * Set consultation
+     * Set person
      *
-     * @param \Ben\DoctorsBundle\Entity\Consultation $consultation
+     * @param \Ben\DoctorsBundle\Entity\Person $person
      * @return Test
      */
-    public function setConsultation(\Ben\DoctorsBundle\Entity\Consultation $consultation)
+    public function setPerson(\Ben\DoctorsBundle\Entity\Person $person)
     {
-        $this->consultation = $consultation;
+        $this->person = $person;
 
         return $this;
     }
 
     /**
-     * Get consultation
+     * Get person
      *
-     * @return \Ben\DoctorsBundle\Entity\Consultation
+     * @return \Ben\DoctorsBundle\Entity\Person
      */
-    public function getConsultation()
+    public function getPerson()
     {
-        return $this->consultation;
+        return $this->person;
     }
 
     /**

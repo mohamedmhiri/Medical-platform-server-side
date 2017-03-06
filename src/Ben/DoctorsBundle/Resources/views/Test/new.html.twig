@@ -6,6 +6,13 @@
     {% block stylesheet %}
         {{ parent() }}
         <link href="{{ asset('css/fine-uploader-gallery.css') }}" rel="stylesheet">
+        {#<!-- Fine Uploader New/Modern CSS file#}
+    {#====================================================================== -->#}
+        {#<link href=""{{ asset('fine-upload/fine-uploader/fine-uploader-new.css')}}" rel="stylesheet">#}
+        {#<link href=""{{ asset('css/mine-fine-uploader.css')}}" rel="stylesheet">#}
+
+
+
     {% endblock %}
 
 {% endblock %}
@@ -31,13 +38,84 @@
                         </div>
                         <div class="x_content">
                             <br />
-                            <form action="{{ path('test_create') }}" method="POST" data-parsley-validate class="form-horizontal form-label-left">
+                            <form action="{{ path('test_create') }}" method="POST" id="fileupload" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="user">Patient </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control" disabled="disabled" name="unused" value="{{ entity.person.fullName }}">
+                                        <input type="hidden" name="person" value="{{ entity.person.id }}">
+                                    </div>
+                                </div>
                                 {{ form_widget(form) }}
+
                                 <div class="ln_solid">
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Ajouter</button>
+                                        <div class="container" id="container">
+                                            <div id="actions" class="row">
+
+                                                <div class="col-lg-7">
+                                                    {#<!-- The fileinput-button span is used to style the file input field as button -->#}
+                                                    {#<span class="btn btn-success fileinput-button">#}
+                                                        {#<i class="glyphicon glyphicon-plus"></i>#}
+                                                        {#<span>Add files...</span>#}
+                                                    {#</span>#}
+                                                    {#<button type="reset" class="btn btn-warning cancel">#}
+                                                        {#<i class="glyphicon glyphicon-ban-circle"></i>#}
+                                                        {#<span>Cancel upload</span>#}
+                                                    {#</button>#}
+                                                    <button type="submit" class="btn btn-primary start" id="addFiles">
+                                                        <i class="glyphicon glyphicon-upload"></i>
+                                                        <span>Ajouter</span>
+                                                    </button>
+
+                                                </div>
+
+                                                        {#<div class="col-lg-5">#}
+                                                            {#<!-- The global file processing state -->#}
+                                                            {#<span class="fileupload-process">#}
+                                                        {#<div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">#}
+                                                        {#<div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>#}
+                                                        {#</div>#}
+                                                    {#</span>#}
+                                                        {#</div>#}
+
+                                            </div>
+
+                                            {#<div class="table table-striped" class="files" id="previews">#}
+
+                                                {#<div id="template" class="file-row">#}
+                                                    {#<!-- This is used as the file preview template -->#}
+                                                    {#<div>#}
+                                                        {#<span class="preview"><img data-dz-thumbnail /></span>#}
+                                                    {#</div>#}
+                                                    {#<div>#}
+                                                        {#<p class="name" data-dz-name></p>#}
+                                                        {#<strong class="error text-danger" data-dz-errormessage></strong>#}
+                                                    {#</div>#}
+                                                    {#<div>#}
+                                                        {#<p class="size" data-dz-size></p>#}
+                                                        {#<div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">#}
+                                                            {#<div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>#}
+                                                        {#</div>#}
+                                                    {#</div>#}
+                                                    {#<div>#}
+                                                        {#<button data-dz-remove class="btn btn-warning cancel">#}
+                                                            {#<i class="glyphicon glyphicon-ban-circle"></i>#}
+                                                            {#<span>Cancel</span>#}
+                                                        {#</button>#}
+                                                        {#<button data-dz-remove class="btn btn-danger delete">#}
+                                                            {#<i class="glyphicon glyphicon-trash"></i>#}
+                                                            {#<span>Delete</span>#}
+                                                        {#</button>#}
+                                                    {#</div>#}
+                                                {#</div>#}
+
+                                            {#</div>#}
+                                        </div>
+                                        {#<button type="submit" id="addFiles" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Ajouter</button>#}
+
                                     </div>
                                 </div>
                             </form>
@@ -68,8 +146,34 @@
 {{ parent() }}
 <script src="{{ asset('js/moment.js') }}"></script>
 <script src="{{ asset('bootstrap/js/bootstrap-datetimepicker.js') }}"></script>
+    {#<!-- Fine Uploader jQuery JS file#}
+            {#====================================================================== -->#}
+    {#<script src="{{ asset('fine-upload/fine-uploader/jquery.fine-uploader.js')}}"></script>#}
+    {#<!-- Fine Uploader DOM Element#}
+        {#====================================================================== -->#}
+    {#<div id="fine-uploader-manual-trigger"></div>#}
 
+    {#<!-- Your code to create an instance of Fine Uploader and bind to the DOM/template#}
+    {#====================================================================== -->#}
+    {#<script>#}
+        {#$('#fine-uploader-manual-trigger').fineUploader({#}
+            {#template: 'qq-template-manual-trigger',#}
+            {#request: {#}
+                {#endpoint: '/uploads/gallery'#}
+            {#},#}
+            {#thumbnails: {#}
+                {#placeholders: {#}
+                    {#waitingPath: '/source/placeholders/waiting-generic.png',#}
+                    {#notAvailablePath: '/source/placeholders/not_available-generic.png'#}
+                {#}#}
+            {#},#}
+            {#autoUpload: false#}
+        {#});#}
 
+        {#$('#trigger-upload').click(function() {#}
+            {#$('#fine-uploader-manual-trigger).fineUploader('uploadStoredFiles');#}
+        {#});#}
+    {#</script>#}
 <script>
     (function($) {
     $('.has-datepicker').attr('data-date-format', 'YYYY-MM-DD').parent().datetimepicker({
@@ -91,6 +195,19 @@
           else fixedvisualissue.hide();
         });
 
+    })(jQuery);
+</script>
+<script>
+    (function($) {
+//        $.ajaxSetup({
+//            beforeSend: function (jqXHR, settings) {
+//                if(settings.type === "POST")
+//                    console.log("salem");
+//            }
+//        });
+//        $.('.glyphicon-upload').submit(function (e) {
+//           e.preventDefault();
+//        });
     })(jQuery);
 </script>
 {% endblock %}

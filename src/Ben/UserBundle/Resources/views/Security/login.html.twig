@@ -12,7 +12,7 @@ Login - {{ parent() }}
         <div class="login_wrapper">
             <div class="animate form login_form">
                 <section class="login_content">
-                    <form action="/check" method="post">
+                    <form data-parsley-validate action="/check" method="post">
                         <h1>Login Form</h1>
                         <div>
                             <input type="text" class="form-control" placeholder="Username" name="_username" value="{{ last_username }}" required="" autofocus/>

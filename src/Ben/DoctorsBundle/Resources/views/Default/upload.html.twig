@@ -1,0 +1,149 @@
+{% extends "BenDoctorsBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/blueimp/jquery.fileupload.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap/bootstrap.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/blueimp/bootstrap-theme.css') }}" />
+{% endblock %}
+
+{% block body %}
+        <!-- page content -->
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>Plain Page</h3>
+                </div>
+
+
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Plain Page</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div id="box-list" class="clearfix">
+                                Go to: <a href="#">Product list</a>
+                            </div>
+                            <div id="box-upload">
+                                <div id="box-file-upload">
+                                    <form method="post" enctype="multipart/form-data">
+                                        <span class="btn btn-success fileinput-button">
+                                            <i class="glyphicon glyphicon-plus"></i>
+                                            <span>&nbsp;Choose files...</span>
+                                            <input id="file-upload" type="file" name="files[]"
+                                            {#<!--data-url="{{ oneup_uploader_endpoint('gallery') }}"--> #}
+                                            />
+                                        </span>
+                                    </form>
+                                </div>
+                                <div id="box-progress">
+                                    <div id="box-progress-bar" style="width: 0%;"></div>
+                                </div>
+                                <div id="box-info">
+                                    <p>Upload status...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /page content -->
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {#<script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>#}
+    <script type="text/javascript" src="{{ asset('js/blueimp/jquery.ui.widget.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/blueimp/jquery.iframe-transport.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/blueimp/jquery.fileupload.js') }}"></script>
+    <script type="text/javascript">
+        $(function()
+        {
+            'use strict';
+            $('#file-upload').on('click', function ()
+            {
+                $('#box-progress-bar').css('width', '1%');
+            });
+
+            $('#file-upload').on("fileuploadprocessfail", function(e, data)
+            {
+                var file = data.files[data.index];
+                alert(file.error);
+                console.log(file.error);
+            });
+
+            $('#file-upload').fileupload({
+                dataType: 'json',
+                add: function (e, data)
+                {
+                    var fileName = data.files[0].name;
+                    var fileType = data.files[0].name.split('.').pop();
+                    var allowedTypes = 'jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF';
+                    if (allowedTypes.indexOf(fileType) < 0)
+                    {
+                        $('#box-progress-bar').css('width', '0');
+                        $('<p/>').text(fileName).appendTo($('#box-info'));
+                        $('<p class="wrong-file-type"/>').text('Invalid file type').appendTo($('#box-info'));
+                        return false;
+                    }
+                    else
+                    {
+                        $('<p/>').text(fileName).appendTo($('#box-info'));
+                        if ($('.button-upload').length == 0)
+                        {
+                            // disabling file input
+                            $('input#file-upload').attr('disabled', true);
+
+                            data.context = $('<button class="button-upload btn btn-primary start"/>').text('Upload')
+                                    .appendTo($('#box-info'))
+                                    .click(function ()
+                                    {
+                                        data.context = $('<p class="upload-success"/>').text('Uploading...').replaceAll($(this));
+                                        ($('.button-cancel')).remove();
+                                        data.submit();
+                                    });
+                            $('<button class="button-cancel btn btn-warning cancel" />').text('Cancel')
+                                    .appendTo($('#box-info'))
+                                    .click(function ()
+                                    {
+                                        $('#box-progress-bar').css('width', '0');
+                                        //console.log('testing');
+                                        var message = 'Upload canceled';
+                                        ($('.button-upload')).remove();
+                                        ($('.button-cancel')).remove();
+                                        $('<p class="wrong-file-type"/>').text(message).appendTo($('#box-info'));
+                                        // enabling file input
+                                        $('input#file-upload').attr('disabled', false);
+                                    });
+                        }
+                    }
+                },
+                progressall: function (e, data)
+                {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $('#box-progress-bar').css('width', progress + '%');
+                },
+                done: function (e, data)
+                {
+                    data.context.text('Upload finished.');
+                    // enabling file input
+                    $('input#file-upload').attr('disabled', false);
+                }
+            });
+        });
+    </script>
+{% endblock %}

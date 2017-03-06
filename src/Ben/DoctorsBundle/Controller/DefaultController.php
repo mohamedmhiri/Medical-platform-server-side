@@ -17,199 +17,122 @@ class DefaultController extends Controller
 
 
     /********************************/
-    public function getThisMonth()
+    /**
+     * @param $int
+     * @return array
+     * this function returns an array
+     * of a specific (month, year)
+     */
+    public function getMonthAndYear($int)
     {
-      $em=$this->getDoctrine()->getManager();
-
-      $qb = $em->createQueryBuilder();
-      $qb->select('co')
-      ->from('BenDoctorsBundle:consultation','co')
-      ->where('month(co.created)=month(now())')//
-      ->andWhere('YEAR(co.created)-(YEAR (now())) <2');//
-
-        return $qb->getQuery()->getResult();
+        $month = date("n", strtotime("-".$int." month"));
+        $year = date("Y", strtotime("-".$int." month"));
+        return array(
+            "month" => $month,
+            "year" => $year
+        );
     }
-    public function getPreviousMonth()
+
+    /**
+     *
+     */
+    public function averageAge()
     {
-      $em=$this->getDoctrine()->getManager();
-
-      $qb = $em->createQueryBuilder();
-      $qb->select('co')
-      ->from('BenDoctorsBundle:consultation','co')
-      ->where('month(co.created)=(month(now())-1)')//
-      ->andWhere('YEAR(co.created)-(YEAR (now())) <2');//
-
-        return $qb->getQuery()->getResult();
+        $birth=$this->
+        getDoctrine()
+            ->getManager()
+            ->getRepository('BenDoctorsBundle:Person')
+            ->findByBirthdays();
+        $sum = 0;
+        foreach ($birth as $b)
+        {
+            $sum += date_create($b["birthday"])->diff(date_create('today'))->y ;
+        }
+        return round($sum / count($birth));
     }
-    public function get2PreviousMonth()
+
+    public function prepareTopChart()
     {
-      $em=$this->getDoctrine()->getManager();
-
-      $qb = $em->createQueryBuilder();
-      $qb->select('co')
-      ->from('BenDoctorsBundle:consultation','co')
-      ->where('month(co.created)=(month(now())-2)')//
-      ->andWhere('YEAR(co.created)-(YEAR (now())) <2');//
-
-        return $qb->getQuery()->getResult();
+        return $consultations = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('BenDoctorsBundle:Consultation')
+            ->findByMonthOrderedByNbConsultation();
     }
-    public function get3PreviousMonth()
+    public function trialAction($int)
     {
-      $em=$this->getDoctrine()->getManager();
-
-      $qb = $em->createQueryBuilder();
-      $qb->select('co')
-      ->from('BenDoctorsBundle:consultation','co')
-      ->where('month(co.created)=(month(now())-3)')//
-      ->andWhere('YEAR(co.created)-(YEAR (now())) <2');//
-
-        return $qb->getQuery()->getResult();
+        $consultations = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('BenDoctorsBundle:Appointment')
+            ->findByPerson($int);
+        $i=0;
+        while ($i < count($consultations))
+        {
+            print_r($consultations[$i]["date"]);
+            $i++;
+        }
     }
-    public function get4PreviousMonth()
+    public function prepareChart($month_0,$month_1,$month_2,$month_3,$month_4)
     {
-      $em=$this->getDoctrine()->getManager();
+        $nb_patients_this_month = $this->nbConsultationInMonth($month_0)["nb_patients"];
+        $nb_patients_previous_month = $this->nbConsultationInMonth($month_1)["nb_patients"];
+        $nb_patient2 = $this->nbConsultationInMonth($month_2)["nb_patients"];
+        $nb_patient3 = $this->nbConsultationInMonth($month_3)["nb_patients"];
+        $nb_patient4 = $this->nbConsultationInMonth($month_4)["nb_patients"];
+        $sum = $nb_patients_this_month+$nb_patients_previous_month+$nb_patient2+$nb_patient3+$nb_patient4;
 
-      $qb = $em->createQueryBuilder();
-      $qb->select('co')
-      ->from('BenDoctorsBundle:consultation','co')
-      ->where('month(co.created)=(month(now())-4)')//
-      ->andWhere('YEAR(co.created)-(YEAR (now())) <2');//
-
-        return $qb->getQuery()->getResult();
-    }
-    public function get5PreviousMonth()
-    {
-      $em=$this->getDoctrine()->getManager();
-
-      $qb = $em->createQueryBuilder();
-      $qb->select('co')
-      ->from('BenDoctorsBundle:consultation','co')
-      ->where('month(co.created)=(month(now())-5)')//
-      ->andWhere('YEAR(co.created)-(YEAR (now())) <2');//
-
-        return $qb->getQuery()->getResult();
-    }
-    public function get6PreviousMonth()
-    {
-      $em=$this->getDoctrine()->getManager();
-
-      $qb = $em->createQueryBuilder();
-      $qb->select('co')
-      ->from('BenDoctorsBundle:consultation','co')
-      ->where('month(co.created)=(month(now())-6)')//
-      ->andWhere('YEAR(co.created)-(YEAR (now())) <2');//
-
-        return $qb->getQuery()->getResult();
-    }
-    public function get7PreviousMonth()
-    {
-      $em=$this->getDoctrine()->getManager();
-
-      $qb = $em->createQueryBuilder();
-      $qb->select('co')
-      ->from('BenDoctorsBundle:consultation','co')
-      ->where('month(co.created)=(month(now())-7)')//
-      ->andWhere('YEAR(co.created)-(YEAR (now())) <2');//
-
-        return $qb->getQuery()->getResult();
-    }
-    public function get8PreviousMonth()
-    {
-      $em=$this->getDoctrine()->getManager();
-
-      $qb = $em->createQueryBuilder();
-      $qb->select('co')
-      ->from('BenDoctorsBundle:consultation','co')
-      ->where('month(co.created)=(month(now())-8)')//
-      ->andWhere('YEAR(co.created)-(YEAR (now())) <2');//
-
-        return $qb->getQuery()->getResult();
-    }
-    public function get9PreviousMonth()
-    {
-      $em=$this->getDoctrine()->getManager();
-
-      $qb = $em->createQueryBuilder();
-      $qb->select('co')
-      ->from('BenDoctorsBundle:consultation','co')
-      ->where('month(co.created)=(month(now())-9)')//
-      ->andWhere('YEAR(co.created)=(YEAR (now())) ')
-          ->orWhere('YEAR(co.created)-(YEAR (now())) <2');//
-
-        return $qb->getQuery()->getResult();
-    }
-    public function get10PreviousMonth()
-    {
-      $em=$this->getDoctrine()->getManager();
-
-      $qb = $em->createQueryBuilder();
-      $qb->select('co')
-      ->from('BenDoctorsBundle:consultation','co')
-      ->where('month(co.created)=(month(now())-10)')//
-      ->andWhere('YEAR(co.created)=(YEAR (now())) ')
-          ->orWhere('YEAR(co.created)-(YEAR (now())) <2');//
-      return $qb->getQuery()->getResult();
-    }
-    public function get11PreviousMonth()
-    {
-      $em=$this->getDoctrine()->getManager();
-
-      $qb = $em->createQueryBuilder();
-      $qb->select('co')
-      ->from('BenDoctorsBundle:consultation','co')
-      ->where('month(co.created)=(month(now())-11)')//
-      ->andWhere('YEAR(co.created)-(YEAR (now())) <2 ');//
-      return $qb->getQuery()->getResult();
-    }
-    public function get12PreviousMonth()
-    {
-      $em=$this->getDoctrine()->getManager();
-
-      $qb = $em->createQueryBuilder();
-      $qb->select('co')
-      ->from('BenDoctorsBundle:consultation','co')
-      ->where('month(co.created)=(month(now())-12)')//
-      ->andWhere('YEAR(co.created)-(YEAR (now())) <2');//
-      return $qb->getQuery()->getResult();
-    }
-    public function getBirthdays()
-    {
-      $em=$this->getDoctrine()->getManager();
-
-      $qb = $em->createQueryBuilder();
-      $qb->select('co')
-      ->from('BenDoctorsBundle:person','co')
-      ->where('co.birthday is not null');
-      return $qb->getQuery()->getResult();
+        $patients_this = round(($nb_patients_this_month/$sum)*100);
+        $patients_1 = round(($nb_patients_previous_month/$sum)*100);
+        $patients_2 = round(($nb_patient2/$sum)*100);
+        $patients_3 = round(($nb_patient3/$sum)*100);
+        $patients_4 = round(($nb_patient4/$sum)*100);
+        return array(
+            "month_0" => $patients_this,
+            "date_0" => $this->nbConsultationInMonth(0)["date"],
+            "month_1" => $patients_1,
+            "date_1" => $this->nbConsultationInMonth(1)["date"],
+            "month_2" => $patients_2,
+            "date_2" => $this->nbConsultationInMonth(2)["date"],
+            "month_3" => $patients_3,
+            "date_3" => $this->nbConsultationInMonth(3)["date"],
+            "month_4" => $patients_4,
+            "date_4" => $this->nbConsultationInMonth(4)["date"]
+        );
     }
     /**chart appointments*
     */
     public function chartApiAction()
     {
-      if(count($usersCo=$this->getDoctrine()->getManager()->getRepository('BenUserBundle:User')->findByIsActivated(1))==0)
-      {
-        //go to /login
-        return new RedirectResponse('http://localhost:8080/admin');
-      }
-      else {
-        $chart=json_encode([
-          "this_month"=>count($this->getThisMonth()),
-          "previous_month"=>count($this->getPreviousMonth()),
-          "twoprevious_month"=>count($this->get2PreviousMonth()),
-          "threeprevious_month"=>count($this->get3PreviousMonth()),
-          "fourprevious_month"=>count($this->get4PreviousMonth()),
-          "fiveprevious_month"=>count($this->get5PreviousMonth()),
-          "sixprevious_month"=>count($this->get6PreviousMonth()),
-          "sevenprevious_month"=>count($this->get7PreviousMonth()),
-          "eightprevious_month"=>count($this->get8PreviousMonth()),
-          "nineprevious_month"=>count($this->get9PreviousMonth()),
-          "tenprevious_month"=>count($this->get10PreviousMonth()),
-          "elevenprevious_month"=>count($this->get11PreviousMonth()),
-          "twelveprevious_month"=>count($this->get12PreviousMonth())
-        ]);
+        $chart=json_encode(
+            $this->prepareChart(0,1,2,3,4)
+        );
         return new Response($chart);
-      }
+//      }
     }
+    /**chart appointments*
+     */
+    public function topChartApiAction()
+    {
+        $chart=json_encode(
+            $this->prepareTopChart()
+        );
+        return new Response($chart);
+//      }
+    }
+
+
+    public function nbConsultationInMonth($int)
+    {
+        $month = $this->getMonthAndYear($int)["month"];
+        $year = $this->getMonthAndYear($int)["year"];
+//        $chart=json_encode([
+            $nb = count($this->getDoctrine()
+                ->getManager()
+                ->getRepository('BenDoctorsBundle:Consultation')
+                ->findByNbCustomersInMonth($month, $year)
+            );
+        return array("nb_patients" => $nb, "date" =>$month."-".$year);
+    }
+
     /************************************/
     /**
      * @Secure(roles="ROLE_USER")
@@ -223,38 +146,77 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $nbentities = $em->getRepository('BenDoctorsBundle:Person')->counter();
         $women=$em->getRepository('BenDoctorsBundle:Person')->findByGender('Féminin');
-        $birth=$this->getBirthdays();
-        $bNull=$em->getRepository('BenDoctorsBundle:Person')->findByBirthday(NULL);
-        $denAges=$nbentities-count($bNull);
+        $age=$this->averageAge();
         $p_femmes=(count($women)/$nbentities)*100;
         $p_hommes=100-$p_femmes;
-        $nb_patients_this_month=count($this->getThisMonth());
-        $old=0;
-        $now=new \DateTime('now');
-        $y=(int)$now->format('y');
-        $m=(int)($now->format('m'));
-        $d=(int)($now->format('d'));
-        foreach ($birth as $key => $value) {
-          if($value->getBirthday()!=null){
-            ///to be modified
-
-            $my_y=((int)($value->getBirthday()->format('y')))-100;
-            $my_m=(int)($value->getBirthday()->format('m'));
-            $my_d=(int)($value->getBirthday()->format('d'));
-            $old+=($y-$my_y)+($m-$my_m)/12+($d-$my_d)/365;
+        $nb_patients_this_month = $this->nbConsultationInMonth(0)["nb_patients"];
+        $nb_patients_previous_month = $this->nbConsultationInMonth(1)["nb_patients"];
+        $evolution=$nb_patients_this_month-$nb_patients_previous_month;
+        $index_array = array(
+            'age'=>round($age),
+            'p_femmes'=>$p_femmes,
+            'p_hommes'=>$p_hommes,
+            'nb_patients_this_month'=>$nb_patients_this_month,
+            'evolution'=>$evolution,
+            //pie chart
+            'date_0'=>$this->prepareChart(0,1,2,3,4)["date_0"],
+            'month_0'=>$this->prepareChart(0,1,2,3,4)["month_0"],
+            'date_1'=>$this->prepareChart(0,1,2,3,4)["date_1"],
+            'month_1'=>$this->prepareChart(0,1,2,3,4)["month_1"],
+            'date_2'=>$this->prepareChart(0,1,2,3,4)["date_2"],
+            'month_2'=>$this->prepareChart(0,1,2,3,4)["month_2"],
+            'date_3'=>$this->prepareChart(0,1,2,3,4)["date_3"],
+            'month_3'=>$this->prepareChart(0,1,2,3,4)["month_3"],
+            'date_4'=>$this->prepareChart(0,1,2,3,4)["date_4"],
+            'month_4'=>$this->prepareChart(0,1,2,3,4)["month_4"]);
+          if(count($this->prepareTopChart())>0)
+          {
+              $index_array['top_0']=$this->prepareTopChart()[0]['rendezvous'];
+              $index_array['nb_0']=$this->prepareTopChart()[0]['total'];
+          }else
+          {
+              $index_array['top_0']=null;
+              $index_array['nb_0']=null;
           }
-        }
-        $age=$old/$denAges;
-        $evolution=$nb_patients_this_month-count($this->getPreviousMonth());
-
-        return $this->render('BenDoctorsBundle:Default:index.html.twig',array(
-          'age'=>round($age),
-          'p_femmes'=>$p_femmes,
-          'p_hommes'=>$p_hommes,
-          'nb_patients_this_month'=>$nb_patients_this_month,
-          'evolution'=>$evolution
-
-        ));
+          if(count($this->prepareTopChart())>1)
+          {
+              $index_array['top_1']=$this->prepareTopChart()[1]['rendezvous'];
+              $index_array['nb_1']=$this->prepareTopChart()[1]['total'];
+          }else
+          {
+              $index_array['top_1']=null;
+              $index_array['nb_1']=null;
+          }
+          if(count($this->prepareTopChart())>2)
+          {
+              $index_array['top_2']=$this->prepareTopChart()[2]['rendezvous'];
+              $index_array['nb_2']=$this->prepareTopChart()[2]['total'];
+          }else
+          {
+              $index_array['top_2']=null;
+              $index_array['nb_2']=null;
+          }
+          if(count($this->prepareTopChart())>3)
+          {
+              $index_array['top_3']=$this->prepareTopChart()[3]['rendezvous'];
+              $index_array['nb_3']=$this->prepareTopChart()[3]['total'];
+          }else
+          {
+              $index_array['top_3']=null;
+              $index_array['nb_3']=null;
+          }
+          if(count($this->prepareTopChart())>4)
+          {
+              $index_array['top_4']=$this->prepareTopChart()[4]['rendezvous'];
+              $index_array['nb_4']=$this->prepareTopChart()[4]['total'];
+          }else
+          {
+              $index_array['top_4']=null;
+              $index_array['nb_4']=null;
+          }
+        return $this->render('BenDoctorsBundle:Default:index.html.twig'
+            ,$index_array);
+                //top chart
 
       }else {
         return new RedirectResponse('http://localhost:8080/admin');
@@ -283,5 +245,10 @@ class DefaultController extends Controller
 
         return $this->render('BenDoctorsBundle:Default:ajaxStats.html.twig', array(
             'stats' => $stats));
+    }
+
+    public function uploadAction()
+    {
+        return $this->render('BenDoctorsBundle:Default:upload.html.twig');
     }
 }

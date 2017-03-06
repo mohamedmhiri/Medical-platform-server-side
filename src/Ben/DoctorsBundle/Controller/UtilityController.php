@@ -64,7 +64,8 @@ class UtilityController extends Controller
     /**
     *
     * this function compares two Carbon objects and returns
-    * weather the first obj is less/grater then the second obj or
+    * weather the first obj is less/grater then the second obj
+    * or not
     *
     */
     public function isLowerThen($date1,$date2)

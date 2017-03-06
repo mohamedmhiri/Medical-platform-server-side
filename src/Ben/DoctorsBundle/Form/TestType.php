@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-
+use Ben\DoctorsBundle\Entity\Test;
 class TestType extends AbstractType
 {
 
@@ -23,11 +23,16 @@ class TestType extends AbstractType
 
             $builder
 //                ->add('consultation')
-                ->add('typeexam', 'text', array('label'=>'Type de l examen'))
+                ->add('typeexam', 'text', array('label'=>"Type de l'examen"))
                 ->add('lieu', 'text', array('label'=>'Lieu'))
-                ->add('conclusion', 'textarea', array('label'=>'conclusion','required'  => false))
+                ->add('conclusion', 'textarea', array('label'=>'Conclusion','required'  => false))
                 //->add('images' , new \Doctrine\Common\Collections\ArrayCollection())
                 ->add('date', 'date', array('widget' => 'single_text','label'=>'Date'))
+//                ->add('images', imageType::class, array(
+//                    'data_class' => null
+////                        Test::class
+//                ,
+//                ));
                 // ->add('hasvisualissue', 'checkbox', array('label'=>'Trouble visuel','required'  => false))
                 // ->add('fixedvisualissue', 'choice', array('choices' => ['Corrigé'=>'Corrigé', 'Non corrigé'=>'Non corrigé'],
                 //         'expanded' => true,
